@@ -1,5 +1,4 @@
 # Javascript AJAX (ajax.js)
-Very small AJAX library with syntax based on jQuery. Supports JSON, JSONP, XML, HTML or TEXT, or returns result type by HTTP headers.
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
 ## Features
