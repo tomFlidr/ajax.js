@@ -1,6 +1,8 @@
 # Javascript AJAX (ajax.js)
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
+* [ajax.min.js download](https://raw.githubusercontent.com/tomFlidr/ajax.js/master/src/ajax.min.js)
+
 ## Features
 - very effective, super small javascript AJAX library - **minimized: 6.1 KB**, **gzipped: 2.6 KB**
 - **syntax based on jQuery.ajax();**, no promisses
@@ -22,7 +24,7 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 ## Usage
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 ```
-<script src="/path/to/ajax.min.js" type="text/javascript"></script>
+<script src="https://raw.githubusercontent.com/tomFlidr/ajax.js/master/src/ajax.min.js"></script>
 ```
 
 ### Universal syntax
