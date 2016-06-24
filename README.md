@@ -26,14 +26,14 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 ## Usage
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 ```
-<script src="https://raw.githubusercontent.com/tomFlidr/ajax.js/master/src/ajax.min.js"></script>
+<script src="src/ajax.min.js"></script>
 ```
 
 ### Universal syntax
 ```
 Ajax.load({
 	// required - relative or absolute path
-	url: 'https://raw.githubusercontent.com/tomFlidr/ajax.js/master/demos/data/books.json',
+	url: 'demos/data/books.json',
 	// not required, get by default
 	method: 'post',
 	// not required, any structured data are automaticly stringified 
@@ -50,9 +50,13 @@ Ajax.load({
 	type: 'json',
 	// not required, custom callback for success, data are automaticly 
 	// evaluated or parsed by type param or HTTP header
-	success: function (data, statusCode, xhr) {},
+	success: function (data, statusCode, xhr) {
+		console.log(arguments);
+	},
 	// not required, custom callback for error
-	error: function (responseText, statusCode, xhr) {}
+	error: function (responseText, statusCode, xhr) {
+		console.log(arguments);
+	}
 	// not required, true by default
 	async: true,
 	// not required, http headers to overwrite before data are sended, empty object by default
@@ -66,7 +70,7 @@ Ajax.load({
 ```
 Ajax.get(
 	// required - relative or absolute path
-	'https://raw.githubusercontent.com/tomFlidr/ajax.js/master/demos/data/books.json',
+	'demos/data/books.json',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
@@ -81,9 +85,13 @@ Ajax.get(
 	'json',
 	// not required, custom callback for success, data are automaticly 
 	// evaluated or parsed by type param or HTTP header
-	function (data, statusCode, xhr) {},
+	function (data, statusCode, xhr) {
+		console.log(arguments);
+	},
 	// not required, custom callback for error
-	function (responseText, statusCode, xhr) {}
+	function (responseText, statusCode, xhr) {
+		console.log(arguments);
+	}
 );
 ```
 
@@ -91,7 +99,7 @@ Ajax.get(
 ```
 Ajax.post(
 	// required - relative or absolute path
-	'https://raw.githubusercontent.com/tomFlidr/ajax.js/master/demos/data/books.xml',
+	'demos/data/books.xml',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
@@ -106,9 +114,13 @@ Ajax.post(
 	'xml',
 	// not required, custom callback for success, data are automaticly 
 	// evaluated or parsed by type param or HTTP header
-	function (data, statusCode, xhr) {},
+	function (data, statusCode, xhr) {
+		console.log(arguments);
+	},
 	// not required, custom callback for error
-	function (responseText, statusCode, xhr) {}
+	function (responseText, statusCode, xhr) {
+		console.log(arguments);
+	}
 );
 ```
 
