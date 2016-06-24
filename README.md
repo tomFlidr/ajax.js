@@ -5,7 +5,9 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 - very effective, super small javascript AJAX library - minimized: 6.1 KB, gzipped: 2.6 KB
 - syntax base on jQuery.ajax();, no promisses
 - supported browsers: MSIE6+, Firefox, Chrome, Safari, Opera and mobile browsers
-- supported request methods: GET, POST (by XMLHttpRequest) and GET through type: JSONP (by <stript> tag) to request foreing domains
+- supported request methods: 
+  - GET, POST - by XMLHttpRequest, to request same domains or diferent domains with "Access-Control-Allow-Origin" header
+  - GET through type: JSONP - by <stript> tag, to request foreing domains without any other settings
 - automatic JSON serialization into format: key1=value1&key2=["anything",{"with":["JSON","structure"]}]  
 - data always sended with HTTP header Content-Type: application/x-www-form-urlencoded and posibility to change
 - JSON evaluation and XML/HTML parsing into environment types by type param
