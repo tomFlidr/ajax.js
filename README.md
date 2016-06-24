@@ -28,29 +28,29 @@ Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section,
 ### Universal syntax
 ```
 Ajax.load({
-    // required - relative or absolute path
-		url: 'json.php',
-		// not required, get by default
-		method: 'post',
-		// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
-		data: {
-	  	key1: "value1",
-	  	key2: [
-	  	  "anything",
-	  	  {"with": ["JSON", "structure"]}
-	  	]  
-		},
-		// not required, possible values: JSON,JSONP,XML,HTML,TEXT, if not set, data are parsed/evaluated by HTTP header
-		type: 'json',
-		// not required, custom code in success, data are automaticly evaluated or parsed by type param or HTTP header
-		success: function (data, statusCode, xhr) {},
-		// not required, custom code in error
-		error: function (responseText, statusCode, xhr) {}
-		// not required, true by default
-		async: true,
-		// not required, http headers to overwrite before data are sended, empty object by default
-		headers: {
-		  // 'content-Type': 'allication/xml'
-		}
-	});
+	// required - relative or absolute path
+	url: 'json.php',
+	// not required, get by default
+	method: 'post',
+	// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
+	data: {
+  	key1: "value1",
+  	key2: [
+  		"anything",
+		{"with": ["JSON", "structure"]}
+  	]  
+	},
+	// not required, possible values: JSON,JSONP,XML,HTML,TEXT, if not set, data are parsed/evaluated by HTTP header
+	type: 'json',
+	// not required, custom code in success, data are automaticly evaluated or parsed by type param or HTTP header
+	success: function (data, statusCode, xhr) {},
+	// not required, custom code in error
+	error: function (responseText, statusCode, xhr) {}
+	// not required, true by default
+	async: true,
+	// not required, http headers to overwrite before data are sended, empty object by default
+	headers: {
+		// 'content-Type': 'allication/xml'
+	}
+});
 ```
