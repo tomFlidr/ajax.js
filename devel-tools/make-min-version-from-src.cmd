@@ -36,9 +36,12 @@
 :: remove all new line chars in minimized temporary file result.js
 @cd bin
 @call jrepl "\n" "" /M /F result.js /O -
+@cd ..
 
 :: delete previous result file and complete initial comment with new minimized result into result file
 @if exist "!resultFile!" del "!resultFile!"
+
+@cd bin
 @for %%f in (comment.js result.js) do @(
 	@type "%%f" >> ../!resultFile!
 )

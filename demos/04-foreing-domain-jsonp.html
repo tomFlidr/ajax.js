@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<title>Javascript AJAX - JSONP Example - Foreing Domain Requests</title>
+	<style type="text/css">
+		.wait{cursor:wait !important;}
+		html,body{font-family:arial;height:100%;}
+		h1{text-align:center;}
+		#result{margin:0 auto;}
+		#result img{display:block;margin:10px auto;}
+	</style>
+	<script src="../src/ajax.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+	<h1>Javascript AJAX - JSONP Example - Foreing Domain Requests</h1>
+	<hr />
+	
+	<div id="result">
+		Loading images from <a href="https://www.flickr.com/services/api/">Flickr JSON API</a>...
+	</div>
+
+	<script type="text/javascript">
+		(function () {
+		
+			var apiUrlTemplate = 'https://api.flickr.com/services/rest/?method={method}&api_key={api_key}&{method_params}&format=json';
+			var imgUrlTemplate = 'https://farm{farm}.staticflickr.com/{server}/{id}_{secret}_n.jpg';
+			
+			var userName = 'tomasflidr';
+			var api_key = '35e8f59a2837d74a4fefc24c44bd31dc';
+			
+			var formatFlickrUrl = function (url, data) {
+				data.api_key = api_key;
+				for (var key in data) {
+					url = url.replace('{'+key+'}', data[key]);
+				}
+				return url;
+			}
+			
+			var loadUserId = function (callback) {
+				var url = formatFlickrUrl(apiUrlTemplate, {
+					method: 'flickr.people.findByUsername',
+					method_params: 'username=' + userName
+				});
+				/*************************************************************************************************
+				*                                                                                                *
+				*                                      1. JSONP request                                          *
+				*                                                                                                *
+				*************************************************************************************************/
+				Ajax.load({
+					url: url,
+					type: 'jsonp',
+					success: function (data, statusCode, xhr) {
+						callback(data.user.id);
+					}
+				});
+			}
+			
+			var loadUserPublicPhotos = function (userId, callback) {
+				var url = formatFlickrUrl(apiUrlTemplate, {
+					method: 'flickr.people.getPublicPhotos',
+					method_params: 'user_id=' + userId
+				});
+				/*************************************************************************************************
+				*                                                                                                *
+				*                                      2. JSONP request                                          *
+				*                                                                                                *
+				*************************************************************************************************/
+				Ajax.load({
+					url: url,
+					type: 'jsonp',
+					success: function (data, statusCode, xhr) {
+						callback(data.photos.photo);
+					}
+				});
+			}
+			
+			var completeResultImages = function (allPublicPhotos) {
+				var photoElm = {},
+					result = document.getElementById('result'),
+					resultClone = result.cloneNode();
+				for (var i = 0, l = Math.min(3, allPublicPhotos.length); i < l; i += 1) {
+					photoElm = document.createElement('img');
+					photoElm.src = formatFlickrUrl(imgUrlTemplate, allPublicPhotos[i]);
+					if (document.all) {
+						resultClone.insertAdjacentElement('beforeEnd', photoElm);
+					} else {
+						resultClone.appendChild(photoElm);
+					}
+				}
+				result.parentNode.replaceChild(resultClone, result);
+			}
+			
+			/*************************************************************************************************
+			*                                                                                                *
+			*                                         DEMO BEGIN                                             *
+			*                                                                                                *
+			*************************************************************************************************/
+			
+			// set up wait cursor for whole body while data is loading
+			Ajax.onBeforeLoad(function (xhr) {
+				document.body.className = 'wait';
+			});
+			Ajax.onLoadSuccess(function (data, statusCode) {
+				document.body.className = '';
+			});
+			
+			// any error log to console or to result element
+			Ajax.onLoadError(function (responseText, statusCode) {
+				if (console) {
+					console.log(arguments);
+				} else {
+					document.getElementById('result').innerHTML = '<pre>' + JSON.stringify({
+						responseText: responseText,
+						statusCode: statusCode
+					}) + '</pre>';
+				}
+			});
+			
+			
+			// set name for JSON API callback param by Flick, because flickr doesn't use standard convention - 'callback':
+			Ajax.jsonpCallbackParam = 'jsoncallback';
+			
+			
+			// first - load flickr user id by user name
+			loadUserId(function (userId) {
+			
+				// after user id is known - load all user public photos
+				loadUserPublicPhotos(userId, function (allPublicPhotos) {
+				
+					// after all public photos are loaded - append into result element first 3 photos
+					completeResultImages(allPublicPhotos);
+				});
+				
+			});
+		
+		})();
+	</script>
+	
+</body>
+</html>

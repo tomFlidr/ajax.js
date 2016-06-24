@@ -4,17 +4,14 @@
  * @url: https://github.com/tomFlidr/ajax.js
  * @version: 1.0
  * @date: 2015-10-11
- * @usage: basic example:
+ * @usage:
 Ajax.load({
 	url: 'https://github.com/tomFlidr',
 	method: 'post',
-	data: {
-		anything: ["to", "serialize"]
-	},
-	success: function (data, statusCode, xhr) {
-	},
-	error: function (responseText, statusCode, xhr) {
-	}
+	type: 'json',
+	data: { anything: ["to", "serialize"] },
+	success: function (data, statusCode, xhr) {},
+	error: function (responseText, statusCode, xhr) {}
 });
 */
 Ajax = function () {};
@@ -27,6 +24,7 @@ Ajax['defaultHeaders'] = {
 	'X-Requested-With': 'XmlHttpRequest',
 	'Content-Type': 'application/x-www-form-urlencoded'
 };
+Ajax['jsonpCallbackParam'] = 'callback';
 Ajax._scriptCallbackTmpl = 'AjaxJsonpCallback_';
 Ajax._scriptCallbackCounter = 0;
 Ajax['onBeforeLoad'] = function (fn) {
@@ -99,11 +97,11 @@ Ajax['prototype'] = {
 			} else {
 				delete win[callbackName];
 			}
-			scope._callSuccessHandlers();
 			scope.result.data = data;
+			scope._callSuccessHandlers();
 			scope.success(data);
 		};
-		scope.data['callback'] = callbackName;
+		scope.data[Ajax['jsonpCallbackParam']] = callbackName;
 		scope._completeUriAndGetParams('get');
 		scriptElm['setAttribute']('src', scope.url);
 		scope._callBeforeHandlers();
@@ -174,7 +172,7 @@ Ajax['prototype'] = {
 			xhr = scope.xhr;
 		if (scope.type == 'json') {
 			scope._createResultJson();
-		} else if (scope.type == 'xml') {
+		} else if (scope.type == 'xml' || scope.type == 'html') {
 			scope._createResultXml();
 		} else if (scope.type == 'text') {
 			scope.result.data = xhr['responseText'];
@@ -271,24 +269,35 @@ Ajax['prototype'] = {
 	_completeUriAndGetParams: function (method)
 	{
 		var scope = this,
-			paramsStr = '',
+			dataStr = '',
 			delimiter = '?',
 			url = scope.url,
 			delimPos = url.indexOf(delimiter),
 			method = method.toLowerCase();
 		if (method == 'get') {
-			scope.data['_'] = +new Date; // cache buster
-			paramsStr = scope._stringifyParams();
+			scope.data._ = +new Date; // cache buster
+			dataStr = scope._completeDataString();
 			if (delimPos > -1) {
 				delimiter = (delimPos == url.length - 1) ? '' : '&';
 			}
-			scope.url = url + delimiter + paramsStr;
+			scope.url = url + delimiter + dataStr;
 		} else {
-			paramsStr = scope._stringifyParams();
+			dataStr = scope._completeDataString();
 		}
-		return paramsStr;
+		return dataStr;
 	},
-	_stringifyParams: function ()
+	_completeDataString: function () {
+		var scope = this,
+			data = scope.data,
+			w = window;
+		if (typeof(data) == 'string') {
+			return data;
+		} else {
+			if(!w['JSON']) scope._declareJson();
+			return this._stringifyDataObject();
+		}
+	},
+	_stringifyDataObject: function ()
 	{
 		var scope = this,
 			data = scope.data,
@@ -297,7 +306,6 @@ Ajax['prototype'] = {
 			w = window;
 		for (var key in data) {
 			if (typeof(data[key]) == 'object') {
-				if(!w['JSON']) scope._declareJson();
 				dataStr = w['JSON']['stringify'](data[key])
 			} else {
 				dataStr = data[key].toString();
