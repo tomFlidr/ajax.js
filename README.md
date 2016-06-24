@@ -36,7 +36,8 @@ Ajax.load({
 	url: 'json.php',
 	// not required, get by default
 	method: 'post',
-	// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
+	// not required, any structured data are automaticly stringified 
+	// by JSON.stringify() included in this library
 	data: {
   		key1: "value1",
   		key2: [
@@ -47,7 +48,8 @@ Ajax.load({
 	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
 	// if not set, data are parsed/evaluated by HTTP header
 	type: 'json',
-	// not required, custom callback for success, data are automaticly evaluated or parsed by type param or HTTP header
+	// not required, custom callback for success, data are automaticly 
+	// evaluated or parsed by type param or HTTP header
 	success: function (data, statusCode, xhr) {},
 	// not required, custom callback for error
 	error: function (responseText, statusCode, xhr) {}
@@ -65,7 +67,8 @@ Ajax.load({
 Ajax.get(
 	// required - relative or absolute path
 	'json.php',
-	// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
+	// not required, any structured data are automaticly stringified 
+	// by JSON.stringify() included in this library
 	data: {
   		key1: "value1",
   		key2: [
@@ -76,7 +79,8 @@ Ajax.get(
 	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
 	// if not set, data are parsed/evaluated by HTTP header
 	'json',
-	// not required, custom callback for success, data are automaticly evaluated or parsed by type param or HTTP header
+	// not required, custom callback for success, data are automaticly 
+	// evaluated or parsed by type param or HTTP header
 	function (data, statusCode, xhr) {},
 	// not required, custom callback for error
 	function (responseText, statusCode, xhr) {}
@@ -88,7 +92,8 @@ Ajax.get(
 Ajax.post(
 	// required - relative or absolute path
 	'xml.php',
-	// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
+	// not required, any structured data are automaticly stringified 
+	// by JSON.stringify() included in this library
 	data: {
   		key1: "value1",
   		key2: [
@@ -99,14 +104,15 @@ Ajax.post(
 	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
 	// if not set, data are parsed/evaluated by HTTP header
 	'xml',
-	// not required, custom callback for success, data are automaticly evaluated or parsed by type param or HTTP header
+	// not required, custom callback for success, data are automaticly 
+	// evaluated or parsed by type param or HTTP header
 	function (data, statusCode, xhr) {},
 	// not required, custom callback for error
 	function (responseText, statusCode, xhr) {}
 );
 ```
 
-### Common static handlers syntax
+### Global handlers for each request syntax
 ```
 // not required - add function into queue called before each request type
 Ajax.onBeforeLoad(function (xhr) {
