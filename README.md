@@ -22,10 +22,5 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 ## Usage
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 ```
-...
-<head>
-	<meta charset="UTF-8" />
-	<script src="/path/to/ajax.min.js" type="text/javascript"></script>
-</head>
-...
+<script src="/path/to/ajax.min.js" type="text/javascript"></script>
 ```
