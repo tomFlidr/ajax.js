@@ -67,8 +67,8 @@ Ajax['prototype'] = {
 		scope.async = typeof(async) == 'undefined' ? !0 : async;
 		scope.headers = headers || {};
 		scope.result = {
-			success: !0, 
-			data: {}
+			'success': !0, 
+			'data': {}
 		};
 		return scope;
 	},
@@ -97,7 +97,7 @@ Ajax['prototype'] = {
 			} else {
 				delete win[callbackName];
 			}
-			scope.result.data = data;
+			scope.result['data'] = data;
 			scope._callSuccessHandlers();
 			scope.success(data);
 		};
@@ -161,7 +161,7 @@ Ajax['prototype'] = {
 		if (scope.result['success']) {
 			scope._callSuccessHandlers();
 			scope.success(
-				scope.result.data, 
+				scope.result['data'], 
 				xhr['status'], 
 				xhr
 			);
@@ -175,7 +175,7 @@ Ajax['prototype'] = {
 		} else if (scope.type == 'xml' || scope.type == 'html') {
 			scope._createResultXml();
 		} else if (scope.type == 'text') {
-			scope.result.data = xhr['responseText'];
+			scope.result['data'] = xhr['responseText'];
 		}
 	},
 	_determinateTypeByContentTypeHeader: function () {
@@ -211,7 +211,7 @@ Ajax['prototype'] = {
 	{
 		var win = window, scope = this;
 		try {
-			scope.result.data = (new Function('return '+scope.xhr['responseText']))();
+			scope.result['data'] = (new Function('return '+scope.xhr['responseText']))();
 		} catch (e) {
 			scope._responseException(e);
 		}
@@ -226,11 +226,11 @@ Ajax['prototype'] = {
 		try {
 			if (DomParser) {
 				parser = new DomParser();
-				scope.result.data = parser['parseFromString'](responseText, "application/xml");
+				scope.result['data'] = parser['parseFromString'](responseText, "application/xml");
 			} else {
 				parser = new win['ActiveXObject']('Microsoft.XMLDOM');
 				parser['async'] = !1;
-				scope.result.data = parser['loadXML'](responseText);
+				scope.result['data'] = parser['loadXML'](responseText);
 			}
 		} catch (e) {
 			scope._responseException(e);
@@ -360,9 +360,9 @@ Ajax['prototype'] = {
 			jsonp = scope.type == 'jsonp';
 		for (var key in handlers) {
 			if (jsonp) {
-				handlers[key](scope.result.data, 200, null);
+				handlers[key](scope.result['data'], 200, null);
 			} else {
-				handlers[key](scope.result.data, scope.xhr['status'], scope.xhr);
+				handlers[key](scope.result['data'], scope.xhr['status'], scope.xhr);
 			}
 		}
 	},

@@ -67,8 +67,8 @@ Ajax.prototype = {
 		scope.async = typeof(async) == 'undefined' ? !0 : async;
 		scope.headers = headers || {};
 		scope.result = {
-			success: !0, 
-			data: {}
+			'success': !0, 
+			'data': {}
 		};
 		return scope;
 	},
