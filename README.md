@@ -34,13 +34,14 @@ Ajax.load({
 	method: 'post',
 	// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
 	data: {
-  	key1: "value1",
-  	key2: [
-  		"anything",
-		{"with": ["JSON", "structure"]}
-  	]  
+  		key1: "value1",
+  		key2: [
+  			"anything",
+			{"with": ["JSON", "structure"]}
+  		]  
 	},
-	// not required, possible values: JSON,JSONP,XML,HTML,TEXT, if not set, data are parsed/evaluated by HTTP header
+	// not required, possible values: JSON,JSONP,XML,HTML,TEXT, 
+	// if not set, data are parsed/evaluated by HTTP header
 	type: 'json',
 	// not required, custom code in success, data are automaticly evaluated or parsed by type param or HTTP header
 	success: function (data, statusCode, xhr) {},
