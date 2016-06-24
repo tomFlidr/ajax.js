@@ -12,19 +12,20 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 - data always **sended with HTTP header Content-Type: application/x-www-form-urlencoded** and posibility to change
 - **JSON evaluation and XML/HTML parsing** into environment types by type param
 - **automatic result conversion by HTTP header 'Content-Type'** into JSON/XML/HTML/TEXT if no type param defined
+- posibility to **change any http header before** send **and read any header after** data are loaded or error handled
+- posibility to change async requesting to sync (but it is not recomanded, by default is async)
 - **global handlers for each request** to set up error loging or loading animations:
   - Ajax.onBeforeLoad(function(){xhr});
   - Ajax.onLoadSuccess(function(){data, statusCode, xhr});
   - Ajax.onLoadError(function(responseText, statusCode, xhr){});
 
-- possible params:
-  - changing sended headers
-  - switching async to off (default on)
-  - 
-
+## Usage
+Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 ```
-
-
-
-
+...
+<head>
+	<meta charset="UTF-8" />
+	<script src="/path/to/ajax.min.js" type="text/javascript"></script>
+</head>
+...
 ```
