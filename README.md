@@ -56,7 +56,7 @@ Ajax.load({
 	// not required, custom callback for error
 	error: function (responseText, statusCode, xhr) {
 		console.log(arguments);
-	}
+	},
 	// not required, true by default
 	async: true,
 	// not required, http headers to overwrite before data are sended, empty object by default
