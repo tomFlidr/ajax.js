@@ -40,7 +40,7 @@ Ajax.load({
 			{"with": ["JSON", "structure"]}
   		]  
 	},
-	// not required, possible values: JSON,JSONP,XML,HTML,TEXT, 
+	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
 	// if not set, data are parsed/evaluated by HTTP header
 	type: 'json',
 	// not required, custom code in success, data are automaticly evaluated or parsed by type param or HTTP header
@@ -51,7 +51,7 @@ Ajax.load({
 	async: true,
 	// not required, http headers to overwrite before data are sended, empty object by default
 	headers: {
-		// 'content-Type': 'allication/xml'
+		// 'Content-Type': 'multipart/form-data'
 	}
 });
 ```
