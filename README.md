@@ -47,9 +47,9 @@ Ajax.load({
 	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
 	// if not set, data are parsed/evaluated by HTTP header
 	type: 'json',
-	// not required, custom code in success, data are automaticly evaluated or parsed by type param or HTTP header
+	// not required, custom callback for success, data are automaticly evaluated or parsed by type param or HTTP header
 	success: function (data, statusCode, xhr) {},
-	// not required, custom code in error
+	// not required, custom callback for error
 	error: function (responseText, statusCode, xhr) {}
 	// not required, true by default
 	async: true,
@@ -57,5 +57,67 @@ Ajax.load({
 	headers: {
 		// 'Content-Type': 'multipart/form-data'
 	}
+});
+```
+
+### GET request syntax
+```
+Ajax.get(
+	// required - relative or absolute path
+	'json.php',
+	// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
+	data: {
+  		key1: "value1",
+  		key2: [
+  			"anything",
+			{"with": ["JSON", "structure"]}
+  		]  
+	},
+	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+	// if not set, data are parsed/evaluated by HTTP header
+	'json',
+	// not required, custom callback for success, data are automaticly evaluated or parsed by type param or HTTP header
+	function (data, statusCode, xhr) {},
+	// not required, custom callback for error
+	function (responseText, statusCode, xhr) {}
+);
+```
+
+### POST request syntax
+```
+Ajax.post(
+	// required - relative or absolute path
+	'xml.php',
+	// not required, any structured data are automaticly stringified by JSON.stringify() included in this library
+	data: {
+  		key1: "value1",
+  		key2: [
+  			"anything",
+			{"with": ["JSON", "structure"]}
+  		]  
+	},
+	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+	// if not set, data are parsed/evaluated by HTTP header
+	'xml',
+	// not required, custom callback for success, data are automaticly evaluated or parsed by type param or HTTP header
+	function (data, statusCode, xhr) {},
+	// not required, custom callback for error
+	function (responseText, statusCode, xhr) {}
+);
+```
+
+### Common static handlers syntax
+```
+// not required - add function into queue called before each request type
+Ajax.onBeforeLoad(function (xhr) {
+	document.body.style.cursor = 'wait !important';
+});
+// not required - add function into queue called after each success request type
+Ajax.onLoadSuccess(function (data, statusCode, xhr) {
+	document.body.style.cursor = 'default';
+});
+// not required - add function into queue called after each error request type
+Ajax.onLoadError(function (responseText, statusCode, xhr) {
+	console.log(arguments);
 });
 ```
