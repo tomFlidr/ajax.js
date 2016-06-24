@@ -33,7 +33,7 @@ Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section,
 ```
 Ajax.load({
 	// required - relative or absolute path
-	url: 'json.php',
+	url: 'https://raw.githubusercontent.com/tomFlidr/ajax.js/master/demos/data/books.json',
 	// not required, get by default
 	method: 'post',
 	// not required, any structured data are automaticly stringified 
@@ -66,7 +66,7 @@ Ajax.load({
 ```
 Ajax.get(
 	// required - relative or absolute path
-	'json.php',
+	'https://raw.githubusercontent.com/tomFlidr/ajax.js/master/demos/data/books.json',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
@@ -91,7 +91,7 @@ Ajax.get(
 ```
 Ajax.post(
 	// required - relative or absolute path
-	'xml.php',
+	'https://raw.githubusercontent.com/tomFlidr/ajax.js/master/demos/data/books.xml',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
