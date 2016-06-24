@@ -1,12 +1,14 @@
 # Javascript AJAX (ajax.js)
-Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
 * [ajax.min.js download](https://raw.githubusercontent.com/tomFlidr/ajax.js/master/src/ajax.min.js)
+
+Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
 ## Features
 - very effective, super small javascript AJAX library - **minimized: 6.1 KB**, **gzipped: 2.6 KB**
 - **syntax based on jQuery.ajax();**, no promisses
 - supported browsers: **MSIE6+, Firefox, Chrome, Safari, Opera and mobile browsers**
+- highly optimized, supporting JIT - [Just In Time compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation)
 - supported request methods: 
   - **GET, POST** - **by XMLHttpRequest**, still possible to request diferent domains with **"Access-Control-Allow-Origin"**
   - **GET** through type: **JSONP** - **by \<stript\> tag**, to request foreing domains without any other settings
