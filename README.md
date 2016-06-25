@@ -37,7 +37,7 @@ var xhr = Ajax.load({
      url: '',                // string, required
      data: {},               // object (to be serialized), default: {}, not required
      success: function(){},  // function, default: function(){data, statusCode, xhr}, not required
-     type: '',               // string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
+     type: '',               // string, default: '' (result is be processed by Content-Type HTTP header), not required
      error: function(){},    // function, default: function(responseText, statusCode, xhr){}, not required
      headers: {},            // object, default: {}, not required
      async: true             // boolean, default: true, not required
