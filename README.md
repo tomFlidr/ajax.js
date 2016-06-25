@@ -66,7 +66,20 @@ Ajax.load({
 });
 ```
 
-### GET request syntax
+### GET request
+Basic syntax - standard browser window.XMLHttpRequest object is returned
+```
+var xhr = Ajax.get(
+	url,		// string, required
+	data, 		// object (to be serialized), default: {}, not required
+	type, 		// string, default: '' (result wil be evaluated or parsed by Content-Type HTTP header, not required
+	success, 	// function, default: function(){}, not required
+	error, 		// function, default: function(){}, not required
+	async, 		// boolean, default: true, not required
+	headers		// object, default: {}, not required
+);
+```
+Full example (create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
 Ajax.get(
 	// required - relative or absolute path
@@ -96,19 +109,19 @@ Ajax.get(
 ```
 
 ### POST request
-Basic syntax - sttandard browser window.XMLHttpRequest object is returned
+Basic syntax - standard browser window.XMLHttpRequest object is returned
 ```
 var xhr = Ajax.post(
 	url,		// string, required
-	data, 		// object to be serialized, not required
-	type, 		// string, not required
-	success, 	// function, not required
-	error, 		// function, not required
-	async, 		// boolean, not required
-	headers		// object, not required
+	data, 		// object (to be serialized), default: {}, not required
+	type, 		// string, default: '' (result wil be evaluated or parsed by Content-Type HTTP header, not required
+	success, 	// function, default: function(){}, not required
+	error, 		// function, default: function(){}, not required
+	async, 		// boolean, default: true, not required
+	headers		// object, default: {}, not required
 );
 ```
-Full example
+Full example (create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
 Ajax.post(
 	// required - relative or absolute path
