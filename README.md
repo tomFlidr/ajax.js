@@ -27,7 +27,7 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 ## Usage
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 ```
-<script src="src/ajax.min.js"></script>
+<script src="https://tomflidr.github.io/ajax.js/src/ajax.min.js"></script>
 ```
 
 ### Universal syntax
@@ -51,7 +51,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 ```
 var xhr = Ajax.load({
 	// required - relative or absolute path
-	url: 'demos/data/books.json',
+	url: 'https://tomflidr.github.io/ajax.js/demos/data/books.json',
 	// not required, get by default
 	method: 'post',
 	// not required, any structured data are automaticly stringified 
@@ -104,7 +104,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 ```
 var xhr = Ajax.get(
 	// required - relative or absolute path
-	'demos/data/books.json',
+	'https://tomflidr.github.io/ajax.js/demos/data/books.json',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
@@ -149,7 +149,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 ```
 var xhr = Ajax.post(
 	// required - relative or absolute path
-	'demos/data/books.xml',
+	'https://tomflidr.github.io/ajax.js/demos/data/books.xml',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
@@ -199,7 +199,7 @@ var jsonpReq.abort();
 #### Full example
 ```
 var jsonpReq = Ajax.get(
-	'http://www.foreingdomain.org/demos/data/books.json',
+	'https://tomflidr.github.io/ajax.js/demos/data/books.json',
 	data: {
   		key1: "value1",
   		key2: [
