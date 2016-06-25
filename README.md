@@ -72,7 +72,7 @@ Basic syntax - standard browser window.XMLHttpRequest object is returned
 var xhr = Ajax.get(
 	url,		// string, required
 	data, 		// object (to be serialized), default: {}, not required
-	type, 		// string, default: '' (result wil be evaluated or parsed by Content-Type HTTP header, not required
+	type, 		// string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
 	success, 	// function, default: function(){}, not required
 	error, 		// function, default: function(){}, not required
 	async, 		// boolean, default: true, not required
@@ -114,7 +114,7 @@ Basic syntax - standard browser window.XMLHttpRequest object is returned
 var xhr = Ajax.post(
 	url,		// string, required
 	data, 		// object (to be serialized), default: {}, not required
-	type, 		// string, default: '' (result wil be evaluated or parsed by Content-Type HTTP header, not required
+	type, 		// string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
 	success, 	// function, default: function(){}, not required
 	error, 		// function, default: function(){}, not required
 	async, 		// boolean, default: true, not required
