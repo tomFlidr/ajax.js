@@ -5,8 +5,8 @@
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
 ## Features
-- very effective, super small javascript AJAX library - **minimized: 6.1 KB**, **gzipped: 2.6 KB**
-- **syntax based on jQuery.ajax();**, no promisses
+- very effective, super small javascript AJAX library - **minimized: 7.8 KB**, **gzipped: 3.1 KB**
+- **syntax based on jQuery.ajax();**, Ajax.load();, Ajax.get();, Ajax.post();, no promisses, returning XmlHttpRequest
 - supported browsers: **MSIE6+, Firefox, Chrome, Safari, Opera and mobile browsers**
 - **highly optimized**
 - supported request methods: 
@@ -19,9 +19,10 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 - posibility to **change any http header before** send **and read any header after** data are loaded or error handled
 - posibility to change async requesting to sync (but it is not recomanded, by default is async)
 - **global handlers for each request** to set up error loging or loading animations:
-  - Ajax.onBeforeLoad(function(xhr){});
-  - Ajax.onLoadSuccess(function(data, statusCode, xhr){});
-  - Ajax.onLoadError(function(responseText, statusCode, xhr){});
+  - Ajax.beforeLoad(function(requestId, url, type, xhr){});
+  - Ajax.onSuccess(function(requestId, url, type, xhr, statusCode, data){});
+  - Ajax.onAbort(function(requestId, url, type, xhr){});
+  - Ajax.onError(function(requestId, url, type, xhr, statusCode, responseText, errorEvent){});
 
 ## Usage
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
@@ -217,25 +218,31 @@ jsonpReqCtrl.abort();
 There is called queue of handlers before each request by window.XMLHttpHeader object and also before each request by JSONP requesting throught \<script\> tags. Also there is called a queue of handlers after each success response for these request types. To add any handler function to these queues is necessary to call static Ajax object functions:
 ```
 // not required - add function into queue called before each request type
-Ajax.onBeforeLoad(function (xhr) {
+Ajax.beforeLoad(function (requestId, url, type, xhr) {
 	document.body.style.cursor = 'wait !important';
 });
+// not required - add function into queue called after request is aborted by programmer
+Ajax.onAbort(function (requestId, url, type, xhr) {
+	document.body.style.cursor = 'default';
+});
 // not required - add function into queue called after each success request type
-Ajax.onLoadSuccess(function (data, statusCode, xhr) {
+Ajax.onSuccess(function (requestId, url, type, xhr, statusCode, data) {
 	document.body.style.cursor = 'default';
 });
 // not required - add function into queue called after each error request type
-Ajax.onLoadError(function (responseText, statusCode, xhr) {
+Ajax.onError(function (requestId, url, type, xhr, statusCode, responseText, errorEvent) {
 	console.log(arguments);
 });
 ```
 All global handlers return Ajax library declaration function, so it's possible to init global handlers like:
 ```
-Ajax.onBeforeLoad(function (xhr) {
+Ajax.beforeLoad(function (requestId, url, type, xhr) {
 	document.body.style.cursor = 'wait !important';
-}).onLoadSuccess(function (data, statusCode, xhr) {
+}).onAbort(function (requestId, url, type, xhr) {
+	document.body.style.cursor = 'wait !important';
+}).onSuccess(function (requestId, url, type, xhr, statusCode, data) {
 	document.body.style.cursor = 'default';
-}).onLoadError(function (responseText, statusCode, xhr) {
+}).onError(function (requestId, url, type, xhr, statusCode, responseText, errorEvent) {
 	console.log(arguments);
 });
 ```
@@ -243,6 +250,7 @@ Ajax.onBeforeLoad(function (xhr) {
 Handlers are stored in arrays placed in:
 ```
 Ajax.handlers.before = [];
+Ajax.handlers.abort = [];
 Ajax.handlers.success = [];
 Ajax.handlers.error = [];
 ```
