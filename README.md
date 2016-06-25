@@ -30,6 +30,21 @@ Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section,
 ```
 
 ### Universal syntax
+#### Basic syntax
+Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
+```
+var xhr = Ajax.load({
+	url: '',		// string, required
+	data: {}, 		// object (to be serialized), default: {}, not required
+	success: function(){},	// function, default: function(){data, statusCode, xhr}, not required
+	type: '', 		// string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
+	error: function(){}, 	// function, default: function(responseText, statusCode, xhr){}, not required
+	headers: {},		// object, default: {}, not required
+	async: true 		// boolean, default: true, not required
+});
+```
+#### Full example
+Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
 Ajax.load({
 	// required - relative or absolute path
@@ -45,14 +60,14 @@ Ajax.load({
 			{"with": ["JSON", "structure"]}
   		]  
 	},
-	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
-	// if not set, data are parsed/evaluated by HTTP header
-	type: 'json',
 	// not required, custom callback for success, data are automaticly 
 	// evaluated or parsed by type param or HTTP header
 	success: function (data, statusCode, xhr) {
 		console.log(arguments);
 	},
+	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+	// if not set, data are parsed/evaluated by HTTP header
+	type: 'json',
 	// not required, custom callback for error
 	error: function (responseText, statusCode, xhr) {
 		console.log(arguments);
@@ -68,16 +83,16 @@ Ajax.load({
 
 ### GET request
 #### Basic syntax
-Standard browser window.XMLHttpRequest object is returned
+Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 ```
 var xhr = Ajax.get(
 	url,		// string, required
 	data, 		// object (to be serialized), default: {}, not required
+	success, 	// function, default: function(data, statusCode, xhr){}, not required
 	type, 		// string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
-	success, 	// function, default: function(){}, not required
-	error, 		// function, default: function(){}, not required
-	async, 		// boolean, default: true, not required
-	headers		// object, default: {}, not required
+	error, 		// function, default: function(responseText, statusCode, xhr){}, not required
+	headers,	// object, default: {}, not required
+	async 		// boolean, default: true, not required
 );
 ```
 #### Full example
@@ -95,14 +110,14 @@ Ajax.get(
 			{"with": ["JSON", "structure"]}
   		]  
 	},
-	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
-	// if not set, data are parsed/evaluated by HTTP header
-	'json',
 	// not required, custom callback for success, data are automaticly 
 	// evaluated or parsed by type param or HTTP header
 	function (data, statusCode, xhr) {
 		console.log(arguments);
 	},
+	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+	// if not set, data are parsed/evaluated by HTTP header
+	'json',
 	// not required, custom callback for error
 	function (responseText, statusCode, xhr) {
 		console.log(arguments);
@@ -112,16 +127,16 @@ Ajax.get(
 
 ### POST request
 #### Basic syntax
-Standard browser window.XMLHttpRequest object is returned
+Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 ```
 var xhr = Ajax.post(
 	url,		// string, required
 	data, 		// object (to be serialized), default: {}, not required
+	success, 	// function, default: function(data, statusCode, xhr){}, not required
 	type, 		// string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
-	success, 	// function, default: function(){}, not required
-	error, 		// function, default: function(){}, not required
-	async, 		// boolean, default: true, not required
-	headers		// object, default: {}, not required
+	error, 		// function, default: function(responseText, statusCode, xhr){}, not required
+	headers,	// object, default: {}, not required
+	async 		// boolean, default: true, not required
 );
 ```
 #### Full example
@@ -139,14 +154,14 @@ Ajax.post(
 			{"with": ["JSON", "structure"]}
   		]  
 	},
-	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
-	// if not set, data are parsed/evaluated by HTTP header
-	'xml',
 	// not required, custom callback for success, data are automaticly 
 	// evaluated or parsed by type param or HTTP header
 	function (data, statusCode, xhr) {
 		console.log(arguments);
 	},
+	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+	// if not set, data are parsed/evaluated by HTTP header
+	'xml',
 	// not required, custom callback for error
 	function (responseText, statusCode, xhr) {
 		console.log(arguments);
