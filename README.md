@@ -36,52 +36,56 @@ Standard browser window.XMLHttpRequest object is returned, for JSONP requests is
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.load({
-     url: '',                // string, required
-     method: '',             // string, default: 'get', not required
-     data: {},               // object (to be serialized), default: {}, not required
-     success: function(){},  // function, default: function(){data, statusCode, xhr}, not required
-     type: '',               // string, default: '' (result is be processed by Content-Type HTTP header), not req.
-     error: function(){},    // function, default: function(responseText, statusCode, xhr){}, not required
-     headers: {},            // object, default: {}, not required
-     async: true             // boolean, default: true, not required
+    url: '',                // string, required
+    method: '',             // string, default: 'get', not required
+    data: {},               // object (to be serialized), default: {}, not required
+    success: function(){},  // function, default: function(){data, statusCode, xhr}, not required
+    type: '',               // string, default: '' (result is be processed by Content-Type HTTP header), not req.
+    error: function(){},    // function, default: function(responseText, statusCode, xhr){}, not required
+    headers: {},            // object, default: {}, not required
+    async: true             // boolean, default: true, not required
 });
 ```
 #### Full example
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
-var xhr = Ajax.load({
-	// required - relative or absolute path
-	url: 'data/json.php',
-	// not required, get by default
-	method: 'post',
-	// not required, any structured data are automaticly stringified 
-	// by JSON.stringify() included in this library
-	data: {
-  		key1: "value1",
-  		key2: [
-  			"anything",
-			{"with": ["JSON", "structure"]}
-  		]  
-	},
-	// not required, custom callback for success, data are automaticly 
-	// evaluated or parsed by type param or HTTP header
-	success: function (data, statusCode, xhr) {
-		console.log(arguments);
-	},
-	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
-	// if not set, data are parsed/evaluated by HTTP header
-	type: 'json',
-	// not required, custom callback for error
-	error: function (responseText, statusCode, xhr) {
-		console.log(arguments);
-	},
-	// not required, true by default
-	async: true,
-	// not required, http headers to overwrite before data are sended, empty object by default
-	headers: {
-		// 'Content-Type': 'multipart/form-data'
-	}
-});
+<div id="result"></div>
+<script type="text/javascript">
+    var xhr = Ajax.load({
+        // required - relative or absolute path
+        url: 'data/json.php',
+        // not required, get by default
+        method: 'post',
+        // not required, any structured data are automaticly stringified 
+        // by JSON.stringify() included in this library
+        data: {
+            key1: "value1",
+            key2: [
+                "anything",
+                    {"with": ["JSON", "structure"]}
+            ]  
+        },
+        // not required, custom callback for success, data are automaticly 
+        // evaluated or parsed by type param or HTTP header
+        success: function (data, statusCode, xhr) {
+            // print data - beautiful indented output with third param
+	    result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
+        },
+        // not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+        // if not set, data are parsed/evaluated by HTTP header
+        type: 'json',
+        // not required, custom callback for error
+        error: function (responseText, statusCode, xhr) {
+            console.log(arguments);
+        },
+        // not required, true by default
+        async: true,
+        // not required, http headers to overwrite before data are sended, empty object by default
+        headers: {
+            // 'Content-Type': 'multipart/form-data'
+        }
+    });
+</script>
 ```
 
 ### GET request
