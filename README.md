@@ -124,7 +124,7 @@ Ajax.post(
 );
 ```
 
-### Global handlers for each request syntax
+### Global handlers for each request
 ```
 // not required - add function into queue called before each request type
 Ajax.onBeforeLoad(function (xhr) {
