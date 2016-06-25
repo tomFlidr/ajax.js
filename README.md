@@ -19,8 +19,8 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 - posibility to **change any http header before** send **and read any header after** data are loaded or error handled
 - posibility to change async requesting to sync (but it is not recomanded, by default is async)
 - **global handlers for each request** to set up error loging or loading animations:
-  - Ajax.onBeforeLoad(function(){xhr});
-  - Ajax.onLoadSuccess(function(){data, statusCode, xhr});
+  - Ajax.onBeforeLoad(function(xhr){});
+  - Ajax.onLoadSuccess(function(data, statusCode, xhr){});
   - Ajax.onLoadError(function(responseText, statusCode, xhr){});
 
 ## Usage
