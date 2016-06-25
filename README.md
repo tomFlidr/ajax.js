@@ -214,7 +214,7 @@ var jsonpReq.abort();
 ```
 var jsonpReq = Ajax.get(
 	'https://tomflidr.github.io/ajax.js/demos/data/books.json',
-	data: {
+	{
   		key1: "value1",
   		key2: [
   			"anything",
