@@ -186,7 +186,10 @@ var jsonpReqCtrl = {
 	abort	// function, local library function to abort request
 };
 ```
-Url propery 
+If you want to manipulate with this kind of request resources, be free to do anything. Read more in source lines in function "_processScriptRequest". But to abort JSONP request - it's just only necessrry to:
+```
+var jsonpReqCtrl.abort();
+```
 
 #### Full example
 ```
