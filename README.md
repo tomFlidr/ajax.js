@@ -169,6 +169,46 @@ Ajax.post(
 );
 ```
 
+### GET JSONP request
+#### Description
+
+For all requests with return type initialized with JSONP value is not created standard instance from browser's window.XMLHttpRequest, but there is created temporary \<script\> tag in \<head\> section of your HTML file to safely include script resource from foreing domain without any broser security Error thrown. You can load data from foreing domains also by using HTTP header "Access-Control-Allow-Origin", but it's not what is necessary to describe here. 
+To be clear - **there is possible with JSONP to use only GET method** - to send and load data from foreing domain. So be careful, there are some [**limitations for url length**](https://support.microsoft.com/cs-cz/kb/208427), because all params are contained in url. 
+
+Before \<script\> tag is appended into \<head\> section, there is initialized **temporary public function** in **window.Ajax.JsonpCallback[X]** to handle incoming script content. Name of this public function is sended to foreing server in GET param named as "&callback=Ajax.JsonpCallback[X]". Ajax library presume, that server always return only content with only this public function call with first argument containing result data. Be careful for server trust, there should be anything else, but it doesn't happend (but it's only a different way how to say - it happends:-). After script is loaded by browser, initialized in \<head\> section, then prepared public function is called. Temporary \<script\> tag is removed, public function is also deleted and your custom callback is called.
+
+##### Returned type
+Ajax.load() and Ajax.get() will not return any xhr object if you use JSONP data type to return. There is returned javascript object with three properties:
+```
+var jsonpReqCtrl = {
+	url	// string, complete script tag str url
+	script	// HTMLScriptElement, stript tag object appended into \<head\> section
+	abort	// function, local library function to abort request
+};
+```
+Url propery 
+
+#### Full example
+```
+var jsonpReqCtrl = Ajax.get(
+	'http://www.foreingdomain.org/demos/data/books.json',
+	data: {
+  		key1: "value1",
+  		key2: [
+  			"anything",
+			{"with": ["JSON", "structure"]}
+  		]  
+	},
+	function (data, statusCode, xhr) {
+		console.log(arguments);
+	},
+	'jsonp'
+);
+// to abort request any time - use:
+jsonpReqCtrl.abort();
+// jsonpReqCtrl.abort(); removes \<script\>tag from \< head\>section, unset global handler 
+```
+
 ### Global handlers
 #### Add global handler
 There is called queue of handlers before each request by window.XMLHttpHeader object and also before each request by JSONP requesting throught \<script\> tags. Also there is called a queue of handlers after each success response for these request types. To add any handler function to these queues is necessary to call static Ajax object functions:
