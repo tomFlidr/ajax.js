@@ -53,7 +53,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 <script type="text/javascript">
     var xhr = Ajax.load({
         // required - relative or absolute path
-        url: 'data/json.php',
+        url: 'demos/data/json.php',
         // not required, get by default
         method: 'post',
         // not required, any structured data are automaticly stringified 
@@ -110,10 +110,10 @@ Create any *.html file in base project directory and paste this code into \<scri
 <script type="text/javascript">
     var xhr = Ajax.get(
         // required - relative or absolute path
-        'data/json.php',
+        'demos/data/json.php',
         // not required, any structured data are automaticly stringified 
         // by JSON.stringify() included in this library
-        data: {
+        {
             key1: "value1",
             key2: [
                 "anything",
@@ -159,10 +159,10 @@ Create any *.html file in base project directory and paste this code into \<scri
 <script type="text/javascript">
     var xhr = Ajax.post(
         // required - relative or absolute path
-        'data/xml.php',
+        'demos/data/xml.php',
         // not required, any structured data are automaticly stringified 
         // by JSON.stringify() included in this library
-        data: {
+        {
             key1: "value1",
             key2: [
                 "anything",
