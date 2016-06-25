@@ -34,6 +34,7 @@ Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section,
 #### Basic syntax
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 ```
+// into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.load({
      url: '',                // string, required
      data: {},               // object (to be serialized), default: {}, not required
@@ -47,7 +48,7 @@ var xhr = Ajax.load({
 #### Full example
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
-Ajax.load({
+var xhr = Ajax.load({
 	// required - relative or absolute path
 	url: 'demos/data/books.json',
 	// not required, get by default
@@ -86,6 +87,7 @@ Ajax.load({
 #### Basic syntax
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 ```
+// into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.get(
 	url,		// string, required
 	data, 		// object (to be serialized), default: {}, not required
@@ -99,7 +101,7 @@ var xhr = Ajax.get(
 #### Full example
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
-Ajax.get(
+var xhr = Ajax.get(
 	// required - relative or absolute path
 	'demos/data/books.json',
 	// not required, any structured data are automaticly stringified 
@@ -130,6 +132,7 @@ Ajax.get(
 #### Basic syntax
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 ```
+// into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.post(
 	url,		// string, required
 	data, 		// object (to be serialized), default: {}, not required
@@ -143,7 +146,7 @@ var xhr = Ajax.post(
 #### Full example
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
-Ajax.post(
+var xhr = Ajax.post(
 	// required - relative or absolute path
 	'demos/data/books.xml',
 	// not required, any structured data are automaticly stringified 
@@ -178,7 +181,7 @@ To be clear - **there is possible with JSONP to use only GET method** - to send 
 
 Before \<script\> tag is appended into \<head\> section, there is initialized **temporary public function** in **window.Ajax.JsonpCallback[X]** to handle incoming script content. Name of this public function is sended to foreing server in GET param named as "&callback=Ajax.JsonpCallback[X]". Ajax library presume, that server always return only content with only this public function call with first argument containing result data. Be careful for server trust, there should be anything else, but it doesn't happend (but it's only a different way how to say - it happends:-). After script is loaded by browser, initialized in \<head\> section, then prepared public function is called. Temporary \<script\> tag is removed, public function is also deleted and your custom callback is called.
 
-##### Returned type
+##### Return type
 Ajax.load() and Ajax.get() will not return any xhr object if you use JSONP data type to return. There is returned javascript object with three properties:
 ```
 var jsonpReqCtrl = {
