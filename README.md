@@ -51,7 +51,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 ```
 var xhr = Ajax.load({
 	// required - relative or absolute path
-	url: 'data/books.json',
+	url: 'data/json.php',
 	// not required, get by default
 	method: 'post',
 	// not required, any structured data are automaticly stringified 
@@ -104,7 +104,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 ```
 var xhr = Ajax.get(
 	// required - relative or absolute path
-	'data/books.json',
+	'data/json.php',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
@@ -149,7 +149,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 ```
 var xhr = Ajax.post(
 	// required - relative or absolute path
-	'data/books.xml',
+	'data/xml.php',
 	// not required, any structured data are automaticly stringified 
 	// by JSON.stringify() included in this library
 	data: {
@@ -199,7 +199,7 @@ var jsonpReq.abort();
 #### Full example
 ```
 var jsonpReq = Ajax.get(
-	'data/books.json',
+	'https://tomflidr.github.io/ajax.js/demos/data/books.json',
 	data: {
   		key1: "value1",
   		key2: [
