@@ -69,7 +69,7 @@ Create any *.html file in base project directory and paste this code into \<scri
         // evaluated or parsed by type param or HTTP header
         success: function (data, statusCode, xhr) {
             // print data - beautiful indented output with third param
-	    result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
+            result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
         },
         // not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
         // if not set, data are parsed/evaluated by HTTP header
@@ -106,31 +106,35 @@ var xhr = Ajax.get(
 #### Full example
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
-var xhr = Ajax.get(
-	// required - relative or absolute path
-	'data/json.php',
-	// not required, any structured data are automaticly stringified 
-	// by JSON.stringify() included in this library
-	data: {
-  		key1: "value1",
-  		key2: [
-  			"anything",
-			{"with": ["JSON", "structure"]}
-  		]  
-	},
-	// not required, custom callback for success, data are automaticly 
-	// evaluated or parsed by type param or HTTP header
-	function (data, statusCode, xhr) {
-		console.log(arguments);
-	},
-	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
-	// if not set, data are parsed/evaluated by HTTP header
-	'json',
-	// not required, custom callback for error
-	function (responseText, statusCode, xhr) {
-		console.log(arguments);
-	}
-);
+<div id="result"></div>
+<script type="text/javascript">
+    var xhr = Ajax.get(
+        // required - relative or absolute path
+        'data/json.php',
+        // not required, any structured data are automaticly stringified 
+        // by JSON.stringify() included in this library
+        data: {
+            key1: "value1",
+            key2: [
+                "anything",
+                {"with": ["JSON", "structure"]}
+            ]  
+        },
+        // not required, custom callback for success, data are automaticly 
+        // evaluated or parsed by type param or HTTP header
+        function (data, statusCode, xhr) {
+            // print data - beautiful indented output with third param
+            result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
+        },
+        // not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+        // if not set, data are parsed/evaluated by HTTP header
+        'json',
+        // not required, custom callback for error
+        function (responseText, statusCode, xhr) {
+            console.log(arguments);
+        }
+    );
+</script>
 ```
 
 ### POST request
@@ -151,31 +155,35 @@ var xhr = Ajax.post(
 #### Full example
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
-var xhr = Ajax.post(
-	// required - relative or absolute path
-	'data/xml.php',
-	// not required, any structured data are automaticly stringified 
-	// by JSON.stringify() included in this library
-	data: {
-  		key1: "value1",
-  		key2: [
-  			"anything",
-			{"with": ["JSON", "structure"]}
-  		]  
-	},
-	// not required, custom callback for success, data are automaticly 
-	// evaluated or parsed by type param or HTTP header
-	function (data, statusCode, xhr) {
-		console.log(arguments);
-	},
-	// not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
-	// if not set, data are parsed/evaluated by HTTP header
-	'xml',
-	// not required, custom callback for error
-	function (responseText, statusCode, xhr) {
-		console.log(arguments);
-	}
-);
+<div id="result"></div>
+<script type="text/javascript">
+    var xhr = Ajax.post(
+        // required - relative or absolute path
+        'data/xml.php',
+        // not required, any structured data are automaticly stringified 
+        // by JSON.stringify() included in this library
+        data: {
+            key1: "value1",
+            key2: [
+                "anything",
+                {"with": ["JSON", "structure"]}
+            ]  
+        },
+        // not required, custom callback for success, data are automaticly 
+        // evaluated or parsed by type param or HTTP header
+        function (data, statusCode, xhr) {
+            // print data - beautiful indented output with third param
+            result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
+        },
+        // not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
+        // if not set, data are parsed/evaluated by HTTP header
+        'xml',
+        // not required, custom callback for error
+        function (responseText, statusCode, xhr) {
+            console.log(arguments);
+        }
+    );
+</script>
 ```
 
 ### GET JSONP request
