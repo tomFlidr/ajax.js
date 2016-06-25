@@ -184,7 +184,7 @@ Before \<script\> tag is appended into \<head\> section, there is initialized **
 ##### Return type
 Ajax.load() and Ajax.get() will not return any xhr object if you use JSONP data type to return. There is returned javascript object with three properties:
 ```
-var jsonpReqCtrl = {
+var jsonpReq = {
 	url	// string, complete script tag str url
 	script	// HTMLScriptElement, stript tag object appended into \<head\> section
 	abort	// function, local library function to abort request
@@ -192,12 +192,12 @@ var jsonpReqCtrl = {
 ```
 If you want to manipulate with this kind of request resources, be free to do anything. Read more in source lines in function "_processScriptRequest". But to abort JSONP request - it's just only necessrry to:
 ```
-var jsonpReqCtrl.abort();
+var jsonpReq.abort();
 ```
 
 #### Full example
 ```
-var jsonpReqCtrl = Ajax.get(
+var jsonpReq = Ajax.get(
 	'http://www.foreingdomain.org/demos/data/books.json',
 	data: {
   		key1: "value1",
@@ -212,7 +212,7 @@ var jsonpReqCtrl = Ajax.get(
 	'jsonp'
 );
 // to abort request any time - use:
-jsonpReqCtrl.abort();
+jsonpReq.abort();
 // jsonpReqCtrl.abort(); removes \<script\>tag from \< head\>section, unset global handler 
 ```
 
