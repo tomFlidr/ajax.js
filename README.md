@@ -172,8 +172,10 @@ Create any *.html file in base project directory and paste this code into \<scri
         // not required, custom callback for success, data are automaticly 
         // evaluated or parsed by type param or HTTP header
         function (data, statusCode, xhr) {
-            // print data - beautiful indented output with third param
-            result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
+            // print xml root element object as string
+            result.innerHTML = "<pre><code>Result data:\n"
+                + data.documentElement.outerHTML.replace(/\</g, '&lt;').replace(/\>/g, '&gt;') 
+                + "</code></pre>";
         },
         // not required, possible values: JSON, JSONP, XML, HTML, TEXT, 
         // if not set, data are parsed/evaluated by HTTP header
