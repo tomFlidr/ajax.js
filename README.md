@@ -57,7 +57,7 @@ var xhr = Ajax.load({
 ```
 #### Full Example
 
-**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html)
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
@@ -121,7 +121,7 @@ var xhr = Ajax.get(
 ```
 #### Full Example
 
-**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/01-basic-get.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/01-basic-get.html)
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
@@ -175,8 +175,11 @@ var xhr = Ajax.post(
     async    // boolean, default: true, not required
 );
 ```
+
 #### Full Example
+
 Create any *.html file in base project directory and paste this code into \<script\> tag:
+
 ```
 <div id="result"></div>
 <script type="text/javascript">
@@ -212,6 +215,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 ```
 
 ### GET JSONP Request
+
 #### Description
 
 For all requests with return type initialized with JSONP value is not created standard instance from browser's window.XMLHttpRequest, but there is created temporary \<script\> tag in \<head\> section of your HTML file to safely include script resource from foreing domain without any broser security Error thrown. You can load data from foreing domains also by using HTTP header "Access-Control-Allow-Origin", but it's not what is necessary to describe here. 
@@ -230,14 +234,16 @@ var jsonpReq = {
     abort // function, library function to abort JSONP request
 };
 ```
+
 If you want to manipulate with this kind of request resources, be free to do anything. Read more in source lines in function "_processScriptRequest". But to abort JSONP request - it's just only necessrry to:
+
 ```
 var jsonpReq.abort();
 ```
 
 #### Full Example
 
-**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html)
 
 ```
 var jsonpReq = Ajax.get(
@@ -267,7 +273,7 @@ There is called queue of handlers before each request by window.XMLHttpHeader ob
 
 #### Full Example
 
-**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
 
 ```
 // not required - add function into queue called before each request type
