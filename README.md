@@ -5,6 +5,7 @@
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
 ## Features
+
 - very effective, super small javascript AJAX library - all in 460 lines, **minimized: 7.968 KB**, **gzipped: 3.176 KB**
 - **syntax based on jQuery.ajax();**, Ajax.load();, Ajax.get();, Ajax.post();, no promisses, returning XmlHttpRequest
 - supported browsers: **MSIE6+, Firefox, Chrome, Safari, Opera and mobile browsers**
@@ -25,14 +26,19 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
   - Ajax.onError(function(responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type){});
 
 ## Usage
+
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
+
 ```
 <script src="https://tomflidr.github.io/ajax.js/src/ajax.min.js"></script>
 ```
 
-### Universal syntax
-#### Basic syntax
+### Universal Syntax
+
+#### Basic Syntax
+
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
+
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.load({
@@ -49,11 +55,12 @@ var xhr = Ajax.load({
     async: true           // boolean, not required, default: true
 });
 ```
-#### Full example
+#### Full Example
 
-[VIEW DEMO](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html)
+**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html)
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
+
 ```
 <div id="result"></div>
 <script type="text/javascript">
@@ -94,9 +101,12 @@ Create any *.html file in base project directory and paste this code into \<scri
 </script>
 ```
 
-### GET request
-#### Basic syntax
+### GET Request
+
+#### Basic Syntax
+
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
+
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.get(
@@ -109,8 +119,12 @@ var xhr = Ajax.get(
     async    // boolean, default: true, not required
 );
 ```
-#### Full example
+#### Full Example
+
+**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/01-basic-get.html)
+
 Create any *.html file in base project directory and paste this code into \<script\> tag:
+
 ```
 <div id="result"></div>
 <script type="text/javascript">
@@ -143,9 +157,12 @@ Create any *.html file in base project directory and paste this code into \<scri
 </script>
 ```
 
-### POST request
-#### Basic syntax
+### POST Request
+
+#### Basic Syntax
+
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
+
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.post(
@@ -158,7 +175,7 @@ var xhr = Ajax.post(
     async    // boolean, default: true, not required
 );
 ```
-#### Full example
+#### Full Example
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
 <div id="result"></div>
@@ -194,7 +211,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 </script>
 ```
 
-### GET JSONP request
+### GET JSONP Request
 #### Description
 
 For all requests with return type initialized with JSONP value is not created standard instance from browser's window.XMLHttpRequest, but there is created temporary \<script\> tag in \<head\> section of your HTML file to safely include script resource from foreing domain without any broser security Error thrown. You can load data from foreing domains also by using HTTP header "Access-Control-Allow-Origin", but it's not what is necessary to describe here. 
@@ -202,8 +219,10 @@ To be clear - **there is possible with JSONP to use only GET method** - to send 
 
 Before \<script\> tag is appended into \<head\> section, there is initialized **temporary public function** in **window.Ajax.JsonpCallback[X]** to handle incoming script content. Name of this public function is sended to foreing server in GET param named as "&callback=Ajax.JsonpCallback[X]". Ajax library presume, that server always return only content with only this public function call with first argument containing result data. Be careful for server trust, there should be anything else, but it doesn't happend (but it's only a different way how to say - it happends:-). After script is loaded by browser, initialized in \<head\> section, then prepared public function is called. Temporary \<script\> tag is removed, public function is also deleted and your custom callback is called.
 
-##### Return type
+##### Return Type
+
 Ajax.load() and Ajax.get() will not return any xhr object if you use JSONP data type to return. There is returned javascript object with three properties:
+
 ```
 var jsonpReq = {
     url   // string, complete script tag str url
@@ -216,7 +235,10 @@ If you want to manipulate with this kind of request resources, be free to do any
 var jsonpReq.abort();
 ```
 
-#### Full example
+#### Full Example
+
+**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html)
+
 ```
 var jsonpReq = Ajax.get(
     'https://tomflidr.github.io/ajax.js/demos/data/books.json',
@@ -237,9 +259,16 @@ jsonpReq.abort();
 // jsonpReqCtrl.abort(); removes \<script\>tag from \< head\>section, unset global handler 
 ```
 
-### Global handlers
-#### Add global handler
-There is called queue of handlers before each request by window.XMLHttpHeader object and also before each request by JSONP requesting throught \<script\> tags. Also there is called a queue of handlers after each success response for these request types. To add any handler function to these queues is necessary to call static Ajax object functions:
+### Global Handlers
+
+#### Add Global Handler
+
+There is called queue of handlers before each request by window.XMLHttpHeader object and also before each request by JSONP requesting throught \<script\> tags. Also there is called a queue of handlers after each success response for these request types. To add any handler function, see full example bellow.
+
+#### Full Example
+
+**[VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
+
 ```
 // not required - add function into queue called before each request type
 Ajax.beforeLoad(function (xhr, requestId, url, type) {
@@ -295,23 +324,30 @@ Ajax.beforeLoad(function (xhr, requestId, url, type) {
     console.log(arguments);
 });
 ```
-#### Remove global handler
+#### Remove Global Handler
+
 Handlers are stored in arrays placed in:
+
 ```
 Ajax.handlers.before = [];
 Ajax.handlers.abort = [];
 Ajax.handlers.success = [];
 Ajax.handlers.error = [];
 ```
+
 Feel free to use them as standard arrays with functions to add or remove any handler anytime. There are no any static functions on Ajax object to remove handlers, so it's necessary to do it (if you want) by:
+
 ```
 delete Ajax.handlers.before[yourDesireIndex];
 ```
 
-### Public static properties
+### Public Static Properties
+
 #### Ajax.defaultHeaders
+
 HTTP default headers sended in each request by XMLHttpRequest, not in JSONP requesting.
 Feel free to change it.
+
 ```
 Ajax.defaultHeaders = {
     'X-Requested-With': 'XmlHttpRequest',
@@ -319,9 +355,11 @@ Ajax.defaultHeaders = {
 };
 ```
 #### Ajax.jsonpCallbackParam
+
 JSONP requesting GET param name how to say name of public callback function to server.
 Specific name of the function is generated by library. As default library uses name 'callback'.
 Most of JSON APIs uses standard naming convention - 'callback' value, but sometimes should be handy to change it.
+
 ```
 Ajax.jsonpCallbackParam = 'callback';
 ```
