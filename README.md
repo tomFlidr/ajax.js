@@ -57,7 +57,7 @@ var xhr = Ajax.load({
 ```
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html){:target="_blank"}
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html)
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
@@ -121,7 +121,7 @@ var xhr = Ajax.get(
 ```
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/01-basic-get.html){:target="_blank"}
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/01-basic-get.html)
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
@@ -243,7 +243,7 @@ var jsonpReq.abort();
 
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html){:target="_blank"}
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html)
 
 ```
 var jsonpReq = Ajax.get(
@@ -273,7 +273,7 @@ There is called queue of handlers before each request by window.XMLHttpHeader ob
 
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html){:target="_blank"}
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
 
 ```
 // not required - add function into queue called before each request type
