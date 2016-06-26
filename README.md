@@ -29,7 +29,7 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 
-```
+```html
 <script src="https://tomflidr.github.io/ajax.js/src/ajax.min.js"></script>
 ```
 
@@ -39,9 +39,7 @@ Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section,
 
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 
-<iframe src="http://www.seznam.cz/" width="400" height="200"></iframe>
-
-```
+```javascript
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.load({
     url: '',              // string, required
@@ -63,7 +61,7 @@ var xhr = Ajax.load({
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
-```
+```html
 <div id="result"></div>
 <script type="text/javascript">
     var xhr = Ajax.load({
@@ -109,7 +107,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 
-```
+```javascript
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.get(
     url,     // string, required
@@ -127,7 +125,7 @@ var xhr = Ajax.get(
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
-```
+```html
 <div id="result"></div>
 <script type="text/javascript">
     var xhr = Ajax.get(
@@ -165,7 +163,7 @@ Create any *.html file in base project directory and paste this code into \<scri
 
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 
-```
+```javascript
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.post(
     url,     // string, required
@@ -182,7 +180,7 @@ var xhr = Ajax.post(
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
-```
+```html
 <div id="result"></div>
 <script type="text/javascript">
     var xhr = Ajax.post(
@@ -229,7 +227,7 @@ Before \<script\> tag is appended into \<head\> section, there is initialized **
 
 Ajax.load() and Ajax.get() will not return any xhr object if you use JSONP data type to return. There is returned javascript object with three properties:
 
-```
+```javascript
 var jsonpReq = {
     url   // string, complete script tag str url
     id    // number, request id
@@ -239,7 +237,7 @@ var jsonpReq = {
 
 If you want to manipulate with this kind of request resources, be free to do anything. Read more in source lines in function "_processScriptRequest". But to abort JSONP request - it's just only necessrry to:
 
-```
+```javascript
 var jsonpReq.abort();
 ```
 
@@ -247,7 +245,7 @@ var jsonpReq.abort();
 
 [**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html)
 
-```
+```javascript
 var jsonpReq = Ajax.get(
     'https://tomflidr.github.io/ajax.js/demos/data/books.json',
     {
@@ -277,7 +275,7 @@ There is called queue of handlers before each request by window.XMLHttpHeader ob
 
 [**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
 
-```
+```javascript
 // not required - add function into queue called before each request type
 Ajax.beforeLoad(function (xhr, requestId, url, type) {
     // xhr - XMLHttpRequest | ActiveXObject | null - browser request obj. or null before JSONP request
@@ -323,7 +321,7 @@ Ajax.onError(function (responseText, statusCode, xhr, errorObject, errorEvent, r
 
 All global handlers return Ajax library declaration function, so it's possible to init global handlers like:
 
-```
+```javascript
 Ajax.beforeLoad(function (xhr, requestId, url, type) {
     document.body.style.cursor = 'wait !important';
 }).onAbort(function (xhr, requestId, url, type) {
@@ -339,7 +337,7 @@ Ajax.beforeLoad(function (xhr, requestId, url, type) {
 
 Handlers are stored in arrays placed in:
 
-```
+```javascript
 Ajax.handlers.before = [];
 Ajax.handlers.abort = [];
 Ajax.handlers.success = [];
@@ -348,7 +346,7 @@ Ajax.handlers.error = [];
 
 Feel free to use them as standard arrays with functions to add or remove any handler anytime. There are no any static functions on Ajax object to remove handlers, so it's necessary to do it (if you want) by:
 
-```
+```javascript
 delete Ajax.handlers.before[yourDesireIndex];
 ```
 
@@ -359,7 +357,7 @@ delete Ajax.handlers.before[yourDesireIndex];
 HTTP default headers sended in each request by XMLHttpRequest, not in JSONP requesting.
 Feel free to change it.
 
-```
+```javascript
 Ajax.defaultHeaders = {
     'X-Requested-With': 'XmlHttpRequest',
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -372,6 +370,6 @@ JSONP requesting GET param name how to say name of public callback function to s
 Specific name of the function is generated by library. As default library uses name 'callback'.
 Most of JSON APIs uses standard naming convention - 'callback' value, but sometimes should be handy to change it.
 
-```
+```javascript
 Ajax.jsonpCallbackParam = 'callback';
 ```
