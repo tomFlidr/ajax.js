@@ -237,31 +237,51 @@ There is called queue of handlers before each request by window.XMLHttpHeader ob
 ```
 // not required - add function into queue called before each request type
 Ajax.beforeLoad(function (xhr, requestId, url, type) {
+    // xhr - XMLHttpRequest | ActiveXObject | null - browser request obj. or null before JSONP request
+    // requestId - number - request id
+    // url - string - full requested url
+    // type - string - initialized response type or empty string
     document.body.style.cursor = 'wait !important';
 });
+
 // not required - add function into queue called after request is aborted by programmer
 Ajax.onAbort(function (xhr, requestId, url, type) {
+    // xhr - XMLHttpRequest | ActiveXObject | null - browser request obj. or null before JSONP request
+    // requestId - number - request id
+    // url - string - full requested url
+    // type - string - initialized response type or empty string
     document.body.style.cursor = 'default';
 });
+
 // not required - add function into queue called after each success request type
 Ajax.onSuccess(function (data, statusCode, xhr, requestId, url, type) {
+    // data - mixed - evaluated or parsed result data, shoud be js object, array, xml document or text
+    // statusCode - number - http status code
+    // xhr - XMLHttpRequest | ActiveXObject | null - browser request obj. or null before JSONP request
+    // requestId - number - request id
+    // url - string - full requested url
+    // type - string - initialized response type or empty string
     document.body.style.cursor = 'default';
 });
+
 // not required - add function into queue called after each error request type
 Ajax.onError(function (responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type) {
+    // responseText - string - raw response text string or empty string
+    // statusCode - number - http status code
+    // xhr - XMLHttpRequest | ActiveXObject | null - browser request obj. or null before JSONP request
+    // errorObject - javascript error - should be trown and catched by json evaluation or xml parsing
+    // errorEvent - javascript error event - should be created by JSONP request type loading error
+    // requestId - number - request id
+    // url - string - full requested url
+    // type - string - initialized response type or empty string
     console.log(arguments);
 });
 ```
 All global handlers return Ajax library declaration function, so it's possible to init global handlers like:
 ```
 Ajax.beforeLoad(function (xhr, requestId, url, type) {
-    // xhr - XMLHttpRequest | ActiveXObject | null - classic browser request object or null before JSONP request type
-    // requestId - number - request id
-    // url - string - full requested url
-    // type - string - initialized response type or empty string
     document.body.style.cursor = 'wait !important';
 }).onAbort(function (xhr, requestId, url, type) {
-    // xhr - XMLHttpRequest | ActiveXObject | null - classic browser request object or null before JSONP request type
     document.body.style.cursor = 'wait !important';
 }).onSuccess(function (data, statusCode, xhr, requestId, url, type) {
     document.body.style.cursor = 'default';
