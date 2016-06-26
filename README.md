@@ -39,6 +39,8 @@ Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section,
 
 Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
 
+<iframe src="http://www.seznam.cz/" width="400" height="200"></iframe>
+
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.load({
