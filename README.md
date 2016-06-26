@@ -19,10 +19,10 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 - posibility to **change any http header before** send **and read any header after** data are loaded or error handled
 - posibility to change async requesting to sync (but it is not recomanded, by default is async)
 - **global handlers for each request** to set up error loging or loading animations:
-  - Ajax.beforeLoad(function(requestId, url, type, xhr){});
-  - Ajax.onSuccess(function(requestId, url, type, xhr, statusCode, data){});
-  - Ajax.onAbort(function(requestId, url, type, xhr){});
-  - Ajax.onError(function(requestId, url, type, xhr, statusCode, responseText, errorEvent){});
+  - Ajax.beforeLoad(function(xhr, requestId, url, typ){});
+  - Ajax.onSuccess(function(xhr, requestId, url, type){});
+  - Ajax.onAbort(function(data, statusCode, xhr, requestId, url, type){});
+  - Ajax.onError(function(responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type){});
 
 ## Usage
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
@@ -94,13 +94,13 @@ Standard browser window.XMLHttpRequest object is returned, for JSONP requests is
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.get(
-	url,		// string, required
-	data, 		// object (to be serialized), default: {}, not required
-	success, 	// function, default: function(data, statusCode, xhr){}, not required
-	type, 		// string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
-	error, 		// function, default: function(responseText, statusCode, xhr){}, not required
-	headers,	// object, default: {}, not required
-	async 		// boolean, default: true, not required
+    url,       // string, required
+    data,      // object (to be serialized), default: {}, not required
+    success,   // function, default: function(data, statusCode, xhr){}, not required
+    type,      // string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
+    error,     // function, default: function(responseText, statusCode, xhr){}, not required
+    headers,   // object, default: {}, not required
+    async      // boolean, default: true, not required
 );
 ```
 #### Full example
@@ -143,13 +143,13 @@ Standard browser window.XMLHttpRequest object is returned, for JSONP requests is
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.post(
-	url,		// string, required
-	data, 		// object (to be serialized), default: {}, not required
-	success, 	// function, default: function(data, statusCode, xhr){}, not required
-	type, 		// string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
-	error, 		// function, default: function(responseText, statusCode, xhr){}, not required
-	headers,	// object, default: {}, not required
-	async 		// boolean, default: true, not required
+    url,       // string, required
+    data,      // object (to be serialized), default: {}, not required
+    success,   // function, default: function(data, statusCode, xhr){}, not required
+    type,      // string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
+    error,     // function, default: function(responseText, statusCode, xhr){}, not required
+    headers,   // object, default: {}, not required
+    async      // boolean, default: true, not required
 );
 ```
 #### Full example
@@ -200,9 +200,9 @@ Before \<script\> tag is appended into \<head\> section, there is initialized **
 Ajax.load() and Ajax.get() will not return any xhr object if you use JSONP data type to return. There is returned javascript object with three properties:
 ```
 var jsonpReq = {
-	url	// string, complete script tag str url
-	script	// HTMLScriptElement, stript tag object appended into \<head\> section
-	abort	// function, local library function to abort request
+    url       // string, complete script tag str url
+    script    // HTMLScriptElement, stript tag object appended into \<head\> section
+    abort     // function, local library function to abort request
 };
 ```
 If you want to manipulate with this kind of request resources, be free to do anything. Read more in source lines in function "_processScriptRequest". But to abort JSONP request - it's just only necessrry to:
@@ -213,18 +213,18 @@ var jsonpReq.abort();
 #### Full example
 ```
 var jsonpReq = Ajax.get(
-	'https://tomflidr.github.io/ajax.js/demos/data/books.json',
-	{
-  		key1: "value1",
-  		key2: [
-  			"anything",
-			{"with": ["JSON", "structure"]}
-  		]  
-	},
-	function (data, statusCode, xhr) {
-		console.log(arguments);
-	},
-	'jsonp'
+    'https://tomflidr.github.io/ajax.js/demos/data/books.json',
+    {
+        key1: "value1",
+        key2: [
+            "anything",
+            {"with": ["JSON", "structure"]}
+        ]  
+    },
+    function (data, statusCode, xhr) {
+        console.log(arguments);
+    },
+    'jsonp'
 );
 // to abort request any time - use:
 jsonpReq.abort();
@@ -236,32 +236,37 @@ jsonpReq.abort();
 There is called queue of handlers before each request by window.XMLHttpHeader object and also before each request by JSONP requesting throught \<script\> tags. Also there is called a queue of handlers after each success response for these request types. To add any handler function to these queues is necessary to call static Ajax object functions:
 ```
 // not required - add function into queue called before each request type
-Ajax.beforeLoad(function (requestId, url, type, xhr) {
-	document.body.style.cursor = 'wait !important';
+Ajax.beforeLoad(function (xhr, requestId, url, type) {
+    document.body.style.cursor = 'wait !important';
 });
 // not required - add function into queue called after request is aborted by programmer
-Ajax.onAbort(function (requestId, url, type, xhr) {
-	document.body.style.cursor = 'default';
+Ajax.onAbort(function (xhr, requestId, url, type) {
+    document.body.style.cursor = 'default';
 });
 // not required - add function into queue called after each success request type
-Ajax.onSuccess(function (requestId, url, type, xhr, statusCode, data) {
-	document.body.style.cursor = 'default';
+Ajax.onSuccess(function (data, statusCode, xhr, requestId, url, type) {
+    document.body.style.cursor = 'default';
 });
 // not required - add function into queue called after each error request type
-Ajax.onError(function (requestId, url, type, xhr, statusCode, responseText, errorEvent) {
-	console.log(arguments);
+Ajax.onError(function (responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type) {
+    console.log(arguments);
 });
 ```
 All global handlers return Ajax library declaration function, so it's possible to init global handlers like:
 ```
-Ajax.beforeLoad(function (requestId, url, type, xhr) {
-	document.body.style.cursor = 'wait !important';
-}).onAbort(function (requestId, url, type, xhr) {
-	document.body.style.cursor = 'wait !important';
-}).onSuccess(function (requestId, url, type, xhr, statusCode, data) {
-	document.body.style.cursor = 'default';
-}).onError(function (requestId, url, type, xhr, statusCode, responseText, errorEvent) {
-	console.log(arguments);
+Ajax.beforeLoad(function (xhr, requestId, url, type) {
+    // xhr - XMLHttpRequest | ActiveXObject | null - classic browser request object or null before JSONP request type
+    // requestId - number - request id
+    // url - string - full requested url
+    // type - string - initialized response type or empty string
+    document.body.style.cursor = 'wait !important';
+}).onAbort(function (xhr, requestId, url, type) {
+    // xhr - XMLHttpRequest | ActiveXObject | null - classic browser request object or null before JSONP request type
+    document.body.style.cursor = 'wait !important';
+}).onSuccess(function (data, statusCode, xhr, requestId, url, type) {
+    document.body.style.cursor = 'default';
+}).onError(function (responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type) {
+    console.log(arguments);
 });
 ```
 #### Remove global handler
@@ -283,8 +288,8 @@ HTTP default headers sended in each request by XMLHttpRequest, not in JSONP requ
 Feel free to change it.
 ```
 Ajax.defaultHeaders = {
-	'X-Requested-With': 'XmlHttpRequest',
-	'Content-Type': 'application/x-www-form-urlencoded'
+    'X-Requested-With': 'XmlHttpRequest',
+    'Content-Type': 'application/x-www-form-urlencoded'
 };
 ```
 #### Ajax.jsonpCallbackParam
