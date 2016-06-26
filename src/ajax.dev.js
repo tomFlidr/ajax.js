@@ -5,19 +5,22 @@
  * @version: 1.0
  * @date: 2015-10-11
  * @usage:
-Ajax.load({
+var xhr = Ajax.load({
 	url: 'https://github.com/tomFlidr',
 	method: 'post',
-	type: 'json',
 	data: { anything: ["to", "serialize"] },
 	success: function (data, statusCode, xhr) {},
-	error: function (responseText, statusCode, xhr) {}
+	type: 'json',
+	error: function (responseText, statusCode, xhr) {},
+	headers: {},
+	async: true
 });
 */
-Ajax = function () {};
+Ajax = function Ajax() {};
 Ajax.handlers = {
 	'before': [],
 	'success': [],
+	'abort': [],
 	'error': []
 };
 Ajax.defaultHeaders = {
@@ -25,16 +28,23 @@ Ajax.defaultHeaders = {
 	'Content-Type': 'application/x-www-form-urlencoded'
 };
 Ajax.jsonpCallbackParam = 'callback';
-Ajax._scriptCallbackTmpl = 'AjaxJsonpCallback_';
-Ajax._scriptCallbackCounter = 0;
-Ajax.onBeforeLoad = function (fn) {
+Ajax._scriptCallbackTmpl = 'JsonpCallback';
+Ajax._requestCounter = 0;
+Ajax.beforeLoad = function (fn) {
 	Ajax.handlers.before.push(fn);
+	return Ajax;
 };
-Ajax.onLoadSuccess = function (fn) {
+Ajax.onSuccess = function (fn) {
 	Ajax.handlers.success.push(fn);
+	return Ajax;
 };
-Ajax.onLoadError = function (fn) {
+Ajax.onAbort = function (fn) {
+	Ajax.handlers.abort.push(fn);
+	return Ajax;
+};
+Ajax.onError = function (fn) {
 	Ajax.handlers.error.push(fn);
+	return Ajax;
 };
 Ajax.get = function () {
 	var ajax = new Ajax();
@@ -46,139 +56,210 @@ Ajax.post = function () {
 };
 Ajax.load = function (cfg) {
 	var ajax = new Ajax();
-	cfg.async = typeof(cfg.async) == 'undefined' ? !0 : cfg.async;
 	return ajax._init(
-		cfg.url, 
-		cfg.data, 
-		cfg.type, 
-		cfg.success, 
-		cfg.error, 
-		cfg.async
+		cfg.url, cfg.data, cfg.success, cfg.type, cfg.error, cfg.headers, cfg.async
 	)._processRequest(cfg.method);
 };
 Ajax.prototype = {
-	_init: function (url, data, type, success, error, async, headers) {
+	'toString': function () {
+		return '[object Ajax]';
+	},
+	_init: function (url, data, success, type, error, headers, async) {
 		var fn = function () {}, scope = this;
 		scope.url = url || '';
 		scope.data = data || {};
-		scope.type = (type === undefined ? '' : type).toLowerCase() || '';
 		scope.success = success || fn;
+		scope.type = (type === undefined ? '' : type).toLowerCase() || 'auto';
 		scope.error = error || fn;
-		scope.async = typeof(async) == 'undefined' ? !0 : async;
 		scope.headers = headers || {};
+		scope.async = typeof(async) == 'undefined' ? !0 : async;
 		scope.result = {
-			'success': !0, 
-			'data': {}
+			success: !1, 
+			data: {}
 		};
+		scope.errorEvent = null;
+		scope.errorObject = null;
 		return scope;
 	},
-	_processRequest: function (method) 
-	{
+	_processRequest: function (method) {
 		var scope = this;
+		scope.oldIe = !!document.all;
 		if (scope.type == 'jsonp') {
-			return scope._processScriptRequest()
+			return scope._processScriptRequest();
 		} else {
-			return scope._processXhrRequest(method);
+			return scope._processXhrRequest(method).xhr;
 		}
 	},
-	_processScriptRequest: function ()
-	{
+	_processScriptRequest: function () {
 		var scope = this,
-			doc = document,
-			win = window,
-			oldIe = !!doc.all,
-			scriptElm = doc.createElement('script'),
-			headElm = scope._getScriptContainerElement(),
-			callbackName = Ajax._scriptCallbackTmpl + Ajax._scriptCallbackCounter++;
-		win[callbackName] = function (data) {
-			scriptElm.parentNode.removeChild(scriptElm);
-			if (oldIe) {
-				win[callbackName] = undefined;
-			} else {
-				delete win[callbackName];
-			}
-			scope.result.data = data;
-			scope._callSuccessHandlers();
-			scope.success(data);
+			scriptElm = document.createElement('script'),
+			headElm = scope._getScriptContainerElement();
+		scope.scriptElm = scriptElm;
+		scope.requestId = Ajax._requestCounter++;
+		scope.callbackName = Ajax._scriptCallbackTmpl + scope.requestId;
+		Ajax[scope.callbackName] = function (data) {
+			scope._handlerScriptRequestSuccess(data);
 		};
-		scope.data[Ajax.jsonpCallbackParam] = callbackName;
+		scope.data[Ajax.jsonpCallbackParam] = this._getLibraryName() + '.' + scope.callbackName;
 		scope._completeUriAndGetParams('get');
 		scriptElm.setAttribute('src', scope.url);
 		scope._callBeforeHandlers();
-		if (oldIe) {
+		if (scope.oldIe) {
+			scriptElm.attachEvent('onreadystatechange', scope._handlerProviderScriptRequestError());
 			scriptElm = headElm.insertAdjacentElement('beforeEnd', scriptElm);
 		} else {
+			scriptElm.setAttribute('async', 'async');
+			scriptElm.addEventListener('error', scope._handlerProviderScriptRequestError(), true);
 			scriptElm = headElm.appendChild(scriptElm);
 		}
-		return scope;
+		return {
+			'url': scope.url,
+			'id': scope.requestId,
+			'abort': function () {
+				scope._handlerScriptRequestCleanUp();
+				scope._callAbortHandlers();
+			}
+		};
 	},
-	_processXhrRequest: function (method)
-	{
+	_handlerScriptRequestSuccess: function (data) {
+		var scope = this;
+		scope.result.success = !0;
+		scope._handlerScriptRequestCleanUp();
+		scope.result.data = data;
+		scope.success(data, 200, null, scope.requestId, scope.url, scope.type);
+		scope._callSuccessHandlers();
+	},
+	_handlerProviderScriptRequestError: function () {
+		var scope = this,
+			scriptElm = scope.scriptElm;
+		if (scope.oldIe) {
+			return function (e) {
+				e = e || window.event;
+				if (scriptElm.readyState == 'loaded' && !scope.result.success) {
+					scope._handlerScriptRequestError(e);
+				}
+			}
+		} else {
+			return function (e) {
+				scope._handlerScriptRequestError(e);
+			}
+		}
+	},
+	_handlerScriptRequestError: function (e) {
+		var scope = this,
+			errorHandler = scope._handlerProviderScriptRequestError();
+		if (scope.oldIe) {
+			scope.scriptElm.detachEvent('onreadystatechange', errorHandler);
+		} else {
+			scope.scriptElm.removeEventListener('error', errorHandler, true);
+		}
+		scope._handlerScriptRequestCleanUp();
+		scope.errorEvent = e;
+		scope._logException();
+		scope.error('', 0, null, null, e, scope.requestId, scope.url, scope.type);
+		scope._callErrorHandlers();
+	},
+	_handlerScriptRequestCleanUp: function () {
+		var scope = this;
+		scope.scriptElm.parentNode.removeChild(scope.scriptElm);
+		if (scope.oldIe) {
+			Ajax[scope.callbackName] = undefined;
+		} else {
+			delete Ajax[scope.callbackName];
+		}
+	},
+	_processXhrRequest: function (method) {
 		var method = (method === undefined ? 'get' : method).toLowerCase(),
 			scope = this,
 			paramsStr = scope._completeUriAndGetParams(method);
+		scope.requestId = Ajax._requestCounter++;
 		scope.xhr = scope._createXhrInstance();
+		scope._processXhrRequestAddListener();
 		scope.xhr.open(method, scope.url, scope.async);
 		scope._setUpHeaders();
 		scope._callBeforeHandlers();
-		scope.xhr.onreadystatechange = function (e) {
-			if (scope.xhr.readyState == 4) {
-				scope._processResponse(e);
-			}
-		};
-		if (method == 'get') {
-			scope.xhr.send();
-		} else if (method == 'post') {
-			scope.xhr.send(paramsStr);
-		}
+		scope._processXhrRequestSend(method, paramsStr);
 		return scope;
 	},
-	_processResponse: function (e)
-	{
-		var scope = this, xhr = scope.xhr;
-		if (xhr.status == 200){
-			scope._processResult();
-		} else {
-			scope._responseException(new Error('Http Status Code: ' + xhr.status));
-		}
-		if (!scope.result.success) {
-			scope._callErrorHandlers();
-			scope.error(
-				xhr.responseText, 
-				xhr.status, 
-				xhr
-			);
-		}
-	},
-	_processResult: function ()
-	{
+	_processXhrRequestAddListener: function () {
 		var scope = this,
-			xhr = scope.xhr;
-		if (scope.type.length === 0) scope._determinateTypeByContentTypeHeader();
-		// if parsing cause any error - call error handlers immediately
-		scope._processResultByType();
-		// rest is only for successfully finished parsing:
-		if (scope.result.success) {
-			scope._callSuccessHandlers();
-			scope.success(
-				scope.result.data, 
-				xhr.status, 
-				xhr
-			);
+			xhr = scope.xhr,
+			eventName = 'readystatechange',
+			handler = function (e) {
+				if (xhr.readyState == 4) {
+					scope._handlerXhrRequestReadyStatechange(e);
+				}
+			};
+		if (scope.oldIe) {
+			scope.xhr.attachEvent('on'+eventName, handler);
+		} else {
+			scope.xhr.addEventListener(eventName, handler);
 		}
 	},
-	_processResultByType: function () {
+	_handlerXhrRequestReadyStatechange: function (e) {
+		e = e || window.event,
+			scope = this,
+			statusCode = scope.xhr.status;
+		if (statusCode > 199 && statusCode < 300){
+			scope._processXhrResult();
+			scope._processXhrCallbacks();
+		} else if (statusCode === 0){
+			scope._callAbortHandlers();
+		} else {
+			scope.result.success = !1;
+			scope.errorEvent = e;
+			scope.errorObject = new Error('Http Status Code: ' + statusCode);
+			scope._processXhrCallbacks();
+		}
+	},
+	_processXhrRequestSend: function (method, paramsStr) {
+		var xhr = this.xhr;
+		if (method == 'get') {
+			xhr.send();
+		} else if (method == 'post') {
+			xhr.send(paramsStr);
+		}
+	},
+	_processXhrCallbacks: function (e) {
+		var scope = this, 
+			xhr = scope.xhr,
+			args = [];
+		if (scope.result.success) {
+			args = [
+				scope.result.data, xhr.status, xhr, 
+				scope.requestId, scope.url, scope.type
+			];
+			scope.success.apply(null, args);
+			scope._callSuccessHandlers();
+		} else {
+			args = [
+				xhr.responseText, xhr.status, xhr, 
+				scope.errorEvent, scope.errorObject, 
+				scope.requestId, scope.url, scope.type
+			];
+			scope.error.apply(null, args);
+			scope._callErrorHandlers();
+			scope._logException();
+		}
+	},
+	_processXhrResult: function () {
+		var scope = this;
+		if (scope.type == 'auto') scope._processXhrResultDeterminateType();
+		scope._processXhrResultByType();
+	},
+	_processXhrResultByType: function () {
 		var scope = this,
 			xhr = scope.xhr;
 		if (scope.type == 'json') {
-			scope._createResultJson();
+			scope._processXhrResultJson();
 		} else if (scope.type == 'xml' || scope.type == 'html') {
-			scope._createResultXml();
+			scope._processXhrResultXml();
 		} else if (scope.type == 'text') {
 			scope.result.data = xhr.responseText;
+			scope.result.success = !0;
 		}
 	},
-	_determinateTypeByContentTypeHeader: function () {
+	_processXhrResultDeterminateType: function () {
 		var scope = this,
 			ctSubject = this._getSubjectPartContentHeader();
 		scope.type = 'text';
@@ -191,6 +272,35 @@ Ajax.prototype = {
 		} else if (ctSubject.indexOf('xml') > -1) {
 			// application/xml,text/xml,	application/xml-dtd,application/rss+xml,application/atom+xml,application/vnd.google-earth.kml+xml,model/vnd.collada+xml and much more...
 			scope.type = 'xml';
+		}
+	},
+	_processXhrResultJson: function () {
+		var win = window, scope = this;
+		try {
+			scope.result.data = (new Function('return '+scope.xhr.responseText))();
+			scope.result.success = !0;
+		} catch (e) {
+			scope.errorObject = e;
+		}
+	},
+	_processXhrResultXml: function () {
+		var parser = {}, 
+			win = window, 
+			scope = this,
+			responseText = scope.xhr.responseText,
+			DomParser = win.DOMParser;
+		try {
+			if (DomParser) {
+				parser = new DomParser();
+				scope.result.data = parser.parseFromString(responseText, "application/xml");
+			} else {
+				parser = new win.ActiveXObject('Microsoft.XMLDOM');
+				parser.async = !1;
+				scope.result.data = parser.loadXML(responseText);
+			}
+			scope.result.success = !0;
+		} catch (e) {
+			scope.errorObject = e;
 		}
 	},
 	_getSubjectPartContentHeader: function () {
@@ -207,37 +317,7 @@ Ajax.prototype = {
 		if (semicolPos > -1) contentType = contentType.substr(0, semicolPos);
 		return contentType;
 	},
-	_createResultJson: function ()
-	{
-		var win = window, scope = this;
-		try {
-			scope.result.data = (new Function('return '+scope.xhr.responseText))();
-		} catch (e) {
-			scope._responseException(e);
-		}
-	},
-	_createResultXml: function ()
-	{
-		var parser = {}, 
-			win = window, 
-			scope = this,
-			responseText = scope.xhr.responseText,
-			DomParser = win.DOMParser;
-		try {
-			if (DomParser) {
-				parser = new DomParser();
-				scope.result.data = parser.parseFromString(responseText, "application/xml");
-			} else {
-				parser = new win.ActiveXObject('Microsoft.XMLDOM');
-				parser.async = !1;
-				scope.result.data = parser.loadXML(responseText);
-			}
-		} catch (e) {
-			scope._responseException(e);
-		}
-	},
-	_createXhrInstance: function ()
-	{
+	_createXhrInstance: function () {
 		var xhrInstance,
 			win = window,
 			activeXObjTypes = ['Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.3.0', 'Msxml2.XMLHTTP', 'Microsoft.XMLHTTP'];
@@ -252,8 +332,7 @@ Ajax.prototype = {
 		}
 		return xhrInstance;
 	},
-	_setUpHeaders: function ()
-	{
+	_setUpHeaders: function () {
 		var scope = this,
 			xhr = scope.xhr,
 			configuredHeaders = scope.headers,
@@ -266,8 +345,7 @@ Ajax.prototype = {
 			xhr.setRequestHeader(headerName, defaultHeaders[headerName]);
 		}
 	},
-	_completeUriAndGetParams: function (method)
-	{
+	_completeUriAndGetParams: function (method) {
 		var scope = this,
 			dataStr = '',
 			delimiter = '?',
@@ -297,8 +375,7 @@ Ajax.prototype = {
 			return this._stringifyDataObject();
 		}
 	},
-	_stringifyDataObject: function ()
-	{
+	_stringifyDataObject: function () {
 		var scope = this,
 			data = scope.data,
 			dataArr = [], 
@@ -314,8 +391,7 @@ Ajax.prototype = {
 		}
 		return dataArr.join('&');
 	},
-	_declareJson: function ()
-	{
+	_declareJson: function () {
 		// include json2
 		window.JSON=function(){function f(n){return n<10?'0'+n:n;}
 		Date.prototype.toJSON=function(){return this.getUTCFullYear()+'-'+
@@ -336,8 +412,7 @@ Ajax.prototype = {
 		if(/^[\],:{}\s]*$/.test(text.replace(/\\./g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof filter==='function'?walk('',j):j;}
 		throw new SyntaxError('parseJSON');}};}();
 	},
-	_getScriptContainerElement: function ()
-	{
+	_getScriptContainerElement: function () {
 		var headElm = document.body;
 		while (true) {
 			if (headElm.previousSibling === null || headElm.previousSibling === undefined) break;
@@ -347,33 +422,57 @@ Ajax.prototype = {
 		return headElm;
 	},
 	_callBeforeHandlers: function () {
-		var handlers = Ajax.handlers.before,
-			scope = this,
-			jsonp = scope.type == 'jsonp';
-		for (var key in handlers) {
-			handlers[key](jsonp ? null : scope.xhr);
-		}
+		var scope = this;
+		this._callHandlers('before', scope.type == 'jsonp' ? [null] : [scope.xhr]);
 	},
 	_callSuccessHandlers: function () {
-		var handlers = Ajax.handlers.success,
-			scope = this,
-			jsonp = scope.type == 'jsonp';
-		for (var key in handlers) {
-			if (jsonp) {
-				handlers[key](scope.result.data, 200, null);
-			} else {
-				handlers[key](scope.result.data, scope.xhr.status, scope.xhr);
-			}
-		}
+		var scope = this,
+			xhr = scope.xhr,
+			data = scope.result.data;
+		this._callHandlers('success', scope.type == 'jsonp' ? [data, 200, null] : [data, xhr.status, xhr]);
+	},
+	_callAbortHandlers: function () {
+		var scope = this;
+		this._callHandlers('abort', scope.type == 'jsonp' ? [null] : [scope.xhr]);
 	},
 	_callErrorHandlers: function () {
-		var handlers = Ajax.handlers.error,
-			xhr = this.xhr;	
-		for (var key in handlers) handlers[key](xhr.responseText, xhr.status, xhr);
+		var scope = this, xhr = scope.xhr;
+		this._callHandlers(
+			'error', 
+			scope.type == 'jsonp' ? ['', 0, null, null, scope.errorEvent] : [xhr.responseText, xhr.status, xhr, scope.errorObj, null]
+		);
 	},
-	_responseException: function (e) {
-		var win = window;
-		this.result.success = false;
-		if (win.console) win.console.log(e.stack, this.xhr);
+	_callHandlers: function (handlersKey, args) {
+		var handlers = Ajax.handlers[handlersKey],
+			scope = this,
+			handler = function () {},
+			additionalArgs = [];
+		args.push(scope.requestId, scope.url, scope.type);
+		for (var i = 0, l = handlers.length; i < l; i += 1) {
+			handler = handlers[i];
+			if (typeof(handler) != 'function') continue;
+			handler.apply(null, args);
+		}
+	},
+	_logException: function () {
+		var win = window,
+			scope = this,
+			id = scope.requestId,
+			url = scope.url,
+			type = scope.type,
+			jsonp = type == 'jsonp',
+			errorObj = scope.errorObject,
+			errorEvent = scope.errorEvent,
+			xhr = scope.xhr;
+		if (!win.console) return;
+		if (jsonp) {
+			win.console.log(id, url, type, 0, errorEvent);
+		} else {
+			win.console.log(id, url, type, xhr, xhr.status, xhr.responseText, errorObj, errorObj.stack);
+		}
+	},
+	_getLibraryName: function () {
+		var constructorStr = this.toString();
+		return constructorStr.substr(8, constructorStr.length - 9);
 	}
 };

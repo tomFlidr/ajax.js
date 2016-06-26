@@ -24,65 +24,64 @@
 	<script type="text/javascript">
 		(function () {
 		
-			var apiUrlTemplate = 'https://api.flickr.com/services/rest/?method={method}&api_key={api_key}&{method_params}&format=json';
+			var apiUrl = 'https://api.flickr.com/services/rest/';
 			var imgUrlTemplate = 'https://farm{farm}.staticflickr.com/{server}/{id}_{secret}_n.jpg';
-			
 			var userName = 'tomasflidr';
 			var api_key = '35e8f59a2837d74a4fefc24c44bd31dc';
 			
-			var formatFlickrUrl = function (url, data) {
-				data.api_key = api_key;
-				for (var key in data) {
-					url = url.replace('{'+key+'}', data[key]);
-				}
-				return url;
-			}
-			
 			var loadUserId = function (callback) {
-				var url = formatFlickrUrl(apiUrlTemplate, {
-					method: 'flickr.people.findByUsername',
-					method_params: 'username=' + userName
-				});
 				/*************************************************************************************************
 				*                                                                                                *
 				*                                      1. JSONP request                                          *
 				*                                                                                                *
 				*************************************************************************************************/
-				Ajax.load({
-					url: url,
-					type: 'jsonp',
-					success: function (data, statusCode, xhr) {
+				Ajax.get(
+					apiUrl, {
+						method: 'flickr.people.findByUsername',
+						api_key: api_key,
+						username: userName,
+						format: 'json'
+					},
+					function (data, statusCode, xhr) {
 						callback(data.user.id);
-					}
-				});
+					},
+					'jsonp'
+				);
 			}
 			
 			var loadUserPublicPhotos = function (userId, callback) {
-				var url = formatFlickrUrl(apiUrlTemplate, {
-					method: 'flickr.people.getPublicPhotos',
-					method_params: 'user_id=' + userId
-				});
 				/*************************************************************************************************
 				*                                                                                                *
 				*                                      2. JSONP request                                          *
 				*                                                                                                *
 				*************************************************************************************************/
 				Ajax.load({
-					url: url,
-					type: 'jsonp',
+					url: apiUrl,
+					data: {
+						method: 'flickr.people.getPublicPhotos',
+						api_key: api_key,
+						user_id: userId,
+						format: 'json'
+					},
 					success: function (data, statusCode, xhr) {
 						callback(data.photos.photo);
-					}
+					},
+					type: 'jsonp'
 				});
 			}
 			
 			var completeResultImages = function (allPublicPhotos) {
 				var photoElm = {},
+					imgData = {},
+					imgUrl = '',
 					result = document.getElementById('result'),
 					resultClone = result.cloneNode();
 				for (var i = 0, l = Math.min(3, allPublicPhotos.length); i < l; i += 1) {
 					photoElm = document.createElement('img');
-					photoElm.src = formatFlickrUrl(imgUrlTemplate, allPublicPhotos[i]);
+					imgUrl = imgUrlTemplate;
+					imgData = allPublicPhotos[i];
+					for (var key in imgData) imgUrl = imgUrl.replace('{'+key+'}', imgData[key]);
+					photoElm.src = imgUrl;
 					if (document.all) {
 						resultClone.insertAdjacentElement('beforeEnd', photoElm);
 					} else {
@@ -99,15 +98,15 @@
 			*************************************************************************************************/
 			
 			// set up wait cursor for whole body while data is loading
-			Ajax.onBeforeLoad(function (xhr) {
+			Ajax.beforeLoad(function (xhr) {
 				document.body.className = 'wait';
 			});
-			Ajax.onLoadSuccess(function (data, statusCode) {
+			Ajax.onSuccess(function (data, statusCode) {
 				document.body.className = '';
 			});
 			
 			// any error log to console or to result element
-			Ajax.onLoadError(function (responseText, statusCode) {
+			Ajax.onError(function (responseText, statusCode) {
 				if (console) {
 					console.log(arguments);
 				} else {

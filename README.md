@@ -5,7 +5,7 @@
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
 ## Features
-- very effective, super small javascript AJAX library - all in 470 lines, **minimized: 7.968 KB**, **gzipped: 3.176 KB**
+- very effective, super small javascript AJAX library - all in 460 lines, **minimized: 7.968 KB**, **gzipped: 3.176 KB**
 - **syntax based on jQuery.ajax();**, Ajax.load();, Ajax.get();, Ajax.post();, no promisses, returning XmlHttpRequest
 - supported browsers: **MSIE6+, Firefox, Chrome, Safari, Opera and mobile browsers**
 - **highly optimized**
