@@ -57,7 +57,7 @@ var xhr = Ajax.load({
 ```
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html){:target="_blank"}
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
@@ -121,7 +121,7 @@ var xhr = Ajax.get(
 ```
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/01-basic-get.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/01-basic-get.html){:target="_blank"}
 
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 
@@ -243,7 +243,7 @@ var jsonpReq.abort();
 
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/04-foreing-domain-jsonp.html){:target="_blank"}
 
 ```
 var jsonpReq = Ajax.get(
@@ -273,7 +273,7 @@ There is called queue of handlers before each request by window.XMLHttpHeader ob
 
 #### Full Example
 
-[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
+[**VIEW DEMO**](https://tomflidr.github.io/ajax.js/demos/05-multiple-requests-with-global-handlers.html){:target="_blank"}
 
 ```
 // not required - add function into queue called before each request type
@@ -318,7 +318,9 @@ Ajax.onError(function (responseText, statusCode, xhr, errorObject, errorEvent, r
     console.log(arguments);
 });
 ```
+
 All global handlers return Ajax library declaration function, so it's possible to init global handlers like:
+
 ```
 Ajax.beforeLoad(function (xhr, requestId, url, type) {
     document.body.style.cursor = 'wait !important';
@@ -330,6 +332,7 @@ Ajax.beforeLoad(function (xhr, requestId, url, type) {
     console.log(arguments);
 });
 ```
+
 #### Remove Global Handler
 
 Handlers are stored in arrays placed in:
@@ -360,6 +363,7 @@ Ajax.defaultHeaders = {
     'Content-Type': 'application/x-www-form-urlencoded'
 };
 ```
+
 #### Ajax.jsonpCallbackParam
 
 JSONP requesting GET param name how to say name of public callback function to server.
