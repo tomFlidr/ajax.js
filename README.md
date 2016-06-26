@@ -36,14 +36,14 @@ Standard browser window.XMLHttpRequest object is returned, for JSONP requests is
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.load({
-    url: '',                // string, required
-    method: '',             // string, default: 'get', not required
-    data: {},               // object (to be serialized), default: {}, not required
-    success: function(){},  // function, default: function(){data, statusCode, xhr}, not required
-    type: '',               // string, default: '' (result is be processed by Content-Type HTTP header), not req.
-    error: function(){},    // function, default: function(responseText, statusCode, xhr){}, not required
-    headers: {},            // object, default: {}, not required
-    async: true             // boolean, default: true, not required
+    url: '',              // string, required
+    method: '',           // string, default: 'get', not required
+    data: {},             // object (to be serialized), default: {}, not required
+    success: function(){},// function, default: function(){data, statusCode, xhr, requestId, url, type}, not required
+    type: '',             // string, default: '' (result is be processed by Content-Type HTTP header), not req.
+    error: function(){},  // function, default: function(responseText, statusCode, xhr, requestId, url, type){}, not required
+    headers: {},          // object, default: {}, not required
+    async: true           // boolean, default: true, not required
 });
 ```
 #### Full example
@@ -67,7 +67,7 @@ Create any *.html file in base project directory and paste this code into \<scri
         },
         // not required, custom callback for success, data are automaticly 
         // evaluated or parsed by type param or HTTP header
-        success: function (data, statusCode, xhr) {
+        success: function (data, statusCode, xhr, requestId, url, type) {
             // print data - beautiful indented output with third param
             result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
         },
@@ -75,7 +75,7 @@ Create any *.html file in base project directory and paste this code into \<scri
         // if not set, data are parsed/evaluated by HTTP header
         type: 'json',
         // not required, custom callback for error
-        error: function (responseText, statusCode, xhr) {
+        error: function (responseText, statusCode, xhr, requestId, url, type) {
             console.log(arguments);
         },
         // not required, true by default
@@ -94,13 +94,13 @@ Standard browser window.XMLHttpRequest object is returned, for JSONP requests is
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.get(
-    url,       // string, required
-    data,      // object (to be serialized), default: {}, not required
-    success,   // function, default: function(data, statusCode, xhr){}, not required
-    type,      // string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
-    error,     // function, default: function(responseText, statusCode, xhr){}, not required
-    headers,   // object, default: {}, not required
-    async      // boolean, default: true, not required
+    url,     // string, required
+    data,    // object (to be serialized), default: {}, not required
+    success, // function, default: function(data, statusCode, xhr, requestId, url, type){}, not required
+    type,    // string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
+    error,   // function, default: function(responseText, statusCode, xhr, requestId, url, type){}, not required
+    headers, // object, default: {}, not required
+    async    // boolean, default: true, not required
 );
 ```
 #### Full example
@@ -122,7 +122,7 @@ Create any *.html file in base project directory and paste this code into \<scri
         },
         // not required, custom callback for success, data are automaticly 
         // evaluated or parsed by type param or HTTP header
-        function (data, statusCode, xhr) {
+        function (data, statusCode, xhr, requestId, url, type) {
             // print data - beautiful indented output with third param
             result.innerHTML = "<pre><code>Result data:\n" +  JSON.stringify(data, null, 4) + "</code></pre>";
         },
@@ -130,7 +130,7 @@ Create any *.html file in base project directory and paste this code into \<scri
         // if not set, data are parsed/evaluated by HTTP header
         'json',
         // not required, custom callback for error
-        function (responseText, statusCode, xhr) {
+        function (responseText, statusCode, xhr, requestId, url, type) {
             console.log(arguments);
         }
     );
@@ -143,13 +143,13 @@ Standard browser window.XMLHttpRequest object is returned, for JSONP requests is
 ```
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.post(
-    url,       // string, required
-    data,      // object (to be serialized), default: {}, not required
-    success,   // function, default: function(data, statusCode, xhr){}, not required
-    type,      // string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
-    error,     // function, default: function(responseText, statusCode, xhr){}, not required
-    headers,   // object, default: {}, not required
-    async      // boolean, default: true, not required
+    url,     // string, required
+    data,    // object (to be serialized), default: {}, not required
+    success, // function, default: function(data, statusCode, xhr, requestId, url, type){}, not required
+    type,    // string, default: '' (result is be evaluated/parsed by Content-Type HTTP header), not required
+    error,   // function, default: function(responseText, statusCode, xhr, requestId, url, type){}, not required
+    headers, // object, default: {}, not required
+    async    // boolean, default: true, not required
 );
 ```
 #### Full example
@@ -171,7 +171,7 @@ Create any *.html file in base project directory and paste this code into \<scri
         },
         // not required, custom callback for success, data are automaticly 
         // evaluated or parsed by type param or HTTP header
-        function (data, statusCode, xhr) {
+        function (data, statusCode, xhr, requestId, url, type) {
             // print xml root element object as string
             result.innerHTML = "<pre><code>Result data:\n"
                 + data.documentElement.outerHTML.replace(/\</g, '&lt;').replace(/\>/g, '&gt;') 
@@ -181,7 +181,7 @@ Create any *.html file in base project directory and paste this code into \<scri
         // if not set, data are parsed/evaluated by HTTP header
         'xml',
         // not required, custom callback for error
-        function (responseText, statusCode, xhr) {
+        function (responseText, statusCode, xhr, requestId, url, type) {
             console.log(arguments);
         }
     );
@@ -200,9 +200,9 @@ Before \<script\> tag is appended into \<head\> section, there is initialized **
 Ajax.load() and Ajax.get() will not return any xhr object if you use JSONP data type to return. There is returned javascript object with three properties:
 ```
 var jsonpReq = {
-    url       // string, complete script tag str url
-    script    // HTMLScriptElement, stript tag object appended into \<head\> section
-    abort     // function, local library function to abort request
+    url   // string, complete script tag str url
+    id    // number, request id
+    abort // function, library function to abort JSONP request
 };
 ```
 If you want to manipulate with this kind of request resources, be free to do anything. Read more in source lines in function "_processScriptRequest". But to abort JSONP request - it's just only necessrry to:
@@ -221,7 +221,7 @@ var jsonpReq = Ajax.get(
             {"with": ["JSON", "structure"]}
         ]  
     },
-    function (data, statusCode, xhr) {
+    function (data, statusCode, xhr, requestId, url, type) {
         console.log(arguments);
     },
     'jsonp'
