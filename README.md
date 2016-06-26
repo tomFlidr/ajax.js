@@ -37,13 +37,16 @@ Standard browser window.XMLHttpRequest object is returned, for JSONP requests is
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
 var xhr = Ajax.load({
     url: '',              // string, required
-    method: '',           // string, default: 'get', not required
-    data: {},             // object (to be serialized), default: {}, not required
-    success: function(){},// function, default: function(){data, statusCode, xhr, requestId, url, type}, not required
-    type: '',             // string, default: '' (result is be processed by Content-Type HTTP header), not req.
-    error: function(){},  // function, default: function(responseText, statusCode, xhr, requestId, url, type){}, not required
-    headers: {},          // object, default: {}, not required
-    async: true           // boolean, default: true, not required
+    method: '',           // string, not required, default: 'get'
+    data: {},             // object (to be serialized), not required, default: {}
+    success: function(){},// function, not required, default: 
+                          // function(data,statusCode,xhr,requestId,url,type){}
+    type: '',             // string, not required, default: ''
+                          // (if empty string, result is processed by Content-Type HTTP header)
+    error: function(){},  // function, not required, default: 
+                          // function(responseText,statusCode,xhr,errorObject,errorEvent,requestId,url,type){}
+    headers: {},          // object, not required, default: {},
+    async: true           // boolean, not required, default: true
 });
 ```
 #### Full example
