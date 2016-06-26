@@ -50,6 +50,7 @@ var xhr = Ajax.load({
 });
 ```
 #### Full example
+[VIEW DEMO](https://tomflidr.github.io/ajax.js/demos/03-complete-load.html)
 Create any *.html file in base project directory and paste this code into \<script\> tag:
 ```
 <div id="result"></div>
