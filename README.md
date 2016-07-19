@@ -1,9 +1,9 @@
 # Javascript AJAX (ajax.js)
 
-* [ajax.min.js download](https://tomflidr.github.io/ajax.js/src/ajax.min.js)
+* [ajax.min.js download](https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js)
 
 ```html
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/src/ajax.min.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js"></script>
 ```
 
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
@@ -34,7 +34,7 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 
 ```html
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/src/ajax.min.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js"></script>
 ```
 
 ### Universal Syntax

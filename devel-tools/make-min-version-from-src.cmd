@@ -1,11 +1,11 @@
-:: Minimize source code from file "../src/ajax.src.js" 
+:: Minimize source code from file "../builds/latest/ajax.src.js" 
 :: with Google Closure Compiller (https://github.com/google/closure-compiler) in advanced mode
-:: and overwrite file "../src/ajax.min.js"
+:: and overwrite file "../builds/latest/ajax.min.js"
 
 :: initialization
 @setlocal EnableDelayedExpansion
-@set sourceFile=../src/ajax.src.js
-@set resultFile=../src/ajax.min.js
+@set sourceFile=../builds/latest/ajax.src.js
+@set resultFile=../builds/latest/ajax.min.js
 @set initialJsComment=
 @set initialJsCommentLastLine="*/"
 @set newLine=^
@@ -18,7 +18,7 @@
 @cd ..
 
 :loop
-:: read initial javascript comment from source "../src/ajax.src.js" and save it in temporary file comment.js
+:: read initial javascript comment from source "../builds/latest/ajax.src.js" and save it in temporary file comment.js
 @for /f "Tokens=* Delims=" %%l in (!sourceFile!) do @(
 	@set initialJsComment=!initialJsComment!%%l
 	@if "%%l" == %initialJsCommentLastLine% (
