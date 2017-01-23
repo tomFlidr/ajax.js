@@ -4,3 +4,6 @@ builds/2.*
 demos/*
 devel-tools/*
 .gitignore
+.npmignore
+LICENCE
+README.md
