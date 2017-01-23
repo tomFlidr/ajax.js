@@ -2,6 +2,14 @@
 
 * [ajax.min.js download](https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js)
 
+## **INSTALATION**
+
+```shell
+npm install tomFlidr/ajax.js
+```
+
+## **DOWNLOAD**
+
 ```html
 <script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js"></script>
 ```
