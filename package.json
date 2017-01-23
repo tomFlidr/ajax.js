@@ -9,11 +9,11 @@
     "ajax jsonp",
     "javascript jsonp",
     "ajax json",
-	"async",
-	"async requesting",
+    "async",
+    "async requesting",
     "ajax serialization",
-	"ajax evaluation",
-	"ajax global handlers",
+    "ajax evaluation",
+    "ajax global handlers",
     "javascript ajax requester",
     "js ajax",
     "js requester",
@@ -35,11 +35,9 @@
   "autoupdate": {
     "source": "git",
     "target": "git://github.com/tomFlidr/ajax.js.git",
-    "basePath": "src",
+    "basePath": "builds/latest",
     "files": [
-      "ajax.min.js",
-      "ajax.dev.js",
-      "ajax.src.js"
+      "ajax.min.js"
     ]
   }
 }
