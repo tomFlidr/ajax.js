@@ -41,7 +41,9 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
   - but only **`GET`** in **`JSONP`** request type (**by \<stript\> tag**, to request foreing domains without any other settings)
 - still possible to request diferent domains with http header: **`"Access-Control-Allow-Origin"`**
 - **automatic `JSON` serialization** into format: `key1=value1&key2=["anything",{"with":["JSON","structure"]}]` 
-- data always **sended with HTTP header Content-Type: application/x-www-form-urlencoded** and posibility to change
+- data always **sended with HTTP headers**:
+  - **`X-Requested-With: XmlHttpRequest`** (posibile to change)
+  - **`Content-Type: application/x-www-form-urlencoded`** (posibile to change)
 - **`JSON` evaluation and `XML`/`HTML` parsing** into environment types by type param
 - **automatic result conversion by HTTP header `"Content-Type"`** into `JSON`/`XML`/`HTML`/`TEXT` if no type param defined
 - posibility to **change any http header before** send **and read any header after** data are loaded or error handled
