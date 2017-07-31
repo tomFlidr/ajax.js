@@ -11,8 +11,8 @@ npm install tomFlidr/ajax.js
 
 ## **DOWNLOAD**
 
-* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.dev.js)
 * [**download ajax.min.js (for production)**](https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js)
+* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.dev.js)
 
 ```html
 <!-- for production: -->
