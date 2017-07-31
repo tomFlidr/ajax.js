@@ -45,8 +45,8 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
   - **`X-Requested-With: XmlHttpRequest`** (posibile to change)
   - **`Content-Type: application/x-www-form-urlencoded`** (posibile to change)
 - **`JSON` evaluation and `XML`/`HTML` parsing** into environment types by type param
-- **automatic result conversion by HTTP header `"Content-Type"`** into `JSON`/`XML`/`HTML`/`TEXT` if no type param defined
-- posibility to **change any http header before** send **and read any header after** data are loaded or error handled
+- **automatic result conversion by response HTTP header `"Content-Type"`** into `JSON`/`XML`/`HTML`/`TEXT` if no `type` option defined
+- posibility to **change any http header before** send **and read any header after** data are loaded or error handled (except cookies header:-)
 - posibility to change async requesting to sync (but it is not recomanded, by default is async)
 - **global handlers for each request** to set up error loging or loading animations:
   - `Ajax.beforeLoad(function(xhr, requestId, url, typ){});`
