@@ -1,6 +1,6 @@
 # Javascript AJAX (ajax.js)
 
-* [ajax.min.js download](https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js)
+* [ajax.min.js download](https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js)
 
 ## **INSTALATION**
 
@@ -11,7 +11,7 @@ npm install tomFlidr/ajax.js
 ## **DOWNLOAD**
 
 ```html
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js"></script>
 ```
 
 ## **DEMOS**
@@ -49,7 +49,7 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
 
 ```html
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.0/ajax.min.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js"></script>
 ```
 
 ### Universal Syntax
