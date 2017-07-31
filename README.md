@@ -1,6 +1,7 @@
 # Javascript AJAX (ajax.js)
 
-* [ajax.min.js download](https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js)
+[![Latest Stable Version](https://img.shields.io/badge/stable-1.0.1-green.svg)](https://github.com/tomFlidr/ajax.js/releases)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/tomFlidr/ajax.js/blob/master/LICENCE)
 
 ## **INSTALATION**
 
@@ -10,8 +11,15 @@ npm install tomFlidr/ajax.js
 
 ## **DOWNLOAD**
 
+* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.dev.js)
+* [**download ajax.min.js (for production)**](https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js)
+
 ```html
+<!-- for production: -->
 <script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js"></script>
+
+<!-- for development with JSDocs comments for IDE: -->
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.dev.js"></script>
 ```
 
 ## **DEMOS**
@@ -25,28 +33,28 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
 
 ## Features
 
-- very effective, super small javascript AJAX library - all in 460 lines, **minimized: 8.0 KB**, **gzipped: 3.2 KB**
-- **syntax based on jQuery.ajax();**, Ajax.load();, Ajax.get();, Ajax.post();, no promisses, returning XmlHttpRequest
+- very effective, super small javascript AJAX library - all in 460 lines, **minimized: 8.3 KB**, **gzipped: 3.3 KB**
+- **syntax based on jQuery.ajax();**, `Ajax.load();`, `Ajax.get();`, `Ajax.post();`, no promisses, returning `XmlHttpRequest`
 - supported browsers: **MSIE6+, Firefox, Chrome, Safari, Opera and mobile browsers**
 - **highly optimized**
-- supported request methods: 
-  - **GET, POST** - **by XMLHttpRequest**, still possible to request diferent domains with **"Access-Control-Allow-Origin"**
-  - **GET** through type: **JSONP** - **by \<stript\> tag**, to request foreing domains without any other settings
-- **automatic JSON serialization** into format: key1=value1&key2=["anything",{"with":["JSON","structure"]}]  
+- all request methods supported - **`GET`, `POST`, `HEAD`, `OPTION`, `...`**
+  - but only **`GET`** in **`JSONP`** request type (**by \<stript\> tag**, to request foreing domains without any other settings)
+- still possible to request diferent domains with http header: **`"Access-Control-Allow-Origin"`**
+- **automatic `JSON` serialization** into format: `key1=value1&key2=["anything",{"with":["JSON","structure"]}]` 
 - data always **sended with HTTP header Content-Type: application/x-www-form-urlencoded** and posibility to change
-- **JSON evaluation and XML/HTML parsing** into environment types by type param
-- **automatic result conversion by HTTP header 'Content-Type'** into JSON/XML/HTML/TEXT if no type param defined
+- **`JSON` evaluation and `XML`/`HTML` parsing** into environment types by type param
+- **automatic result conversion by HTTP header `"Content-Type"`** into `JSON`/`XML`/`HTML`/`TEXT` if no type param defined
 - posibility to **change any http header before** send **and read any header after** data are loaded or error handled
 - posibility to change async requesting to sync (but it is not recomanded, by default is async)
 - **global handlers for each request** to set up error loging or loading animations:
-  - Ajax.beforeLoad(function(xhr, requestId, url, typ){});
-  - Ajax.onSuccess(function(xhr, requestId, url, type){});
-  - Ajax.onAbort(function(data, statusCode, xhr, requestId, url, type){});
-  - Ajax.onError(function(responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type){});
+  - `Ajax.beforeLoad(function(xhr, requestId, url, typ){});`
+  - `Ajax.onSuccess(function(xhr, requestId, url, type){});`
+  - `Ajax.onAbort(function(data, statusCode, xhr, requestId, url, type){});`
+  - `Ajax.onError(function(responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type){});`
 
 ## Usage
 
-Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section, no other library is necessary:
+Include JAVASCRIPT file **`ajax.dev.js`** into your HTML page in `\<head\>` section, no other library is necessary:
 
 ```html
 <script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.1/ajax.min.js"></script>
@@ -56,7 +64,7 @@ Include JAVASCRIPT file **ajax.min.js** into your HTML page in \<head\> section,
 
 #### Basic Syntax
 
-Standard browser window.XMLHttpRequest object is returned, for JSONP requests is returned object described later.
+Standard browser window.XMLHttpRequest object is returned, for **`JSONP`** requests is returned object described later.
 
 ```javascript
 // into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
