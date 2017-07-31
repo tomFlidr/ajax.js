@@ -375,7 +375,7 @@ Ajax.handlers.success = [];
 Ajax.handlers.error = [];
 ```
 
-Feel free to use them as standard arrays with functions to add or remove any handler anytime. There are no any static functions on Ajax object to remove handlers, so it's necessary to do it (if you want) by:
+Feel free to use them as standard plain JS arrays to add or remove any handler anytime. There are no any static functions on Ajax object to remove handlers, so it's necessary to do it (if you want) by:
 
 ```javascript
 delete Ajax.handlers.before[yourDesireIndex];
