@@ -31,7 +31,7 @@ npm install tomFlidr/ajax.js
 
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
-## Features
+## **FEATURES**
 
 - very effective, super small javascript AJAX library - all in 460 lines, **minimized: 8.3 KB**, **gzipped: 3.3 KB**
 - **syntax based on jQuery.ajax();**, `Ajax.load();`, `Ajax.get();`, `Ajax.post();`, no promisses, returning `XmlHttpRequest`
@@ -54,7 +54,7 @@ Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, 
   - `Ajax.onAbort(function(data, statusCode, xhr, requestId, url, type){});`
   - `Ajax.onError(function(responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type){});`
 
-## Usage
+## **USAGE**
 
 Include JAVASCRIPT file **`ajax.dev.js`** into your HTML page in `\<head\>` section, no other library is necessary:
 
