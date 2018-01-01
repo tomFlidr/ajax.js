@@ -23,11 +23,11 @@ npm install tomFlidr/ajax.js
 ```
 
 ## **DEMOS**
-- [1. Basic GET Example](http://github.tomflidr.cz/ajax.js/demos/01-basic-get.html)
-- [2. Basic POST Example](http://github.tomflidr.cz/ajax.js/demos/02-basic-post.html)
-- [3. Universal Load Example](http://github.tomflidr.cz/ajax.js/demos/03-complete-load.html)
-- [4. Foreing Domain JSONP Request Example](http://github.tomflidr.cz/ajax.js/demos/04-foreing-domain-jsonp.html)
-- [5. Multiple Requests With Global Handlers Example](http://github.tomflidr.cz/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
+- [1. Basic GET Example](http://tomflidr.cz/github/ajax.js/demos/01-basic-get.html)
+- [2. Basic POST Example](http://tomflidr.cz/github/ajax.js/demos/02-basic-post.html)
+- [3. Universal Load Example](http://tomflidr.cz/github/ajax.js/demos/03-complete-load.html)
+- [4. Foreing Domain JSONP Request Example](http://tomflidr.cz/github/ajax.js/demos/04-foreing-domain-jsonp.html)
+- [5. Multiple Requests With Global Handlers Example](http://tomflidr.cz/github/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
 
 Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
 
