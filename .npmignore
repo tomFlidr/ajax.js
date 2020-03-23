@@ -5,6 +5,7 @@ demos/*
 devel-tools/*
 .gitignore
 .npmignore
+_references.js
 LICENCE
 README.md
 Ajax.js.pssproj
