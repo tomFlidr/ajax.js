@@ -11,16 +11,16 @@ npm install tomFlidr/ajax.js
 
 ## **DOWNLOAD**
 
-* [**download ajax.min.js (for production)**](https://tomflidr.github.io/ajax.js/builds/1.0.2/ajax.min.js)
-* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.2/ajax.dev.js)
-* [**download ajax.d.ts (for development in TypeScript with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.2/ajax.d.ts)
+* [**download ajax.min.js (for production)**](https://tomflidr.github.io/ajax.js/builds/1.0.3/ajax.min.js)
+* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.3/ajax.dev.js)
+* [**download ajax.d.ts (for development in TypeScript with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.3/ajax.d.ts)
 
 ```html
 <!-- for production: -->
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.2/ajax.min.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.3/ajax.min.js"></script>
 
 <!-- for development with JSDocs comments for IDE: -->
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.2/ajax.dev.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.3/ajax.dev.js"></script>
 ```
 
 ## **DEMOS**
