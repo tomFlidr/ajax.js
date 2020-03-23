@@ -1,6 +1,6 @@
 {
   "name": "ajax-min",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "description": "Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.",
   "homepage": "https://github.com/tomFlidr/ajax.js",
