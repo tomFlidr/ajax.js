@@ -6,7 +6,7 @@
 ## **INSTALATION**
 
 ```shell
-npm install tomFlidr/ajax.js
+npm install ajax-min
 ```
 
 ## **DOWNLOAD**
