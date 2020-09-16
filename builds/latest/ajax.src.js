@@ -1,22 +1,24 @@
 /**
  * Ajax.JS
- * @author: Tom Flidr | tomflidr(at)gmail(dot)com
- * @url: https://github.com/tomFlidr/ajax.js
- * @licence: https://tomflidr.github.io/ajax.js/LICENCE.txt
- * @version: 1.0.5
- * @date: 2020-03-23
- * @example:
-var xhr = Ajax.load(<Ajax.cfg.Load>{
-	url: 'https://tomflidr.github.io/ajax.js/books.json',
-	method: 'POST', // GET|POST|OPTION|HEAD...
-	data: { anything: ["to", "serialize"] },
-	success: (data?: any, statusCode?: number, xhr?: XMLHttpRequest | null, requestId?: number, url?: string, type?: string) => {},
-	type: 'json', // json|jsonp|xml|html|text
-	error: (responseText?: string, statusCode?: number, xhr?: XMLHttpRequest | null, requestId?: number, url?: string, type?: string) => {},
-	headers: {},
-	async: true
-});
-*/
+ * @author	Tom Flidr | tomflidr(at)gmail(dot)com
+ * @url		https://github.com/tomFlidr/ajax.js
+ * @licence	https://tomflidr.github.io/ajax.js/LICENCE.txt
+ * @version	1.0.6
+ * @date	2020-09-16
+ * @example
+ *
+ *    var xhr = Ajax.load(<Ajax.cfg.Load>{
+ *       url: 'https://tomflidr.github.io/ajax.js/books.json',
+ *       method: 'POST', // GET|POST|OPTION|HEAD...
+ *       data: { anything: ["to", "serialize"] },
+ *       success: (data?: any, statusCode?: number, xhr?: XMLHttpRequest|null, requestId?: number, url?: string, type?: string) => {},
+ *       type: 'json', // json|jsonp|xml|html|text
+ *       error: (responseText?: string, statusCode?: number, xhr?: XMLHttpRequest|null, errorObj?: Error|null, errorEvent?: Event|null, requestId?: number, url?: string, type?: string) => {},
+ *       headers: {},
+ *       async: true
+ *    });
+ *
+ */
 
 /**
  * @typedef		JsonpRequest			JsonpRequest driving object.
@@ -66,7 +68,7 @@ Ajax._requestCounter = 0;
  * @summary					Static method to add global custom callback before any Ajax request type is processed.
  * @access		public
  * 
- * @param		{Function}	callback	Required, default: function (xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback called before any Ajax request type. First param is null only for JSONP requests.
+ * @param		{Function}	callback	Required, default: function (xhr:XMLHttpRequest|null, requestId:Number, url:String, type:String) {}. Custom callback called before any Ajax request type. First param is null only for JSONP requests.
  * 
  * @return		{Ajax}		Ajax library definition.
 */
@@ -78,7 +80,7 @@ Ajax['beforeLoad'] = function (callback) {
  * @summary					Static method to add global custom callback after any Ajax request type is processed successfully.
  * @access		public
  * 
- * @param		{Function}	callback	Required, default: function (xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback called after any Ajax request type is processed successfully. First param is null only for JSONP requests.
+ * @param		{Function}	callback	Required, default: function (data:Object|null, statusCode:Number, xhr:XMLHttpRequest|null, requestId:Number, url:String, type:String) {}. Custom callback called after any Ajax request type is processed successfully. First param is null only for JSONP requests.
  * 
  * @return		{Ajax}		Ajax library definition.
 */
@@ -90,7 +92,7 @@ Ajax['onSuccess'] = function (callback) {
  * @summary					Static method to add global custom callback after any Ajax request type is aborted.
  * @access		public
  * 
- * @param		{Function}	callback	Required, default: function (xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback called after any Ajax request type is aborted. First param is null only for JSONP requests.
+ * @param		{Function}	callback	Required, default: function (xhr:XMLHttpRequest|null, requestId:Number, url:String, type:String) {}. Custom callback called after any Ajax request type is aborted. First param is null only for JSONP requests.
  * 
  * @return		{Ajax}		Ajax library definition.
 */
@@ -102,7 +104,7 @@ Ajax['onAbort'] = function (callback) {
  * @summary					Static method to add global custom callback after any Ajax request type is processed with error.
  * @access		public
  * 
- * @param		{Function}	callback	Required, default: function (xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback called after any Ajax request type is processed with error. First param is null only for JSONP requests.
+ * @param		{Function}	callback	Required, default: function (xhr:XMLHttpRequest|null, errorObj: Error|null, errorEvent: Event|null, requestId:Number, url:String, type:String) {}. Custom callback called after any Ajax request type is processed with error. First param is null only for JSONP requests.
  * 
  * @return		{Ajax}		Ajax library definition.
 */
@@ -116,9 +118,9 @@ Ajax['onError'] = function (callback) {
  * 
  * @param		{String}	url				Required. Url string to send the GET request, relative or absolute.
  * @param		{Object}	data			Not required, default: {}. Object with key/value data to be serialized into query string and sended in url, any complext value will be automaticly stringified by JSON.stringify(), (JSON shim is inclided in this Ajax.js library).
- * @param		{Function}	successCallback	Not required, default: function (data:Object, statusCode:Number, xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 199 and lower than 300. Third param is null only for JSONP requests.
+ * @param		{Function}	successCallback	Not required, default: function (data:Object, statusCode:Number, xhr:XMLHttpRequest|null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 199 and lower than 300. Third param is null only for JSONP requests.
  * @param		{String}	type			Not required, default: ''. Possible values: JSON, JSONP, XML, HTML, TEXT, if not set, result data will be processed/evaluated/parsed by response Content-Type HTTP header.
- * @param		{Function}	errorCallback	Not required, default: function (responseText:String, statusCode:Number, xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
+ * @param		{Function}	errorCallback	Not required, default: function (responseText:String, statusCode:Number, xhr:XMLHttpRequest|null, errorObj: Error|null, errorEvent: Event|null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
  * @param		{Object}	headers			Not required, default: {}. Custom request HTTP headers to send in request.
  * @param		{Boolean}	async			Not required, default: true. Use old synchronized request only if you realy know what you are doing.
  * 
@@ -134,9 +136,9 @@ Ajax['get'] = function () {
  * 
  * @param		{String}	url				Required. Url string to send the GET request, relative or absolute.
  * @param		{Object}	data			Not required, default: {}. Object with key/value data to be serialized into query string and sended in post request body, any complext value will be automaticly stringified by JSON.stringify(), (JSON shim is inclided in this Ajax.js library).
- * @param		{Function}	successCallback	Not required, default: function (data:Object, statusCode:Number, xhr:XMLHttpRequest, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 199 and lower than 300.
+ * @param		{Function}	successCallback	Not required, default: function (data:Object|null, statusCode:Number, xhr:XMLHttpRequest, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 199 and lower than 300.
  * @param		{String}	type			Not required, default: ''. Possible values: JSON, JSONP, XML, HTML, TEXT, if not set, result data will be processed/evaluated/parsed by response Content-Type HTTP header.
- * @param		{Function}	errorCallback	Not required, default: function (responseText:String, statusCode:Number, xhr:XMLHttpRequest, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
+ * @param		{Function}	errorCallback	Not required, default: function (responseText:String, statusCode:Number, xhr:XMLHttpRequest, errorObj: Error|null, errorEvent: Event|null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
  * @param		{Object}	headers			Not required, default: {}. Custom request HTTP headers to send in request.
  * @param		{Boolean}	async			Not required, default: true. Use old synchronized request only if you realy know what you are doing.
  * 
@@ -153,9 +155,9 @@ Ajax['post'] = function () {
  *
  * @property	{String}	url			Required. Url string to send the GET request, relative or absolute.
  * @property	{Object}	data		Not required, default: {}. Object with key/value data to be serialized into query string and sended in post request body, any complext value will be automaticly stringified by JSON.stringify(), (JSON shim is inclided in this Ajax.js library).
- * @property	{Function}	success		Not required, default: function (data:Object, statusCode:Number, xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 199 and lower than 300. Third param is null only for JSONP requests.
+ * @property	{Function}	success		Not required, default: function (data:Object|null, statusCode:Number, xhr:XMLHttpRequest|null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 199 and lower than 300. Third param is null only for JSONP requests.
  * @property	{String}	type		Not required, default: ''. Possible values: JSON, JSONP, XML, HTML, TEXT, if not set, result data will be processed/evaluated/parsed by response Content-Type HTTP header.
- * @property	{Function}	error		Not required, default: function (responseText:String, statusCode:Number, xhr:XMLHttpRequest|Null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
+ * @property	{Function}	error		Not required, default: function (responseText:String, statusCode:Number, xhr:XMLHttpRequest|null, errorObj: Error|null, errorEvent: Event|null, requestId:Number, url:String, type:String) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
  * @property	{Object}	headers		Not required, default: {}. Custom request HTTP headers to send in request.
  * @property	{Boolean}	async		Not required, default: true. Use old synchronized request only if you realy know what you are doing.
 */
@@ -564,23 +566,40 @@ Ajax['prototype'] = {
 	},
 	_callBeforeHandlers: function () {
 		var scope = this;
-		this._callHandlers('before', scope.type == 'jsonp' ? [null] : [scope.xhr]);
+		this._callHandlers(
+			'before', 
+			scope.type == 'jsonp' 
+				? [null] 
+				: [scope.xhr]
+		);
 	},
 	_callSuccessHandlers: function () {
 		var scope = this,
 			xhr = scope.xhr,
 			data = scope.result.data;
-		this._callHandlers('success', scope.type == 'jsonp' ? [data, 200, null] : [data, xhr['status'], xhr]);
+		this._callHandlers(
+			'success', 
+			scope.type == 'jsonp' 
+				? [data, 200, null] 
+				: [data, xhr['status'], xhr]
+		);
 	},
 	_callAbortHandlers: function () {
 		var scope = this;
-		this._callHandlers('abort', scope.type == 'jsonp' ? [null] : [scope.xhr]);
+		this._callHandlers(
+			'abort', 
+			scope.type == 'jsonp' 
+				? [null] 
+				: [scope.xhr]
+		);
 	},
 	_callErrorHandlers: function () {
 		var scope = this, xhr = scope.xhr;
 		this._callHandlers(
 			'error', 
-			scope.type == 'jsonp' ? ['', 0, null, null, scope.errorEvent] : [xhr['responseText'], xhr['status'], xhr, scope.errorObj, null]
+			scope.type == 'jsonp' 
+				? ['', 0, null, null, scope.errorEvent] 
+				: [xhr['responseText'], xhr['status'], xhr, scope.errorObj, null]
 		);
 	},
 	_callHandlers: function (handlersKey, args) {
