@@ -425,3 +425,11 @@ Most of JSON APIs uses standard naming convention - 'callback' value, but someti
 ```javascript
 Ajax.jsonpCallbackParam = 'callback';
 ```
+
+## **LIBRARY DEVELOPMENT**
+- This library doesn't need any dependency.
+- To open project file in Visual Studio, you need to install [PowerShell Tools for Visual Studio](https://marketplace.visualstudio.com/search?term=PowerShell%20Tools%20for%20Visual%20Studio&target=VS&category=All%20categories&vsVersion=&sortBy=Relevance):
+- To build development and minimalized version, you need to run:
+  - `devel-tools/make-dev-version-from-src.cmd`
+  - `devel-tools/make-min-version-from-src.cmd`
+  
