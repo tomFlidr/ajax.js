@@ -1,6 +1,6 @@
 # Javascript AJAX (ajax.js)
 
-[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.9-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
+[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.10-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
 [![License](https://img.shields.io/badge/Licence-MIT-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/blob/master/LICENSE.md)
 
 ## **INSTALATION**
@@ -426,10 +426,14 @@ Most of JSON APIs uses standard naming convention - 'callback' value, but someti
 Ajax.jsonpCallbackParam = 'callback';
 ```
 
-## **LIBRARY DEVELOPMENT**
+<br /><br />
+#### **DEV OPS**
 - This library doesn't need any dependency.
-- To open project file in Visual Studio, you need to install [PowerShell Tools for Visual Studio](https://marketplace.visualstudio.com/search?term=PowerShell%20Tools%20for%20Visual%20Studio&target=VS&category=All%20categories&vsVersion=&sortBy=Relevance):
-- To build development and minimalized version, you need to run:
-  - `devel-tools/make-dev-version-from-src.cmd`
-  - `devel-tools/make-min-version-from-src.cmd`
+- To build development or minimalized version, you need to run:
+  - **Windows**:
+    - `call devel-tools/make-dev-version-from-src.cmd`
+    - `call devel-tools/make-min-version-from-src.cmd`
+  - **Linux**:
+    - `sh devel-tools/make-dev-version-from-src.sh`
+    - `sh devel-tools/make-min-version-from-src.sh`
   
