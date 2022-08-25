@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "Ajax.js", "Ajax.js.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Ajax.js", "Ajax.js.njsproj", "{235F5316-3682-4FE2-B072-2EB5B6443665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{235F5316-3682-4FE2-B072-2EB5B6443665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235F5316-3682-4FE2-B072-2EB5B6443665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235F5316-3682-4FE2-B072-2EB5B6443665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235F5316-3682-4FE2-B072-2EB5B6443665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF504CFF-0C7B-4FB8-884A-16C1F5FC72FB}
 	EndGlobalSection
 EndGlobal
