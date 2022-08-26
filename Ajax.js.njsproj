@@ -29,8 +29,88 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include=".npmignore" />
+    <Content Include="builds\1.0.0\ajax.dev.js" />
+    <Content Include="builds\1.0.0\ajax.min.js" />
+    <Content Include="builds\1.0.0\ajax.src.js" />
+    <Content Include="builds\1.0.1\ajax.dev.js" />
+    <Content Include="builds\1.0.1\ajax.min.js" />
+    <Content Include="builds\1.0.1\ajax.src.js" />
+    <Content Include="builds\1.0.2\ajax.dev.js" />
+    <Content Include="builds\1.0.2\ajax.min.js" />
+    <Content Include="builds\1.0.2\ajax.src.js" />
+    <Content Include="builds\1.0.3\ajax.dev.js" />
+    <Content Include="builds\1.0.3\ajax.min.js" />
+    <Content Include="builds\1.0.3\ajax.src.js" />
+    <Content Include="builds\1.0.4\ajax.dev.js" />
+    <Content Include="builds\1.0.4\ajax.min.js" />
+    <Content Include="builds\1.0.4\ajax.src.js" />
+    <Content Include="builds\1.0.5\ajax.dev.js" />
+    <Content Include="builds\1.0.5\ajax.min.js" />
+    <Content Include="builds\1.0.5\ajax.src.js" />
+    <Content Include="builds\1.0.6\ajax.dev.js" />
+    <Content Include="builds\1.0.6\ajax.min.js" />
+    <Content Include="builds\1.0.6\ajax.src.js" />
+    <Content Include="builds\1.0.7\ajax.dev.js" />
+    <Content Include="builds\1.0.7\ajax.min.js" />
+    <Content Include="builds\1.0.7\ajax.src.js" />
+    <Content Include="builds\1.0.9\ajax.dev.js" />
+    <Content Include="builds\1.0.9\ajax.min.js" />
+    <Content Include="builds\1.0.9\ajax.src.js" />
+    <Content Include="builds\latest\ajax.dev.js" />
+    <Content Include="builds\latest\ajax.min.js" />
+    <Content Include="builds\latest\ajax.src.js" />
+    <Content Include="demos\01-basic-get.html" />
+    <Content Include="demos\02-basic-post.html" />
+    <Content Include="demos\03-complete-load.html" />
+    <Content Include="demos\04-foreing-domain-jsonp.html" />
+    <Content Include="demos\05-multiple-requests-with-global-handlers.html" />
+    <Content Include="demos\data\301.php" />
+    <Content Include="demos\data\404.php" />
+    <Content Include="demos\data\books.json" />
+    <Content Include="demos\data\books.xml" />
+    <Content Include="demos\data\json.php" />
+    <Content Include="demos\data\x-post-request.php" />
+    <Content Include="demos\data\xml.php" />
+    <Content Include="devel-tools\bin\compiler.jar" />
+    <Content Include="devel-tools\bin\compiller-help.txt" />
+    <Content Include="devel-tools\bin\jrepl.bat" />
+    <Content Include="devel-tools\make-dev-version-from-src.cmd" />
+    <Content Include="devel-tools\make-dev-version-from-src.sh" />
+    <Content Include="devel-tools\make-min-version-from-src.cmd" />
+    <Content Include="devel-tools\make-min-version-from-src.sh" />
+    <Content Include="LICENSE.md" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <None Include="_references.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="builds\" />
+    <Folder Include="builds\1.0.0\" />
+    <Folder Include="builds\1.0.1\" />
+    <Folder Include="builds\1.0.2\" />
+    <Folder Include="builds\1.0.3\" />
+    <Folder Include="builds\1.0.4\" />
+    <Folder Include="builds\1.0.5\" />
+    <Folder Include="builds\1.0.6\" />
+    <Folder Include="builds\1.0.7\" />
+    <Folder Include="builds\1.0.9\" />
+    <Folder Include="builds\latest\" />
+    <Folder Include="demos\" />
+    <Folder Include="demos\data\" />
+    <Folder Include="devel-tools\" />
+    <Folder Include="devel-tools\bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="builds\1.0.2\ajax.d.ts" />
+    <TypeScriptCompile Include="builds\1.0.3\ajax.d.ts" />
+    <TypeScriptCompile Include="builds\1.0.4\ajax.d.ts" />
+    <TypeScriptCompile Include="builds\1.0.5\ajax.d.ts" />
+    <TypeScriptCompile Include="builds\1.0.6\ajax.d.ts" />
+    <TypeScriptCompile Include="builds\1.0.7\ajax.d.ts" />
+    <TypeScriptCompile Include="builds\1.0.9\ajax.d.ts" />
+    <TypeScriptCompile Include="builds\latest\ajax.d.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
