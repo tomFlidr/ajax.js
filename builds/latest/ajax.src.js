@@ -3,8 +3,8 @@
  * @author	Tom Flidr | tomflidr(at)gmail(dot)com
  * @url		https://github.com/tomFlidr/ajax.js
  * @licence	https://tomflidr.github.io/ajax.js/LICENSE.md
- * @version	1.0.9
- * @date	2022-03-29
+ * @version	1.0.11
+ * @date	2022-09-06
  * @example
  *
  *    var xhr = Ajax.load(<Ajax.cfg.Load>{
@@ -15,6 +15,7 @@
  *       type: 'json', // json|jsonp|xml|html|text
  *       error: (responseText?: string, statusCode?: number, xhr?: XMLHttpRequest|null, errorObj?: Error|null, errorEvent?: Event|null, requestId?: number, url?: string, type?: string) => {},
  *       headers: {},
+ *       cache: false,
  *       async: true
  *    });
  *
@@ -62,9 +63,15 @@
 		/**
 		 * @summary		JSONP callback GET param default name with value: 'callback'.
 		 * @access		public
-		 * @type		{object}
+		 * @type		{string}
 		*/
 		Ajax['jsonpCallbackParam'] = 'callback';
+		/**
+		 * @summary		Cache buster param name, default `_`.
+		 * @access		public
+		 * @type		{string}
+		*/
+		Ajax['cacheBusterParamName'] = '_';
 		Ajax._scriptCallbackTmpl = 'JsonpCallback';
 		Ajax._requestCounter = 0;
 		/**
@@ -125,6 +132,7 @@
 		 * @param		{string}	type			Not required, default: ''. Possible values: JSON, JSONP, XML, HTML, TEXT, if not set, result data will be processed/evaluated/parsed by response Content-Type HTTP header.
 		 * @param		{Function}	errorCallback	Not required, default: function (responseText:string, statusCode:number, xhr:XMLHttpRequest|null, errorObj: Error|null, errorEvent: Event|null, requestId:number, url:string, type:string) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
 		 * @param		{object}	headers			Not required, default: {}. Custom request HTTP headers to send in request.
+		 * @property	{boolean}	cache			Not required, default: false. Use `true` if you don't want to add `_` cache buster param into url.
 		 * @param		{boolean}	async			Not required, default: true. Use old synchronized request only if you realy know what you are doing.
 		 * 
 		 * @return		{XMLHttpRequest|JsonpRequest}		Build in browser request object or JsonpRequest if JSONP request.
@@ -143,6 +151,7 @@
 		 * @param		{string}	type			Not required, default: ''. Possible values: JSON, JSONP, XML, HTML, TEXT, if not set, result data will be processed/evaluated/parsed by response Content-Type HTTP header.
 		 * @param		{Function}	errorCallback	Not required, default: function (responseText:string, statusCode:number, xhr:XMLHttpRequest, errorObj: Error|null, errorEvent: Event|null, requestId:number, url:string, type:string) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
 		 * @param		{object}	headers			Not required, default: {}. Custom request HTTP headers to send in request.
+		 * @property	{boolean}	cache			Not required, default: false. Use `true` if you don't want to add `_` cache buster param into url.
 		 * @param		{boolean}	async			Not required, default: true. Use old synchronized request only if you realy know what you are doing.
 		 * 
 		 * @return		{XMLHttpRequest}			Build in browser request object.
@@ -161,6 +170,7 @@
 		 * @property	{string}	type		Not required, default: ''. Possible values: JSON, JSONP, XML, HTML, TEXT, if not set, result data will be processed/evaluated/parsed by response Content-Type HTTP header.
 		 * @property	{Function}	error		Not required, default: function (responseText:string, statusCode:number, xhr:XMLHttpRequest|null, errorObj: Error|null, errorEvent: Event|null, requestId:number, url:string, type:string) {}. Custom callback after everything is done and if response HTTP code is bigger than 299.
 		 * @property	{object}	headers		Not required, default: {}. Custom request HTTP headers to send in request.
+		 * @property	{boolean}	cache		Not required, default: false. Use `true` if you don't want to add `_` cache buster param into url.
 		 * @property	{boolean}	async		Not required, default: true. Use old synchronized request only if you realy know what you are doing.
 		*/
 
@@ -181,14 +191,14 @@
 			/// </signature>
 			var ajax = new Ajax();
 			return ajax._init(
-				cfg['url'], cfg['data'], cfg['success'], cfg['type'], cfg['error'], cfg['headers'], cfg['async']
+				cfg['url'], cfg['data'], cfg['success'], cfg['type'], cfg['error'], cfg['headers'], cfg['cache'], cfg['async']
 			)._processRequest(cfg['method']);
 		};
 		Ajax['prototype'] = {
 			'toString': function () {
 				return '[object Ajax]';
 			},
-			_init: function (url, data, success, type, error, headers, async) {
+			_init: function (url, data, success, type, error, headers, cache, async) {
 				var fn = function () {}, scope = this;
 				scope.url = url || '';
 				scope.data = data || {};
@@ -196,7 +206,8 @@
 				scope.type = (type === undefined ? '' : type).toLowerCase() || 'auto';
 				scope.error = error || fn;
 				scope.headers = headers || {};
-				scope.async = typeof(async) == 'undefined' ? !0 : async;
+				scope.cache = cache == null ? !1 : cache;
+				scope.async = async == null ? !0 : async;
 				scope.result = {
 					success: !1, 
 					data: {}
@@ -235,8 +246,7 @@
 				Ajax[scope.callbackName] = function (data) {
 					scope._handlerScriptRequestSuccess(data);
 				};
-				scope.data[Ajax['jsonpCallbackParam']] = this._getLibraryName() + '.' + scope.callbackName;
-				scope._completeUriAndGetParams('get');
+				scope._completeUriAndGetParams('get', !0);
 				scriptElm['setAttribute']('src', scope.url);
 				scope._callBeforeHandlers();
 				if (scope.oldIe) {
@@ -244,7 +254,7 @@
 					scriptElm = headElm['insertAdjacentElement']('beforeEnd', scriptElm);
 				} else {
 					scriptElm.setAttribute('async', 'async');
-					scriptElm.addEventListener('error', scope._handlerProviderScriptRequestError(), true);
+					scriptElm.addEventListener('error', scope._handlerProviderScriptRequestError(), !0);
 					scriptElm = headElm['appendChild'](scriptElm);
 				}
 				var result = {
@@ -316,7 +326,7 @@
 			_processXhrRequest: function (method) {
 				method = (method === undefined ? 'get' : method).toLowerCase();
 				var scope = this,
-					paramsStr = scope._completeUriAndGetParams(method);
+					paramsStr = scope._completeUriAndGetParams(method, !1);
 				scope.requestId = Ajax._requestCounter++;
 				scope.xhr = scope._createXhrInstance();
 				scope._processXhrRequestAddListener();
@@ -497,47 +507,57 @@
 					xhr['setRequestHeader'](headerName, defaultHeaders[headerName]);
 				}
 			},
-			_completeUriAndGetParams: function (method) {
+			_completeUriAndGetParams: function (method, jsonp) {
 				var scope = this,
 					dataStr = '',
-					delimiter = '?',
+					qsMark = '?',
+					amp = '&',
+					eq = '=',
+					delimiter = qsMark,
 					url = scope.url,
 					delimPos = url.indexOf(delimiter);
 				method = method.toLowerCase();
 				if (method == 'get') {
-					scope.data['_'] = +new Date; // cache buster
-					dataStr = scope._completeDataString();
-					if (delimPos > -1) {
-						delimiter = (delimPos == url.length - 1) ? '' : '&';
-					}
-					scope.url = url + delimiter + dataStr;
+					dataStr = scope._completeDataString(!0);
+					if (delimPos > -1)
+						delimiter = (delimPos == url.length - 1) ? '' : amp;
+					url += delimiter + dataStr;
+					dataStr = '';
 				} else {
-					dataStr = scope._completeDataString();
+					dataStr = scope._completeDataString(!1);
 				}
+				if (!scope.cache)
+					url += amp + Ajax['cacheBusterParamName'] + eq + (+new Date);
+				if (jsonp)
+					url += amp + Ajax['jsonpCallbackParam'] + eq + scope._getLibraryName() + '.' + scope.callbackName;
+				scope.url = url;
 				return dataStr;
 			},
-			_completeDataString: function () {
+			_completeDataString: function (isGet) {
 				var scope = this,
 					data = scope.data,
-					w = window;
+					w = window
 				if (typeof(data) == 'string') {
 					return data;
 				} else {
 					if(!w['JSON']) scope._declareJson();
-					return this._stringifyDataObject();
+					return this._stringifyDataObject(isGet);
 				}
 			},
-			_stringifyDataObject: function () {
+			_stringifyDataObject: function (isGet) {
 				var scope = this,
 					data = scope.data,
 					dataArr = [], 
 					dataStr = '',
-					w = window;
+					w = window,
+					encoder = isGet
+						? encodeURIComponent
+						: function (a) { return a };
 				for (var key in data) {
 					if (typeof(data[key]) == 'object') {
-						dataStr = w['JSON']['stringify'](data[key])
+						dataStr = encoder(w['JSON']['stringify'](data[key]))
 					} else {
-						dataStr = data[key].toString();
+						dataStr = encoder(data[key].toString());
 					}
 					dataArr.push(key+'='+dataStr);
 				}
