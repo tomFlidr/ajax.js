@@ -1,6 +1,6 @@
 # Javascript AJAX (ajax.js)
 
-[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.11-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
+[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.12-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
 [![License](https://img.shields.io/badge/Licence-MIT-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/blob/master/LICENSE.md)
 
 ## **INSTALATION**
