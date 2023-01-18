@@ -3,8 +3,8 @@
  * @author	Tom Flidr | tomflidr(at)gmail(dot)com
  * @url		https://github.com/tomFlidr/ajax.js
  * @licence	https://tomflidr.github.io/ajax.js/LICENSE.md
- * @version	1.0.12
- * @date	2022-31-10
+ * @version	1.0.13
+ * @date	2023-01-18
  * @example
  *
  *    var xhr = Ajax.load(<Ajax.cfg.Load>{
@@ -546,20 +546,34 @@
 			},
 			_stringifyDataObject: function (isGet) {
 				var scope = this,
+					item = null,
+					itemType = null,
 					data = scope.data,
 					dataArr = [], 
 					dataStr = '',
 					w = window,
 					encoder = w['encodeURIComponent'];
 				for (var key in data) {
-					if (typeof(data[key]) == 'object') {
-						dataStr = encoder(w['JSON']['stringify'](data[key]))
+					item = data[key];
+					itemType = this._typeOf(item);
+					if (itemType == 'Object') {
+						dataStr = encoder(w['JSON']['stringify'](item));
+						dataArr.push(key + '=' + dataStr);
+					} else if (itemType == 'Array') {
+						for (var i = 0, l = item['length']; i < l; i++) {
+							dataStr = encoder(w['JSON']['stringify'](item[i]));	
+							dataArr.push(key + '[]=' + dataStr);
+						}
 					} else {
-						dataStr = encoder(data[key].toString());
+						dataStr = encoder(item.toString());
+						dataArr.push(key + '=' + dataStr);
 					}
-					dataArr.push(key+'='+dataStr);
 				}
 				return dataArr.join('&');
+			},
+			_typeOf: function (o) {
+				var typeStr = Object['prototype']['toString']['apply'](o);
+				return typeStr.substring(8, typeStr.length - 1);
 			},
 			_declareJson: function () {
 				// include json2
