@@ -1,6 +1,6 @@
 # Javascript AJAX (ajax.js)
 
-[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.13-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
+[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.14-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
 [![License](https://img.shields.io/badge/Licence-MIT-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/blob/master/LICENSE.md)
 
 ## **INSTALATION**
@@ -11,16 +11,16 @@ npm install ajax-min
 
 ## **DOWNLOAD**
 
-* [**download ajax.min.js (for production)**](https://tomflidr.github.io/ajax.js/builds/1.0.13/ajax.min.js)
-* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.13/ajax.dev.js)
-* [**download ajax.d.ts (for development in TypeScript with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.13/ajax.d.ts)
+* [**download ajax.min.js (for production)**](https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.min.js)
+* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.dev.js)
+* [**download ajax.d.ts (for development in TypeScript with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.d.ts)
 
 ```html
 <!-- for production: -->
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.13/ajax.min.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.min.js"></script>
 
 <!-- for development with JSDocs comments for IDE: -->
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.13/ajax.dev.js"></script>
+<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.dev.js"></script>
 ```
 
 ## **DEMOS**
