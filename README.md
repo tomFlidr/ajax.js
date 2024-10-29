@@ -1,9 +1,13 @@
+Here’s an improved version with minor corrections and enhancements for clarity:
+
+---
+
 # Javascript AJAX (ajax.js)
 
-[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.14-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
-[![License](https://img.shields.io/badge/Licence-MIT-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/blob/master/LICENSE.md)
+[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.15-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/blob/master/LICENSE.md)
 
-## **INSTALATION**
+## **INSTALLATION**
 
 ```shell
 npm install ajax-min
@@ -11,100 +15,97 @@ npm install ajax-min
 
 ## **DOWNLOAD**
 
-* [**download ajax.min.js (for production)**](https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.min.js)
-* [**download ajax.dev.js (for development with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.dev.js)
-* [**download ajax.d.ts (for development in TypeScript with JSDocs comments for IDE)**](https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.d.ts)
+* [**Download ajax.min.js (for production)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.min.js)
+* [**Download ajax.dev.js (for development with JSDoc comments for IDEs)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.dev.js)
+* [**Download ajax.d.ts (for development in TypeScript with JSDoc comments for IDEs)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.d.ts)
 
 ```html
 <!-- for production: -->
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.min.js"></script>
 
-<!-- for development with JSDocs comments for IDE: -->
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.14/ajax.dev.js"></script>
+<!-- for development with JSDoc comments for IDE: -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.dev.js"></script>
 ```
 
 ## **DEMOS**
 - [1. Basic GET Example](http://github.tomflidr.cz/ajax.js/demos/01-basic-get.html)
 - [2. Basic POST Example](http://github.tomflidr.cz/ajax.js/demos/02-basic-post.html)
 - [3. Universal Load Example](http://github.tomflidr.cz/ajax.js/demos/03-complete-load.html)
-- [4. Foreing Domain JSONP Request Example](http://github.tomflidr.cz/ajax.js/demos/04-foreing-domain-jsonp.html)
+- [4. Foreign Domain JSONP Request Example](http://github.tomflidr.cz/ajax.js/demos/04-foreign-domain-jsonp.html)
 - [5. Multiple Requests With Global Handlers Example](http://github.tomflidr.cz/ajax.js/demos/05-multiple-requests-with-global-handlers.html)
 
-Very effective, supersmall, cross browser AJAX library, supporting JSON, JSONP, XML, HTML or TEXT requesting or returning result type by HTTP header Content-Type, automatic data serialization, automatic evaluation by recognized type, global handlers and syntax based on jQuery.ajax();.
+A highly efficient, ultra-compact, cross-browser AJAX library that supports JSON, JSONP, XML, HTML, or TEXT request/response types based on HTTP headers, with automatic data serialization, type evaluation, global handlers, and jQuery.ajax()-like syntax.
 
 ## **FEATURES**
 
-- very effective, super small javascript AJAX library - all in 460 lines, **minimized: 8.3 KB**, **gzipped: 3.3 KB**
-- **syntax based on jQuery.ajax();**, `Ajax.load();`, `Ajax.get();`, `Ajax.post();`, no promisses, returning `XmlHttpRequest`
-- supported browsers: **MSIE6+, Firefox, Chrome, Safari, Opera and mobile browsers**
-- **highly optimized**
-- all request methods supported - **`GET`, `POST`, `HEAD`, `OPTION`, `...`**
-  - but only **`GET`** in **`JSONP`** request type (**by \<stript\> tag**, to request foreing domains without any other settings)
-- still possible to request diferent domains with http header: **`"Access-Control-Allow-Origin"`**
-- **automatic `JSON` serialization** into format: `key1=value1&key2=["anything",{"with":["JSON","structure"]}]` 
-- data always **sended with HTTP headers**:
-  - **`X-Requested-With: XmlHttpRequest`** (posibile to change)
-  - **`Content-Type: application/x-www-form-urlencoded`** (posibile to change)
-- **`JSON` evaluation and `XML`/`HTML` parsing** into environment types by type param
-- **automatic result conversion by response HTTP header `"Content-Type"`** into `JSON`/`XML`/`HTML`/`TEXT` if no `type` option defined
-- posibility to **change any http header before** send **and read any header after** data are loaded or error handled (except cookies header:-)
-- posibility to change async requesting to sync (but it is not recomanded, by default is async)
-- **global handlers for each request** to set up error loging or loading animations:
-  - `Ajax.beforeLoad(function(xhr, requestId, url, typ){});`
+- Very efficient, super small JavaScript AJAX library - all in 760 lines, **minified: 9.3 KB**, **gzipped: 4.0 KB**
+- **jQuery.ajax()-like syntax**, `Ajax.load();`, `Ajax.get();`, `Ajax.post();`, no promises, returns `XMLHttpRequest`
+- Supported browsers: **MSIE6+, Firefox, Chrome, Safari, Opera, and mobile browsers**
+- **Highly optimized**
+- All request methods supported - **`GET`, `POST`, `HEAD`, `OPTION`, etc.**
+  - Only **`GET`** in **`JSONP`** request type (using a `<script>` tag to request foreign domains without further configuration)
+- Supports cross-domain requests using the HTTP header: **`"Access-Control-Allow-Origin"`**
+- **Automatic `JSON` serialization** in the format: `key1=value1&key2=["anything",{"with":["JSON","structure"]}]`
+- Data always **sent with HTTP headers**:
+  - **`X-Requested-With: XMLHttpRequest`** (configurable)
+  - **`Content-Type: application/x-www-form-urlencoded`** (configurable)
+- **`JSON` evaluation and `XML`/`HTML` parsing** based on the `type` parameter
+- **Automatic result conversion based on the response's HTTP header `"Content-Type"`** to `JSON`/`XML`/`HTML`/`TEXT` if no `type` option is defined
+- Ability to **modify any HTTP header before sending** and **read any header after** data loads or errors occur (excluding cookies)
+- Option to switch from asynchronous to synchronous requests (not recommended, async by default)
+- **Global handlers for each request** to set up error logging or loading animations:
+  - `Ajax.beforeLoad(function(xhr, requestId, url, type){});`
   - `Ajax.onSuccess(function(xhr, requestId, url, type){});`
   - `Ajax.onAbort(function(data, statusCode, xhr, requestId, url, type){});`
   - `Ajax.onError(function(responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type){});`
 
 ## **USAGE**
 
-Include JAVASCRIPT file **`ajax.min.js`** into your HTML page in `\<head\>` section, no other library is necessary:
+Include the **`ajax.min.js`** JavaScript file in the `<head>` section of your HTML page. No other libraries are necessary:
 
 ```html
-<script type="text/javascript" src="https://tomflidr.github.io/ajax.js/builds/1.0.9/ajax.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.min.js"></script>
 ```
 
-Or include JAVASCRIPT file **`ajax.min.js`** into your project by `require()` function implemented by your own:
+Or include it in your project with `require()` if implemented in your setup:
 ```js
 var Ajax = require('./node_modules/ajax-min/builds/latest/ajax.min.js').Ajax;
 ```
 
-If you are using **TypeScript**, add to your `tsconfig.json` file:
+If using **TypeScript**, add to your `tsconfig.json` file:
 ```js
 {
   "compilerOptions": {
-    "typeRoots": [
-	  "./node_modules/",
-	],
-    "types": [
-      "ajax-min"
-    ],
-  },
+    "paths": [
+      "ajax-min": ["./node_modules/ajax-min/builds/latest/ajax.d.ts"]
+    ]
+  }
 }
 ```
-
 
 ### Universal Syntax
 
 #### Basic Syntax
 
-Standard browser window.XMLHttpRequest object is returned, for **`JSONP`** requests is returned object described later.
+The `XMLHttpRequest` object is returned. For **`JSONP`** requests, an object described later is returned.
 
 ```javascript
-// into xhr is returned XMLHttpRequest instance, in MSIE 8- ActiveObject instance is returned
+// `xhr` contains the XMLHttpRequest instance; in MSIE 8-, it contains an ActiveObject instance.
 var xhr = Ajax.load({
     url: '',              // string, required
-    method: '',           // string, not required, default: 'get'
-    data: {},             // object (to be serialized), not required, default: {}
-    success: function(){},// function, not required, default: 
-                          // function(data,statusCode,xhr,requestId,url,type){}
-    type: '',             // string, not required, default: ''
-                          // (if empty string, result is processed by Content-Type HTTP header)
-    error: function(){},  // function, not required, default: 
-                          // function(responseText,statusCode,xhr,errorObject,errorEvent,requestId,url,type){}
-    headers: {},          // object, not required, default: {},
-    async: true           // boolean, not required, default: true
+    method: '',           // string, optional, default: 'GET'
+    data: {},             // object (to be serialized), optional, default: {}
+    success: function(){},// function, optional, default: 
+                          // function(data, statusCode, xhr, requestId, url, type){}
+    type: '',             // string, optional, default: ''
+                          // (if empty string, result is determined by Content-Type HTTP header)
+    error: function(){},  // function, optional, default: 
+                          // function(responseText, statusCode, xhr, errorObject, errorEvent, requestId, url, type){}
+    headers: {},          // object, optional, default: {},
+    async: true           // boolean, optional, default: true
 });
 ```
+
 #### Full Example
 
 [**VIEW DEMO**](http://github.tomflidr.cz/ajax.js/demos/03-complete-load.html)
@@ -399,7 +400,7 @@ Ajax.handlers.error = [];
 Feel free to use them as standard plain JS arrays to add or remove any handler anytime. There are no any static functions on Ajax object to remove handlers, so it's necessary to do it (if you want) by:
 
 ```javascript
-delete Ajax.handlers.before[yourDesireIndex];
+delete Ajax.handlers.before[yourDesiredIndex];
 ```
 
 ### Public Static Properties
@@ -428,12 +429,14 @@ Ajax.jsonpCallbackParam = 'callback';
 
 <br /><br />
 #### **DEV OPS**
-- This library doesn't need any dependency.
-- To build development or minimalized version, you need to run:
-  - **Windows**:
-    - `call devel-tools/make-dev-version-from-src.cmd`
-    - `call devel-tools/make-min-version-from-src.cmd`
-  - **Linux**:
-    - `sh devel-tools/make-dev-version-from-src.sh`
-    - `sh devel-tools/make-min-version-from-src.sh`
-  
+
+This library is standalone and has no dependencies. 
+To generate development or minified versions, follow these instructions:
+
+- **Windows:**
+  - For development version: `call devel-tools/make-dev-version-from-src.cmd`
+  - For minified version: `call devel-tools/make-min-version-from-src.cmd`
+
+- **Linux:**
+  - For development version: `sh devel-tools/make-dev-version-from-src.sh`
+  - For minified version: `sh devel-tools/make-min-version-from-src.sh`
