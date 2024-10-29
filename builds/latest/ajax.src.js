@@ -559,20 +559,24 @@
 					delimiter = qsMark,
 					url = scope.url,
 					delimPos = url.indexOf(delimiter);
+				if (delimPos > -1) {
+					delimiter = (delimPos === url.length - 1)
+						? ''
+						: amp;
+				}
 				method = method.toLowerCase();
 				if (method == 'get') {
 					dataStr = scope._completeDataString(!0);
-					if (delimPos > -1)
-						delimiter = (delimPos == url.length - 1) ? '' : amp;
 					url += delimiter + dataStr;
+					delimiter = amp;
 					dataStr = '';
 				} else {
 					dataStr = scope._completeDataString(!1);
 				}
 				if (!scope.cache)
-					url += amp + Ajax['cacheBusterParamName'] + eq + (+new Date);
+					url += delimiter + Ajax['cacheBusterParamName'] + eq + (+new Date);
 				if (jsonp)
-					url += amp + Ajax['jsonpCallbackParam'] + eq + scope._getLibraryName() + '.' + scope.callbackName;
+					url += delimiter + Ajax['jsonpCallbackParam'] + eq + scope._getLibraryName() + '.' + scope.callbackName;
 				scope.url = url;
 				return dataStr;
 			},
