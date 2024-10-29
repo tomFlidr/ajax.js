@@ -25,8 +25,15 @@
  * @suppress {checkTypes}
  */
 
-(function(globalVar){
-	globalVar['Ajax'] = globalVar['Ajax'] || (function(){
+(function () {
+	var undef = 'undefined', globalVar, modules = false;
+	if (typeof window != undef) {
+		globalVar = window;
+	} else {
+		globalVar = typeof global != undef ? global : {};
+		modules = true;
+	}
+	var Ajax = globalVar['Ajax'] = globalVar['Ajax'] || (function(){
 		/**
 		 * @typedef		JsonpRequest			JsonpRequest driving object.
 		 * @property	{string}	url			Full appended &lt;script&gt; tag src attribute value.
@@ -737,12 +744,7 @@
 		};
 		return Ajax;
 	})();
-})(
-	typeof(window) !== 'undefined' 
-		? window 
-		: (
-			typeof(global) !== 'undefined'
-				? global
-				: this
-		)
-);
+	if (modules && typeof module != undef) {
+		module.exports = Ajax;
+	}
+})();
