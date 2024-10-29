@@ -1,32 +1,22 @@
 <?php
 
-	// load raw json from hard drive
-	$books = json_decode(file_get_contents(__DIR__ . '/books.js'));
-	
-	// complete all params into one array
-	$rawInput = array_merge($_GET, $_POST);
-	
-	// if there is any sleep param - sleep stript
-	if (isset($rawInput['sleep'])) {
-		$seconds = intval($rawInput['sleep']);
-		sleep($seconds);
-	}
+	include_once(__DIR__ . '/base.php');
 	
 	// get posted data
-	$encodedParams = json_decode($rawInput['params']);
+	$encodedParams = json_decode($params['params']);
 	
 	// get url from original domain to redirect into
-	$responseUrl = $rawInput['responseUrl'];
+	$responseUrl = $params['responseUrl'];
 	
 	// get javascript callbackKey and callbackValue
-	$callbackKey = $rawInput['callbackKey'];
-	$callbackValue = $rawInput['callbackValue'];
+	$callbackKey = $params['callbackKey'];
+	$callbackValue = $params['callbackValue'];
 	
 	// encode all variables into one json string
 	$out = json_encode(
 		array(
 			'params'=> $encodedParams, 
-			'json'	=> $books,
+			'json'	=> $booksJson,
 		)
 	);
 	

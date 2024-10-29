@@ -1,22 +1,7 @@
 <?php
 
-	// load xml as string
-	$books = file_get_contents(__DIR__ . '/books.xml');
-	
-	// complete all params into one array
-	$params = array_merge($_GET, $_POST);
-	
-	// sometimes there is param under key "key2" from examples serialized in json - deserialize it
-	if (isset($params['key2'])) {
-		$params['key2'] = json_decode($params['key2']);
-	}
-	
-	// if there is any sleep param - sleep stript
-	if (isset($params['sleep'])) {
-		$seconds = intval($params['sleep']);
-		sleep($seconds);
-	}
-	
+	include_once(__DIR__ . '/base.php');
+
 	// init formating function to convert php array and stdClass into xml string
 	function formatParams ($data, $level = 2) {
 		$s = ''; $indent = ''; $i = 0;
@@ -40,7 +25,7 @@
 	$out = str_replace(
 		array("\t", "<books>", "</books>",),
 		array("\t\t", "<data>\n\t<params>\n".$paramsStr."\t</params>\n\t<books>", "\t</books>\n</data>",),
-		$books
+		$booksXml
 	);
 	
 	// send xml string with proper http headers
