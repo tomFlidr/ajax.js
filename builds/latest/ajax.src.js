@@ -25,15 +25,27 @@
  * @suppress {checkTypes}
  */
 
-(function () {
-	var undef = 'undefined', globalVar, modules = false;
-	if (typeof window != undef) {
+(function (undefinedStr, modules) {
+	var globalVar;
+	if (typeof window != undefinedStr) {
 		globalVar = window;
 	} else {
-		globalVar = typeof global != undef ? global : {};
+		globalVar = typeof global != undefinedStr ? global : {};
 		modules = true;
 	}
-	var Ajax = globalVar['Ajax'] = globalVar['Ajax'] || (function(){
+	var Ajax = globalVar['Ajax'] = globalVar['Ajax'] || (function (
+		w, d,
+		readyStateChangeStr, successStr, errorStr,
+		responseTextStr, handlersStr, jsonpStr,
+		statusStr, jsonpCallbackParamStr, cacheBusterParamNameStr,
+		jsonCapStr, beforeStr, abortStr,
+		jsonStr, xmlStr, htmlStr,
+		textStr, addEventListenerStr, attachEventStr,
+		asyncStr, setAttributeStr, toLowerCaseStr,
+		autoStr, postStr, getStr,
+		sendStr, parseStr, defaultHeadersStr,
+		prototypeStr
+	) {
 		/**
 		 * @typedef		JsonpRequest			JsonpRequest driving object.
 		 * @property	{string}	url			Full appended &lt;script&gt; tag src attribute value.
@@ -52,7 +64,7 @@
 		 * @access		public
 		 * @type		{object}
 		*/
-		Ajax['handlers'] = {
+		Ajax[handlersStr] = {
 			'before': [],
 			'success': [],
 			'abort': [],
@@ -63,7 +75,7 @@
 		 * @access		public
 		 * @type		{object}
 		*/
-		Ajax['defaultHeaders'] = {
+		Ajax[defaultHeadersStr] = {
 			'X-Requested-With': 'XmlHttpRequest',
 			'Content-Type': 'application/x-www-form-urlencoded'
 		};
@@ -72,13 +84,13 @@
 		 * @access		public
 		 * @type		{string}
 		*/
-		Ajax['jsonpCallbackParam'] = 'callback';
+		Ajax[jsonpCallbackParamStr] = 'callback';
 		/**
 		 * @summary		Cache buster param name, default `_`.
 		 * @access		public
 		 * @type		{string}
 		*/
-		Ajax['cacheBusterParamName'] = '_';
+		Ajax[cacheBusterParamNameStr] = '_';
 		Ajax._scriptCallbackTmpl = 'JsonpCallback';
 		Ajax._requestCounter = 0;
 		/**
@@ -90,7 +102,7 @@
 		 * @return		{Ajax}		Ajax library definition.
 		*/
 		Ajax['beforeLoad'] = function (callback) {
-			Ajax['handlers']['before'].push(callback);
+			Ajax[handlersStr][beforeStr].push(callback);
 			return Ajax;
 		};
 		/**
@@ -102,7 +114,7 @@
 		 * @return		{Ajax}		Ajax library definition.
 		*/
 		Ajax['onSuccess'] = function (callback) {
-			Ajax['handlers']['success'].push(callback);
+			Ajax[handlersStr][successStr].push(callback);
 			return Ajax;
 		};
 		/**
@@ -114,7 +126,7 @@
 		 * @return		{Ajax}		Ajax library definition.
 		*/
 		Ajax['onAbort'] = function (callback) {
-			Ajax['handlers']['abort'].push(callback);
+			Ajax[handlersStr][abortStr].push(callback);
 			return Ajax;
 		};
 		/**
@@ -126,7 +138,7 @@
 		 * @return		{Ajax}		Ajax library definition.
 		*/
 		Ajax['onError'] = function (callback) {
-			Ajax['handlers']['error'].push(callback);
+			Ajax[handlersStr][errorStr].push(callback);
 			return Ajax;
 		};
 		/**
@@ -144,7 +156,7 @@
 		 * 
 		 * @return		{XMLHttpRequest|JsonpRequest}		Build in browser request object or JsonpRequest if JSONP request.
 		*/
-		Ajax['get'] = function () {
+		Ajax[getStr] = function () {
 			var ajax = new Ajax();
 			return ajax._init.apply(ajax, [].slice.apply(arguments))._processRequest();
 		};
@@ -163,9 +175,9 @@
 		 * 
 		 * @return		{XMLHttpRequest}			Build in browser request object.
 		*/
-		Ajax['post'] = function () {
+		Ajax[postStr] = function () {
 			var ajax = new Ajax();
-			return ajax._init.apply(ajax, [].slice.apply(arguments))._processRequest('post');
+			return ajax._init.apply(ajax, [].slice.apply(arguments))._processRequest(postStr);
 		};
 
 		/**
@@ -198,10 +210,10 @@
 			/// </signature>
 			var ajax = new Ajax();
 			return ajax._init(
-				cfg['url'], cfg['data'], cfg['success'], cfg['type'], cfg['error'], cfg['headers'], cfg['cache'], cfg['async']
+				cfg['url'], cfg['data'], cfg[successStr], cfg['type'], cfg[errorStr], cfg['headers'], cfg['cache'], cfg[asyncStr]
 			)._processRequest(cfg['method']);
 		};
-		Ajax['prototype'] = {
+		Ajax[prototypeStr] = {
 			'toString': function () {
 				return '[object Ajax]';
 			},
@@ -210,7 +222,7 @@
 				scope.url = url || '';
 				scope.data = data || {};
 				scope.success = success || fn;
-				scope.type = (type === undefined ? '' : type).toLowerCase() || 'auto';
+				scope.type = type != null ? type[toLowerCaseStr]() : autoStr;
 				scope.error = error || fn;
 				scope.headers = headers || {};
 				scope.cache = cache == null ? !1 : cache;
@@ -225,8 +237,8 @@
 			},
 			_processRequest: function (method) {
 				var scope = this;
-				scope.oldIe = !!document.all;
-				if (scope.type == 'jsonp') {
+				scope.oldIe = !!d.all;
+				if (scope.type == jsonpStr) {
 					return scope._processScriptRequest();
 				} else {
 					return scope._processXhrRequest(method).xhr;
@@ -245,7 +257,7 @@
 				///		<returns type="JsonpRequest">JSONP driving object.</returns>
 				/// </signature>
 				var scope = this,
-					scriptElm = document['createElement']('script'),
+					scriptElm = d['createElement']('script'),
 					headElm = scope._getScriptContainerElement();
 				scope.scriptElm = scriptElm;
 				scope.requestId = Ajax._requestCounter++;
@@ -253,15 +265,15 @@
 				Ajax[scope.callbackName] = function (data) {
 					scope._handlerScriptRequestSuccess(data);
 				};
-				scope._completeUriAndGetParams('get', !0);
-				scriptElm['setAttribute']('src', scope.url);
+				scope._completeUriAndGetParams(getStr, !0);
+				scriptElm[setAttributeStr]('src', scope.url);
 				scope._callBeforeHandlers();
 				if (scope.oldIe) {
-					scriptElm.attachEvent('onreadystatechange', scope._handlerProviderScriptRequestError());
+					scriptElm[attachEventStr]('on'+readyStateChangeStr, scope._handlerProviderScriptRequestError());
 					scriptElm = headElm['insertAdjacentElement']('beforeEnd', scriptElm);
 				} else {
-					scriptElm.setAttribute('async', 'async');
-					scriptElm.addEventListener('error', scope._handlerProviderScriptRequestError(), !0);
+					scriptElm[setAttributeStr](asyncStr, asyncStr);
+					scriptElm[addEventListenerStr](errorStr, scope._handlerProviderScriptRequestError(), !0);
 					scriptElm = headElm['appendChild'](scriptElm);
 				}
 				var result = {
@@ -323,9 +335,9 @@
 					called = !1,
 					errorHandler = scope._handlerProviderScriptRequestError();
 				if (scope.oldIe) {
-					scope.scriptElm.detachEvent('onreadystatechange', errorHandler);
+					scope.scriptElm.detachEvent('on'+readyStateChangeStr, errorHandler);
 				} else {
-					scope.scriptElm.removeEventListener('error', errorHandler, true);
+					scope.scriptElm.removeEventListener(errorStr, errorHandler, true);
 				}
 				scope._handlerScriptRequestCleanUp();
 				scope.errorEvent = e;
@@ -353,7 +365,7 @@
 				}
 			},
 			_processXhrRequest: function (method) {
-				method = (method === undefined ? 'get' : method).toLowerCase();
+				method = (method == null ? getStr : method)[toLowerCaseStr]();
 				var scope = this,
 					paramsStr = scope._completeUriAndGetParams(method, !1);
 				scope.requestId = Ajax._requestCounter++;
@@ -368,22 +380,21 @@
 			_processXhrRequestAddListener: function () {
 				var scope = this,
 					xhr = scope.xhr,
-					eventName = 'readystatechange',
 					handler = function (e) {
 						if (xhr['readyState'] == 4) {
 							scope._handlerXhrRequestReadyStatechange(e);
 						}
 					};
 				if (scope.oldIe) {
-					scope.xhr['attachEvent']('on'+eventName, handler);
+					scope.xhr[attachEventStr]('on'+readyStateChangeStr, handler);
 				} else {
-					scope.xhr['addEventListener'](eventName, handler);
+					scope.xhr[addEventListenerStr](readyStateChangeStr, handler);
 				}
 			},
 			_handlerXhrRequestReadyStatechange: function (e) {
 				e = e || window.event;
 				var scope = this,
-					statusCode = scope.xhr['status'];
+					statusCode = scope.xhr[statusStr];
 				if (statusCode > 199 && statusCode < 300){
 					scope._processXhrResult();
 					scope._processXhrCallbacks();
@@ -398,10 +409,10 @@
 			},
 			_processXhrRequestSend: function (method, paramsStr) {
 				var xhr = this.xhr;
-				if (method == 'get') {
-					xhr['send']();
-				} else if (method == 'post') {
-					xhr['send'](paramsStr);
+				if (method === getStr) {
+					xhr[sendStr]();
+				} else if (method === postStr) {
+					xhr[sendStr](paramsStr);
 				}
 			},
 			_processXhrCallbacks: function (e) {
@@ -411,7 +422,7 @@
 					args = [];
 				if (scope.result.success) {
 					args = [
-						scope.result.data, xhr['status'], xhr, 
+						scope.result.data, xhr[statusStr], xhr, 
 						scope.requestId, scope.url, scope.type
 					];
 					try {
@@ -428,7 +439,7 @@
 					}
 				} else {
 					args = [
-						xhr['responseText'], xhr['status'], xhr, 
+						xhr[responseTextStr], xhr[statusStr], xhr, 
 						scope.errorEvent, scope.errorObject, 
 						scope.requestId, scope.url, scope.type
 					];
@@ -449,45 +460,43 @@
 			},
 			_processXhrResult: function () {
 				var scope = this;
-				if (scope.type == 'auto') scope._processXhrResultDeterminateType();
+				if (scope.type === autoStr) scope._processXhrResultDeterminateType();
 				scope._processXhrResultByType();
 			},
 			_processXhrResultByType: function () {
 				var scope = this,
 					xhr = scope.xhr;
-				if (scope.type == 'json') {
+				if (scope.type === jsonStr) {
 					scope._processXhrResultJson();
-				} else if (scope.type == 'xml' || scope.type == 'html') {
+				} else if (scope.type === xmlStr || scope.type === htmlStr) {
 					scope._processXhrResultXml();
-				} else if (scope.type == 'text') {
-					scope.result.data = xhr['responseText'];
+				} else if (scope.type === textStr) {
+					scope.result.data = xhr[responseTextStr];
 					scope.result.success = !0;
 				}
 			},
 			_processXhrResultDeterminateType: function () {
 				var scope = this,
 					ctSubject = this._getSubjectPartContentHeader();
-				scope.type = 'text';
-				if (ctSubject.indexOf('javascript') > -1 || ctSubject.indexOf('json') > -1) {
+				scope.type = textStr;
+				if (ctSubject.indexOf('javascript') > -1 || ctSubject.indexOf(jsonStr) > -1) {
 					// application/json,application/javascript,application/x-javascript,text/javascript,text/x-javascript,text/x-json
-					scope.type = 'json';
-				} else if (ctSubject.indexOf('html') > -1) {
+					scope.type = jsonStr;
+				} else if (ctSubject.indexOf(htmlStr) > -1) {
 					// application/xhtml+xml,text/html,application/vnd.ms-htmlhelp
-					scope.type = 'html';
-				} else if (ctSubject.indexOf('xml') > -1) {
+					scope.type = htmlStr;
+				} else if (ctSubject.indexOf(xmlStr) > -1) {
 					// application/xml,text/xml,	application/xml-dtd,application/rss+xml,application/atom+xml,application/vnd.google-earth.kml+xml,model/vnd.collada+xml and much more...
-					scope.type = 'xml';
+					scope.type = xmlStr;
 				}
 			},
 			_processXhrResultJson: function () {
-				var w = window, 
-					scope = this,
-					jsonStr = 'JSON',
-					responseText = scope.xhr['responseText'];
-				if (!w[jsonStr])
+				var scope = this,
+					responseText = scope.xhr[responseTextStr];
+				if (!w[jsonCapStr])
 					scope._declareJson();
 				try {
-					scope.result.data = w[jsonStr]['parse'](responseText);
+					scope.result.data = w[jsonCapStr][parseStr](responseText);
 					scope.result.success = !0;
 				} catch (e1) {
 					try {
@@ -499,9 +508,8 @@
 			},
 			_processXhrResultXml: function () {
 				var parser = {}, 
-					w = window, 
 					scope = this,
-					responseText = scope.xhr['responseText'],
+					responseText = scope.xhr[responseTextStr],
 					DomParser = w['DOMParser'];
 				try {
 					if (DomParser) {
@@ -509,7 +517,7 @@
 						scope.result.data = parser['parseFromString'](responseText, "application/xml");
 					} else {
 						parser = new w['ActiveXObject']('Microsoft.XMLDOM');
-						parser['async'] = !1;
+						parser[asyncStr] = !1;
 						scope.result.data = parser['loadXML'](responseText);
 					}
 					scope.result.success = !0;
@@ -527,13 +535,12 @@
 				var scope = this,
 					contentType = scope.xhr['getResponseHeader']("Content-Type"),
 					semicolPos = contentType.indexOf(';');
-				contentType = contentType.length > 0 ? contentType.toLowerCase() : '';
+				contentType = contentType.length > 0 ? contentType[toLowerCaseStr]() : '';
 				if (semicolPos > -1) contentType = contentType.substr(0, semicolPos);
 				return contentType;
 			},
 			_createXhrInstance: function () {
 				var xhrInstance,
-					w = window,
 					activeXObjTypes = ['Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.3.0', 'Msxml2.XMLHTTP', 'Microsoft.XMLHTTP'];
 				if (w['XMLHttpRequest']) {
 					xhrInstance = new w['XMLHttpRequest']();
@@ -551,7 +558,7 @@
 					xhr = scope.xhr,
 					setReqHeader = 'setRequestHeader',
 					configuredHeaders = scope.headers,
-					defaultHeaders = Ajax['defaultHeaders'];
+					defaultHeaders = Ajax[defaultHeadersStr];
 				for (var headerName in configuredHeaders) {
 					xhr[setReqHeader](headerName, configuredHeaders[headerName]);
 				}
@@ -574,8 +581,8 @@
 						? ''
 						: amp;
 				}
-				method = method.toLowerCase();
-				if (method == 'get') {
+				method = method[toLowerCaseStr]();
+				if (method === getStr) {
 					dataStr = scope._completeDataString(!0);
 					url += delimiter + dataStr;
 					delimiter = amp;
@@ -584,24 +591,23 @@
 					dataStr = scope._completeDataString(!1);
 				}
 				if (!scope.cache)
-					url += delimiter + Ajax['cacheBusterParamName'] + eq + (+new Date);
+					url += delimiter + Ajax[cacheBusterParamNameStr] + eq + (+new Date);
 				if (jsonp)
-					url += delimiter + Ajax['jsonpCallbackParam'] + eq + scope._getLibraryName() + '.' + scope.callbackName;
+					url += delimiter + Ajax[jsonpCallbackParamStr] + eq + scope._getLibraryName() + '.' + scope.callbackName;
 				scope.url = url;
 				return dataStr;
 			},
 			_completeDataString: function (isGet) {
 				var scope = this,
 					data = scope.data,
-					w = window,
-					jsonDecl = !!w['JSON'];
+					jsonDecl = !!w[jsonCapStr];
 				if (typeof(data) == 'string') {
 					if (!isGet) {
 						return data;
 					} else {
 						if (!jsonDecl)
 							jsonDecl = scope._declareJson();
-						scope.data = w['JSON']['parse'](data);
+						scope.data = w[jsonCapStr][parseStr](data);
 					}
 				}
 				if (!jsonDecl)
@@ -615,8 +621,7 @@
 					data = scope.data,
 					dataArr = [], 
 					dataStr = '',
-					w = window,
-					json = w['JSON'],
+					json = w[jsonCapStr],
 					strf = 'stringify',
 					encoder = w['encodeURIComponent'];
 				for (var key in data) {
@@ -642,7 +647,7 @@
 				return dataArr.join('&');
 			},
 			_typeOf: function (o) {
-				var typeStr = Object['prototype']['toString']['apply'](o);
+				var typeStr = Object[prototypeStr]['toString']['apply'](o);
 				return typeStr.substring(8, typeStr.length - 1);
 			},
 			_declareJson: function () {
@@ -668,20 +673,20 @@
 				return !0;
 			},
 			_getScriptContainerElement: function () {
-				var headElm = document['body'],
+				var headElm = d['body'],
 					prevSibl = 'previousSibling';
 				while (true) {
-					if (headElm[prevSibl] === null || headElm[prevSibl] === undefined) break;
+					if (headElm[prevSibl] == null) break;
 					headElm = headElm[prevSibl];
-					if (headElm['nodeName']['toLowerCase']() == 'head') break;
+					if (headElm['nodeName'][toLowerCaseStr]() === 'head') break;
 				}
 				return headElm;
 			},
 			_callBeforeHandlers: function () {
 				var scope = this;
 				this._callHandlers(
-					'before', 
-					scope.type == 'jsonp' 
+					beforeStr, 
+					scope.type === jsonpStr
 						? [null] 
 						: [scope.xhr]
 				);
@@ -691,17 +696,17 @@
 					xhr = scope.xhr,
 					data = scope.result.data;
 				this._callHandlers(
-					'success', 
-					scope.type == 'jsonp' 
+					successStr, 
+					scope.type === jsonpStr
 						? [data, 200, null] 
-						: [data, xhr['status'], xhr]
+						: [data, xhr[statusStr], xhr]
 				);
 			},
 			_callAbortHandlers: function () {
 				var scope = this;
 				this._callHandlers(
-					'abort', 
-					scope.type == 'jsonp' 
+					abortStr, 
+					scope.type === jsonpStr
 						? [null] 
 						: [scope.xhr]
 				);
@@ -709,14 +714,14 @@
 			_callErrorHandlers: function () {
 				var scope = this, xhr = scope.xhr;
 				this._callHandlers(
-					'error', 
-					scope.type == 'jsonp' 
+					errorStr, 
+					scope.type === jsonpStr
 						? ['', 0, null, null, scope.errorEvent] 
-						: [xhr['responseText'], xhr['status'], xhr, scope.errorObj, null]
+						: [xhr[responseTextStr], xhr[statusStr], xhr, scope.errorObj, null]
 				);
 			},
 			_callHandlers: function (handlersKey, args) {
-				var handlers = Ajax['handlers'][handlersKey],
+				var handlers = Ajax[handlersStr][handlersKey],
 					scope = this,
 					handler = function () {},
 					additionalArgs = [];
@@ -728,14 +733,13 @@
 				}
 			},
 			_logException: function () {
-				var w = window,
-					consoleStr = 'console',
+				var consoleStr = 'console',
 					logStr = 'log',
 					scope = this,
 					id = scope.requestId,
 					url = scope.url,
 					type = scope.type,
-					jsonp = type == 'jsonp',
+					jsonp = type === jsonpStr,
 					errorObj = scope.errorObject,
 					errorEvent = scope.errorEvent,
 					xhr = scope.xhr;
@@ -743,7 +747,7 @@
 				if (jsonp) {
 					w[consoleStr][logStr](id, url, type, 0, errorEvent);
 				} else {
-					w[consoleStr][logStr](id, url, type, xhr, xhr['status'], xhr['responseText'], errorObj, errorObj['stack']);
+					w[consoleStr][logStr](id, url, type, xhr, xhr[statusStr], xhr[responseTextStr], errorObj, errorObj['stack']);
 				}
 			},
 			_getLibraryName: function () {
@@ -752,8 +756,20 @@
 			}
 		};
 		return Ajax;
-	})();
-	if (modules && typeof module != undef) {
+	})(
+		globalVar, document,
+		'readystatechange', 'success', 'error',
+		'responseText', 'handlers', 'jsonp',
+		'status', 'jsonpCallbackParam', 'cacheBusterParamName',
+		'JSON', 'before', 'abort',
+		'json', 'xml', 'html',
+		'text', 'addEventListener', 'attachEvent',
+		'async', 'setAttribute', 'toLowerCase',
+		'auto', 'post', 'get',
+		'send', 'parse', 'defaultHeaders',
+		'prototype'
+	);
+	if (modules && typeof module != undefinedStr) {
 		module.exports = Ajax;
 	}
-})();
+})('undefined', !1);
