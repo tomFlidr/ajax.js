@@ -579,13 +579,20 @@
 			_completeDataString: function (isGet) {
 				var scope = this,
 					data = scope.data,
-					w = window
+					w = window,
+					jsonDecl = !!w['JSON'];
 				if (typeof(data) == 'string') {
-					return data;
-				} else {
-					if(!w['JSON']) scope._declareJson();
-					return this._stringifyDataObject(isGet);
+					if (!isGet) {
+						return data;
+					} else {
+						if (!jsonDecl)
+							jsonDecl = scope._declareJson();
+						scope.data = w['JSON']['parse'](data);
+					}
 				}
+				if (!jsonDecl)
+					scope._declareJson();
+				return this._stringifyDataObject(isGet);
 			},
 			_stringifyDataObject: function (isGet) {
 				var scope = this,
