@@ -480,12 +480,14 @@
 				}
 			},
 			_processXhrResultJson: function () {
-				var win = window, 
+				var w = window, 
 					scope = this,
+					jsonStr = 'JSON',
 					responseText = scope.xhr['responseText'];
-				if(!win['JSON']) scope._declareJson();
+				if (!w[jsonStr])
+					scope._declareJson();
 				try {
-					scope.result.data = win['JSON']['parse'](responseText);
+					scope.result.data = w[jsonStr]['parse'](responseText);
 					scope.result.success = !0;
 				} catch (e1) {
 					try {
@@ -497,16 +499,16 @@
 			},
 			_processXhrResultXml: function () {
 				var parser = {}, 
-					win = window, 
+					w = window, 
 					scope = this,
 					responseText = scope.xhr['responseText'],
-					DomParser = win['DOMParser'];
+					DomParser = w['DOMParser'];
 				try {
 					if (DomParser) {
 						parser = new DomParser();
 						scope.result.data = parser['parseFromString'](responseText, "application/xml");
 					} else {
-						parser = new win['ActiveXObject']('Microsoft.XMLDOM');
+						parser = new w['ActiveXObject']('Microsoft.XMLDOM');
 						parser['async'] = !1;
 						scope.result.data = parser['loadXML'](responseText);
 					}
@@ -531,14 +533,14 @@
 			},
 			_createXhrInstance: function () {
 				var xhrInstance,
-					win = window,
+					w = window,
 					activeXObjTypes = ['Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.3.0', 'Msxml2.XMLHTTP', 'Microsoft.XMLHTTP'];
-				if (win['XMLHttpRequest']) {
-					xhrInstance = new win['XMLHttpRequest']();
+				if (w['XMLHttpRequest']) {
+					xhrInstance = new w['XMLHttpRequest']();
 				} else {
 					for (var i = 0, l = activeXObjTypes.length; i < l; i += 1) {
 						try{
-							xhrInstance = new win['ActiveXObject'](activeXObjTypes[i]);
+							xhrInstance = new w['ActiveXObject'](activeXObjTypes[i]);
 						} catch (e) {};
 					};
 				}
@@ -547,14 +549,15 @@
 			_setUpHeaders: function () {
 				var scope = this,
 					xhr = scope.xhr,
+					setReqHeader = 'setRequestHeader',
 					configuredHeaders = scope.headers,
 					defaultHeaders = Ajax['defaultHeaders'];
 				for (var headerName in configuredHeaders) {
-					xhr['setRequestHeader'](headerName, configuredHeaders[headerName]);
+					xhr[setReqHeader](headerName, configuredHeaders[headerName]);
 				}
 				for (headerName in defaultHeaders) {
 					if (configuredHeaders[headerName]) continue;
-					xhr['setRequestHeader'](headerName, defaultHeaders[headerName]);
+					xhr[setReqHeader](headerName, defaultHeaders[headerName]);
 				}
 			},
 			_completeUriAndGetParams: function (method, jsonp) {
@@ -613,6 +616,8 @@
 					dataArr = [], 
 					dataStr = '',
 					w = window,
+					json = w['JSON'],
+					strf = 'stringify',
 					encoder = w['encodeURIComponent'];
 				for (var key in data) {
 					item = data[key];
@@ -621,11 +626,11 @@
 					} else {
 						itemType = this._typeOf(item);
 						if (itemType == 'Object') {
-							dataStr = encoder(w['JSON']['stringify'](item));
+							dataStr = encoder(json[strf](item));
 							dataArr.push(key + '=' + dataStr);
 						} else if (itemType == 'Array') {
 							for (var i = 0, l = item['length']; i < l; i++) {
-								dataStr = encoder(w['JSON']['stringify'](item[i]));	
+								dataStr = encoder(json[strf](item[i]));	
 								dataArr.push(key + '[]=' + dataStr);
 							}
 						} else {
@@ -660,12 +665,14 @@
 				return filter(k,v);}
 				if(/^[\],:{}\s]*$/.test(text.replace(/\\./g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof filter==='function'?walk('',j):j;}
 				throw new SyntaxError('parseJSON');}};}();
+				return !0;
 			},
 			_getScriptContainerElement: function () {
-				var headElm = document['body'];
+				var headElm = document['body'],
+					prevSibl = 'previousSibling';
 				while (true) {
-					if (headElm['previousSibling'] === null || headElm['previousSibling'] === undefined) break;
-					headElm = headElm['previousSibling'];
+					if (headElm[prevSibl] === null || headElm[prevSibl] === undefined) break;
+					headElm = headElm[prevSibl];
 					if (headElm['nodeName']['toLowerCase']() == 'head') break;
 				}
 				return headElm;
@@ -721,7 +728,9 @@
 				}
 			},
 			_logException: function () {
-				var win = window,
+				var w = window,
+					consoleStr = 'console',
+					logStr = 'log',
 					scope = this,
 					id = scope.requestId,
 					url = scope.url,
@@ -730,11 +739,11 @@
 					errorObj = scope.errorObject,
 					errorEvent = scope.errorEvent,
 					xhr = scope.xhr;
-				if (!win['console']) return;
+				if (!w[consoleStr]) return;
 				if (jsonp) {
-					win['console']['log'](id, url, type, 0, errorEvent);
+					w[consoleStr][logStr](id, url, type, 0, errorEvent);
 				} else {
-					win['console']['log'](id, url, type, xhr, xhr['status'], xhr['responseText'], errorObj, errorObj['stack']);
+					w[consoleStr][logStr](id, url, type, xhr, xhr['status'], xhr['responseText'], errorObj, errorObj['stack']);
 				}
 			},
 			_getLibraryName: function () {
