@@ -1,0 +1,13 @@
+{
+    "name": "@ajax-min/ts-example",
+    "version": "0.0.0",
+    "description": "Ajax.min.js TS example.",
+    "main": "./example.js",
+    "author": "",
+    "devDependencies": {
+        "typescript": "^5.0.4"
+    },
+	"scripts": {
+	    "build": "tsc"
+	}
+}
