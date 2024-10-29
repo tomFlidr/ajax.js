@@ -277,12 +277,23 @@
 				return result;
 			},
 			_handlerScriptRequestSuccess: function (data) {
-				var scope = this;
+				var scope = this,
+					called = !1;
 				scope.result.success = !0;
 				scope._handlerScriptRequestCleanUp();
 				scope.result.data = data;
-				scope.success(data, 200, null, scope.requestId, scope.url, scope.type);
-				scope._callSuccessHandlers();
+				try {
+					scope.success(data, 200, null, scope.requestId, scope.url, scope.type);
+					called = !0;
+					scope._callSuccessHandlers();
+				} catch (e) {
+					if (!called) {
+						setTimeout(function () {
+							scope._callSuccessHandlers();
+						});
+					}
+					throw e;
+				}
 			},
 			_handlerProviderScriptRequestError: function () {
 				var scope = this,
@@ -302,6 +313,7 @@
 			},
 			_handlerScriptRequestError: function (e) {
 				var scope = this,
+					called = !1,
 					errorHandler = scope._handlerProviderScriptRequestError();
 				if (scope.oldIe) {
 					scope.scriptElm.detachEvent('onreadystatechange', errorHandler);
@@ -311,8 +323,18 @@
 				scope._handlerScriptRequestCleanUp();
 				scope.errorEvent = e;
 				scope._logException();
-				scope.error('', 0, null, null, e, scope.requestId, scope.url, scope.type);
-				scope._callErrorHandlers();
+				try {
+					scope.error('', 0, null, null, e, scope.requestId, scope.url, scope.type);
+					called = !0;
+					scope._callErrorHandlers();
+				} catch (e) {
+					if (!called) {
+						setTimeout(function () {
+							scope._callErrorHandlers();
+						});
+					}
+					throw e;
+				}
 			},
 			_handlerScriptRequestCleanUp: function () {
 				var scope = this;
@@ -378,23 +400,44 @@
 			_processXhrCallbacks: function (e) {
 				var scope = this, 
 					xhr = scope.xhr,
+					called = !1,
 					args = [];
 				if (scope.result.success) {
 					args = [
 						scope.result.data, xhr['status'], xhr, 
 						scope.requestId, scope.url, scope.type
 					];
-					scope.success.apply(null, args);
-					scope._callSuccessHandlers();
+					try {
+						scope.success.apply(null, args);
+						called = !0;
+						scope._callSuccessHandlers();
+					} catch (e) {
+						if (!called) {
+							setTimeout(function () {
+								scope._callSuccessHandlers();
+							});
+						}
+						throw e;
+					}
 				} else {
 					args = [
 						xhr['responseText'], xhr['status'], xhr, 
 						scope.errorEvent, scope.errorObject, 
 						scope.requestId, scope.url, scope.type
 					];
-					scope.error.apply(null, args);
-					scope._callErrorHandlers();
 					scope._logException();
+					try {
+						scope.error.apply(null, args);
+						called = !0;
+						scope._callErrorHandlers();
+					} catch (e) {
+						if (!called) {
+							setTimeout(function () {
+								scope._callErrorHandlers();
+							});
+						}
+						throw e;
+					}
 				}
 			},
 			_processXhrResult: function () {
