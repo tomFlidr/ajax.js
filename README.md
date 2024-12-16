@@ -4,7 +4,7 @@ Here’s an improved version with minor corrections and enhancements for clarity
 
 # Javascript AJAX (ajax.js)
 
-[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.15-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
+[![Latest Stable Version](https://img.shields.io/badge/Stable-v1.0.16-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/releases)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=plastic)](https://github.com/tomFlidr/ajax.js/blob/master/LICENSE.md)
 
 ## **INSTALLATION**
@@ -15,16 +15,16 @@ npm install ajax-min
 
 ## **DOWNLOAD**
 
-* [**Download ajax.min.js (for production)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.min.js)
-* [**Download ajax.dev.js (for development with JSDoc comments for IDEs)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.dev.js)
-* [**Download ajax.d.ts (for development in TypeScript with JSDoc comments for IDEs)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.d.ts)
+* [**Download ajax.min.js (for production)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.16/builds/latest/ajax.min.js)
+* [**Download ajax.dev.js (for development with JSDoc comments for IDEs)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.16/builds/latest/ajax.dev.js)
+* [**Download ajax.d.ts (for development in TypeScript with JSDoc comments for IDEs)**](https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.16/builds/latest/ajax.d.ts)
 
 ```html
 <!-- for production: -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.16/builds/latest/ajax.min.js"></script>
 
 <!-- for development with JSDoc comments for IDE: -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.dev.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.16/builds/latest/ajax.dev.js"></script>
 ```
 
 ## **DEMOS**
@@ -64,7 +64,7 @@ A highly efficient, ultra-compact, cross-browser AJAX library that supports JSON
 Include the **`ajax.min.js`** JavaScript file in the `<head>` section of your HTML page. No other libraries are necessary:
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.15/builds/latest/ajax.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/tomFlidr/ajax.js@v1.0.16/builds/latest/ajax.min.js"></script>
 ```
 
 Or include it in your project with `require()` if implemented in your setup:
