@@ -238,6 +238,8 @@
 			_processRequest: function (method) {
 				var scope = this;
 				scope.oldIe = !!d.all;
+				if (scope.url.indexOf('&amp;') !== -1)
+					scope.url = scope.url.replace(/\&amp;/g, '&');
 				if (scope.type == jsonpStr) {
 					return scope._processScriptRequest();
 				} else {
